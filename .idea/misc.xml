@@ -3,8 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable/ic_lock.xml" value="0.2203125" />
         <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable/ic_login_bk.xml" value="0.2203125" />
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable/ic_settings_35.xml" value="0.2203125" />
         <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable/login_button_bk.xml" value="0.2203125" />
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable/login_button_bk2.xml" value="0.2203125" />
         <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable/login_shape_bk.xml" value="0.2203125" />
         <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/activity_main.xml" value="0.2" />

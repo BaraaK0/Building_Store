@@ -10,12 +10,10 @@
     <color name="grey">#9E9E9E</color>
     <color name="colorPrimary">#1F5BF3</color>
     <color name="colorPrimaryLight">#8D79FD</color>
-    <color name="colorAccent">#00A5FF</color>
+    <color name="blue">#5C98FF</color>
 
-
-    <color name="whiteTextColor">#fff</color>
     <color name="primaryTextColor">#00a5ff</color>
     <color name="loginBkColor">#f0f0f0</color>
 
-    <color name="whiteCardColor">#fff</color>
+    <color name="orange">#FFB129</color>
 </resources>
