@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/loginCard"
-    app:cardCornerRadius="@dimen/loginCardRadius"
-    app:cardElevation="5dp"
     android:layout_gravity="center"
     android:layout_marginTop="@dimen/loginViewsMargin"
     android:layout_marginBottom="@dimen/loginViewsMargin"
-    android:background="@color/white">
-
+    android:background="@color/white"
+    app:cardCornerRadius="@dimen/loginCardRadius"
+    app:cardElevation="5dp">
 
 
     <LinearLayout
@@ -18,60 +16,72 @@
         android:padding="@dimen/loginViewsMargin">
 
         <TextView
+            style="@style/headerTextPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            style="@style/headerTextPrimary"
             android:layout_marginTop="@dimen/loginViewsMargin"
             android:textAllCaps="true"
             app:drawableEndCompat="@drawable/lock" />
 
+        <TextView
+            android:id="@+id/errorMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start|center_vertical"
+            android:layout_marginTop="30dp"
+            android:text="@string/wrong_username_or_password"
+            android:textAllCaps="false"
+            android:textColor="@color/red"
+            android:visibility="invisible"
+            app:drawableStartCompat="@drawable/ic_error" />
+
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputEmail"
-            style="@style/parent"
-            android:layout_marginTop="@dimen/loginViewsMargin"
-            >
+            android:id="@+id/textInputUname"
+            style="@style/parent">
+
             <EditText
                 android:id="@+id/unameEdt"
                 style="@style/modifiedEditText"
+                android:hint="@string/username"
                 android:inputType="textPersonName"
                 android:maxLines="1"
-                android:hint="@string/username"
                 android:textAlignment="viewStart"
-
-                />
+                android:textColor="@color/black"
+                android:textColorHint="@color/purple_500" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputPassword"
             style="@style/parent"
             android:layout_marginTop="@dimen/loginViewsMargin">
+
             <EditText
                 android:id="@+id/passEdt"
                 style="@style/modifiedEditText"
                 android:hint="@string/password"
-                android:maxLines="1"
                 android:inputType="textPassword"
-                android:textAlignment="viewStart"/>
+                android:maxLines="1"
+                android:textAlignment="viewStart"
+                android:textColor="@color/black"
+                android:textColorHint="@color/purple_500" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
             android:id="@+id/loginBtn"
-            app:spinning_bar_width="4dp"
-            app:spinning_bar_color="@color/white"
-            android:text="@string/loginTitle"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="27dp"
-            app:spinning_bar_padding="6dp"
-            app:initialCornerAngle="27dp"
-            android:textStyle="bold"
-            android:background="@drawable/login_button_bk"
-            android:textColor="@color/white"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:textSize="18sp"/>
-
-
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="31dp"
+            android:background="@drawable/login_button_bk"
+            android:text="@string/loginTitle"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:initialCornerAngle="27dp"
+            app:spinning_bar_color="@color/white"
+            app:spinning_bar_padding="6dp"
+            app:spinning_bar_width="4dp" />
 
 
     </LinearLayout>
