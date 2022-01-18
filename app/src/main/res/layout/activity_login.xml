@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/loginParent"
     android:orientation="vertical"
-    tools:context=".LoginActivity">
+    tools:context=".Activities.LoginActivity">
 
     <ScrollView style="@style/parent">
 
@@ -24,6 +24,7 @@
                     android:orientation="vertical">
 
                     <ImageView
+                        android:id="@+id/settingsIc"
                         style="@style/parent"
                         android:background="@drawable/ic_login_bk"
                         android:contentDescription="login background" />
@@ -46,7 +47,7 @@
                     style="@style/headerText"
                     android:layout_gravity="center"
                     android:layout_marginTop="42dp"
-                    android:text="@string/app_name"/>
+                    android:text="@string/app_name" />
 
                 <include layout="@layout/layout_login" />
 

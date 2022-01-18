@@ -5,5 +5,12 @@
     <string name="loginTitle">تسجيل الدخول</string>
     <string name="username">اسم المستخدم</string>
     <string name="password">كلمة المرور</string>
+    <string name="wrong_username_or_password">خطأ في اسم المستخدم أو كلمة المرور !</string>
+    <string name="ip_address">عنوان الIP</string>
+    <string name="ip_port">منفذ الIP</string>
+    <string name="company_no">رقم الشركة</string>
+    <string name="ip_settings">إعدادات الIP</string>
+    <string name="ok">حسنًا</string>
+    <string name="cancel">إالغاء</string>
 
 </resources>

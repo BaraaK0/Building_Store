@@ -10,9 +10,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BuildingStore">
         <activity
-            android:name=".LoginActivity"
-            android:exported="true"
-            >
+            android:name=".Activities.HomeActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activities.LoginActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
