@@ -9,16 +9,16 @@ public class User {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "User_ID")
-    public int userId;
+    private int userId;
 
     @ColumnInfo(name = "User_Name")
-    public String userName;
+    private String userName;
 
     @ColumnInfo(name = "User_Password")
-    public String userPassword;
+    private String userPassword;
 
     @ColumnInfo(name = "Disc_Permission")
-    public String discPermission;
+    private String discPermission;
 
     public User(int userId, String userName, String userPassword, String discPermission) {
         this.userId = userId;

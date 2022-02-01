@@ -11,5 +11,7 @@
     <string name="ip_settings">IP Settings</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="customerName">Customer Name</string>
+    <string name="required">*Required</string>
 
 </resources>

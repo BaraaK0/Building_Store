@@ -9,13 +9,13 @@ public class CustomerInfo {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "Customer_ID")
-    public int customerId;
+    private int customerId;
 
     @ColumnInfo(name = "Customer_Name")
-    public String customerName;
+    private String customerName;
 
     @ColumnInfo(name = "Phone_No")
-    public String phoneNo;
+    private String phoneNo;
 
     public CustomerInfo(int customerId, String customerName, String phoneNo) {
         this.customerId = customerId;

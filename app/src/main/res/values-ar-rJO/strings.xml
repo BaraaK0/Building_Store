@@ -12,5 +12,7 @@
     <string name="ip_settings">إعدادات الIP</string>
     <string name="ok">حسنًا</string>
     <string name="cancel">إالغاء</string>
+    <string name="customerName">اسم العميل</string>
+    <string name="required">*مطلوب</string>
 
 </resources>

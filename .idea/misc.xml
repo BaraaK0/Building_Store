@@ -4,8 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2203125" />
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable/blue_gray_gradient.xml" value="0.2203125" />
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable/card_bk.xml" value="0.2203125" />
         <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable/edt_back.xml" value="0.2203125" />
         <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable/grey_gradient.xml" value="0.2203125" />
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable/ic_baseline_person_24.xml" value="0.2203125" />
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable/ic_baseline_vpn_key_24.xml" value="0.2203125" />
         <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable/ic_error.xml" value="0.2203125" />
         <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2203125" />
         <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable/ic_lock.xml" value="0.2203125" />
@@ -16,12 +20,16 @@
         <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable/login_button_bk.xml" value="0.2203125" />
         <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable/login_button_bk2.xml" value="0.2203125" />
         <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable/login_shape_bk.xml" value="0.2203125" />
-        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/activity_home.xml" value="0.20416666666666666" />
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable/orange_gradient.xml" value="0.2203125" />
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable/red_gradient.xml" value="0.2203125" />
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/font/abril_fatface.xml" value="0.1388888888888889" />
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/activity_home.xml" value="0.25" />
         <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/activity_main.xml" value="0.2" />
-        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/customer_card.xml" value="0.33" />
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/customer_card.xml" value="0.25" />
         <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/customers_dialog.xml" value="0.25" />
-        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/ip_settings_dialog.xml" value="0.33" />
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/ip_settings_dialog.xml" value="0.25" />
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/items_card.xml" value="0.25" />
         <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/layout_login.xml" value="0.33" />
       </map>
     </option>
