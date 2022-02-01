@@ -15,12 +15,13 @@ public class Item {
 
     @ColumnInfo(name = "Item_NCode")
     public String itemNCode;
-
+    @ColumnInfo(name = "Item_Name")
+    public String item_Name;
     @ColumnInfo(name = "Avi_Qty")
     public double Aviqty;
 
     @ColumnInfo(name = "Price")
-    public String price;
+    public double price;
 
     @ColumnInfo(name = "Unit")
     public String unit;
@@ -38,8 +39,11 @@ public class Item {
     public double qty;
     @ColumnInfo(name = "Item_Discount")
     double Discount;
+    @ColumnInfo(name = "CUS_ID")
+    public int Cus_Id;
+
     public String area;
-    public Item(int id, String itemOCode, String itemNCode, double qty, String price, String unit, String imagePath, String itemKind, String tax) {
+    public Item(int id, String itemOCode, String itemNCode, double qty, double price, String unit, String imagePath, String itemKind, String tax) {
         this.id = id;
         this.itemOCode = itemOCode;
         this.itemNCode = itemNCode;
@@ -51,7 +55,7 @@ public class Item {
         this.tax = tax;
     }
 
-    public Item(String itemOCode, String itemNCode, double qty, String price, String unit, String imagePath, String itemKind, String tax) {
+    public Item(String itemOCode, String itemNCode, double qty, double price, String unit, String imagePath, String itemKind, String tax) {
         this.itemOCode = itemOCode;
         this.itemNCode = itemNCode;
         this.qty = qty;
@@ -106,16 +110,32 @@ public class Item {
         Discount = discount;
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
     public String getUnit() {
         return unit;
+    }
+
+    public int getCus_Id() {
+        return Cus_Id;
+    }
+
+    public String getItem_Name() {
+        return item_Name;
+    }
+
+    public void setItem_Name(String item_Name) {
+        this.item_Name = item_Name;
+    }
+
+    public void setCus_Id(int cus_Id) {
+        Cus_Id = cus_Id;
     }
 
     public void setUnit(String unit) {

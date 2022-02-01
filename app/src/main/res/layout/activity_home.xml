@@ -190,7 +190,7 @@ android:id="@+id/Catg_SP"
             android:text="حفظ عرض "
 
             android:paddingTop="2dp"
-            android:id="@+id/btn"
+            android:id="@+id/temporderbtn"
             android:textSize="20sp"
             android:layout_weight="1.5"
 

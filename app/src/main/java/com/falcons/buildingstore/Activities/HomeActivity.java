@@ -11,6 +11,8 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Spinner;
 
@@ -18,6 +20,7 @@ import com.falcons.buildingstore.Adapters.CustomAdapter;
 import com.falcons.buildingstore.Adapters.VoherItemAdapter;
 import com.falcons.buildingstore.Database.Entities.Item;
 import com.falcons.buildingstore.Adapters.ItemAdapter;
+import com.falcons.buildingstore.Database.Entities.TempOrder;
 import com.falcons.buildingstore.R;
 
 import java.util.ArrayList;
@@ -28,6 +31,7 @@ public class HomeActivity extends AppCompatActivity {
     public static   RecyclerView recyclerView_Items;
     public static    VoherItemAdapter voherItemAdapter;
   public static   ArrayList<Item>vocher_Items=new ArrayList<>();
+  Button temporderbtn;
     Spinner Catg_SP;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,26 +39,48 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         gridView=findViewById(R.id.simpleGridView);
         Catg_SP=findViewById(R.id.Catg_SP);
+        temporderbtn=findViewById(R.id.temporderbtn);
+        temporderbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for(int i=0;i<vocher_Items.size();i++) {
+                    TempOrder tempOrder = new TempOrder();
+                    tempOrder.setItemNo(vocher_Items.get(i).getItemNCode());
+                    tempOrder.setItemName(vocher_Items.get(i).getItemNCode());
+                    tempOrder.setQty(vocher_Items.get(i).getQty());
+                    tempOrder.setArea(vocher_Items.get(i).getArea());
+                    tempOrder.setTax(vocher_Items.get(i).getTax());
+                    tempOrder.setCustomerId(vocher_Items.get(i).getCus_Id());
+                    tempOrder.setDiscount(vocher_Items.get(i).getDiscount());
+                    tempOrder.setPrice(vocher_Items.get(i).getPrice());
+                    tempOrder.setTotal(vocher_Items.get(i).getPrice());
+                    tempOrder.setConfStatus(1);
+
+                    tempOrder.setDate("");
+                    tempOrder.setTime("");
+                }
+            }
+        });
         recyclerView_Items=findViewById(R.id.recyclerView_Items);
         ArrayList<Item> itemList=new ArrayList<>();
 
         Item item=new Item();
         item.setItemNCode("234755966");
-        item.setPrice("10");
+        item.setPrice(10);
         item.setUnit("10");
         item.setItemKind("granet");
         item.setQty(10);
         itemList.add(item);
         Item item2=new Item();
         item2.setItemNCode("123456538");
-        item2.setPrice("10");
+        item2.setPrice(10);
         item2.setUnit("1");
         item2.setItemKind("granet");
         item2.setQty(10);
 
         Item item3=new Item();
         item3.setItemNCode("983578445");
-        item3.setPrice("10");
+        item3.setPrice(10);
         item3.setUnit("0");
         item3.setItemKind("granet");
         item3.setQty(10);
@@ -72,7 +98,7 @@ public class HomeActivity extends AppCompatActivity {
 
         Item item4=new Item();
         item4.setItemNCode("FILTERS");
-        item4.setPrice("10");
+        item4.setPrice(10);
         item4.setUnit("10");
         itemList.add(0,  item4);
         CustomAdapter customAdapter=new  CustomAdapter ( HomeActivity.this,itemList);
