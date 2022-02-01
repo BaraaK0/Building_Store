@@ -2,15 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
+    android:background="@drawable/edt_back"
     >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="end|center_vertical"
-        android:background="@drawable/grey_gradient">
+        android:gravity="right|center_vertical"
+        android:background="@drawable/edt_back">
 
         <ImageButton
             android:id="@+id/closeBtn"

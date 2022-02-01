@@ -9,43 +9,47 @@ public class TempOrder {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "VHFNO")
-    public int vhfNo;
+    private int vhfNo;
 
     @ColumnInfo(name = "Date")
-    public String date;
+    private String date;
 
     @ColumnInfo(name = "Time")
-    public String time;
+    private String time;
 
     @ColumnInfo(name = "Item_No")
-    public String itemNo;
+    private String itemNo;
 
     @ColumnInfo(name = "Item_Name")
-    public String itemName;
+    private String itemName;
 
     @ColumnInfo(name = "Qty")
+    private String qty;
     public Double qty;
 
     @ColumnInfo(name = "Discount")
+    private String discount;
     public Double discount;
 
     @ColumnInfo(name = "Tax")
-    public String tax;
+    private String tax;
 
     @ColumnInfo(name = "Area")
-    public String area;
+    private String area;
 
     @ColumnInfo(name = "Total")
     public double total;
+    private String total;
 
     @ColumnInfo(name = "Price")
     public double price;
+    private String price;
 
     @ColumnInfo(name = "Customer_ID")
-    public int customerId;
+    private int customerId;
 
     @ColumnInfo(name = "Confirm_Status", defaultValue = "0")
-    public int confStatus;
+    private int confStatus;
 
     public TempOrder(int vhfNo, String date, String time, String itemNo, String itemName, double qty, double discount, String tax, String area, double total, double price, int customerId, int confStatus) {
         this.vhfNo = vhfNo;

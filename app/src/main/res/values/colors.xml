@@ -16,7 +16,8 @@
     <color name="primaryTextColor">#00a5ff</color>
     <color name="loginBkColor">#f0f0f0</color>
 
-    <color name="orange">#FFAC35</color>
+    <color name="orange">#FF9F00</color>
+    <color name="yellow">#FFD400</color>
     <color name="no_color">#00FFFFFF</color>
 
     <color name="yelow">#F5E028</color>

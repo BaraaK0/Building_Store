@@ -9,43 +9,43 @@ public class OrderMaster {
 
     @PrimaryKey
     @ColumnInfo(name = "VHFNO")
-    public int vhfNo;
+    private int vhfNo;
 
     @ColumnInfo(name = "Date")
-    public String date;
+    private String date;
 
     @ColumnInfo(name = "Time")
-    public String time;
+    private String time;
 
     @ColumnInfo(name = "Item_No")
-    public String itemNo;
+    private String itemNo;
 
     @ColumnInfo(name = "Item_Name")
-    public String itemName;
+    private String itemName;
 
     @ColumnInfo(name = "Qty")
-    public String qty;
+    private String qty;
 
     @ColumnInfo(name = "Discount")
-    public String discount;
+    private String discount;
 
     @ColumnInfo(name = "Tax")
-    public String tax;
+    private String tax;
 
     @ColumnInfo(name = "Area")
-    public String area;
+    private String area;
 
     @ColumnInfo(name = "Total")
-    public String total;
+    private String total;
 
     @ColumnInfo(name = "Price")
-    public String price;
+    private String price;
 
     @ColumnInfo(name = "Customer_ID")
-    public int customerId;
+    private int customerId;
 
     @ColumnInfo(name = "IS_Posted", defaultValue = "0")
-    public int isPosted;
+    private int isPosted;
 
     public OrderMaster(int vhfNo, String date, String time, String itemNo, String itemName, String qty, String discount, String tax, String area, String total, String price, int customerId, int isPosted) {
         this.vhfNo = vhfNo;

@@ -10,6 +10,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,12 +19,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.falcons.buildingstore.R;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
 
 public class LoginActivity extends AppCompatActivity {
 
-    EditText unameEdt, passEdt;
+    TextInputEditText unameEdt, passEdt;
+    TextInputLayout unameTextField, passTextField;
     CircularProgressButton loginBtn;
     TextView errorMsg;
     ImageView settingsIc;
@@ -69,6 +73,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
+
+
             }
 
             @Override
@@ -80,6 +86,7 @@ public class LoginActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
 
                 errorMsg.setVisibility(View.INVISIBLE);
+                unameTextField.setError(null);
 
             }
         });
@@ -99,6 +106,7 @@ public class LoginActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
 
                 errorMsg.setVisibility(View.INVISIBLE);
+                passTextField.setError(null);
 
             }
         });
@@ -119,6 +127,8 @@ public class LoginActivity extends AppCompatActivity {
         loginBtn = findViewById(R.id.loginBtn);
         unameEdt = findViewById(R.id.unameEdt);
         passEdt = findViewById(R.id.passEdt);
+        unameTextField = findViewById(R.id.unameTextField);
+        passTextField = findViewById(R.id.passTextField);
         errorMsg = findViewById(R.id.errorMsg);
         settingsIc = findViewById(R.id.settingsIc);
 
@@ -137,9 +147,10 @@ public class LoginActivity extends AppCompatActivity {
 
                     loginBtn.revertAnimation();
                     errorMsg.setVisibility(View.INVISIBLE);
-                    Intent intent=new Intent(LoginActivity.this,HomeActivity.class);
+                    Toast.makeText(LoginActivity.this, "SUCCESS LOGIN!", Toast.LENGTH_SHORT).show();
+
+                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(intent);
-                    Toast.makeText(LoginActivity.this, "SUCCESS!", Toast.LENGTH_SHORT).show();
 
                 } else {
 
@@ -151,14 +162,15 @@ public class LoginActivity extends AppCompatActivity {
             } else {
 
                 loginBtn.revertAnimation();
-                passEdt.setError("");
+                passTextField.setError(getString(R.string.required));
+//                passEdt.setError("");
 
             }
 
         } else {
 
             loginBtn.revertAnimation();
-            unameEdt.setError("");
+            unameTextField.setError(getString(R.string.required));
 
         }
 
@@ -170,6 +182,7 @@ public class LoginActivity extends AppCompatActivity {
         final Dialog ip_settings_dialog = new Dialog(LoginActivity.this);
         ip_settings_dialog.setCancelable(false);
         ip_settings_dialog.setContentView(R.layout.ip_settings_dialog);
+        ip_settings_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(ip_settings_dialog.getWindow().getAttributes());
         lp.width = (int) (getResources().getDisplayMetrics().widthPixels / 1.15);
@@ -222,17 +235,26 @@ public class LoginActivity extends AppCompatActivity {
 
                             ip_settings_dialog.dismiss();
 
-                        } else
+                        } else {
 
                             coNoEdt.setError("");
 
-                    } else
+
+                        }
+
+                    } else {
 
                         portEdt.setError("");
 
-                } else
+
+                    }
+
+                } else {
 
                     ipEdt.setError("");
+
+
+                }
 
             }
         });

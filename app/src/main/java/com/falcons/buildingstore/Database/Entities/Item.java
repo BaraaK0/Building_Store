@@ -8,10 +8,13 @@ import androidx.room.PrimaryKey;
 public class Item {
 
     @PrimaryKey(autoGenerate = true)
-    public int id;
+    private int id;
+
+    @ColumnInfo(name = "Item_Name")
+    private String itemName;
 
     @ColumnInfo(name = "Item_OCode")
-    public String itemOCode;
+    private String itemOCode;
 
     @ColumnInfo(name = "Item_NCode")
     public String itemNCode;
@@ -19,22 +22,28 @@ public class Item {
     public String item_Name;
     @ColumnInfo(name = "Avi_Qty")
     public double Aviqty;
+    private String itemNCode;
+
+    @ColumnInfo(name = "Qty")
+    private String qty;
 
     @ColumnInfo(name = "Price")
     public double price;
+    private String price;
 
     @ColumnInfo(name = "Unit")
-    public String unit;
+    private String unit;
 
     @ColumnInfo(name = "Image_Path")
-    public String imagePath;
+    private String imagePath;
 
     @ColumnInfo(name = "Item_Kind")
-    public String itemKind;
+    private String itemKind;
 
     @ColumnInfo(name = "Tax")
-    public String tax;
+    private String tax;
 
+    public Item(int id, String itemName, String itemOCode, String itemNCode, String qty, String price, String unit, String imagePath, String itemKind, String tax) {
     @ColumnInfo(name = "Qty")
     public double qty;
     @ColumnInfo(name = "Item_Discount")
@@ -45,6 +54,7 @@ public class Item {
     public String area;
     public Item(int id, String itemOCode, String itemNCode, double qty, double price, String unit, String imagePath, String itemKind, String tax) {
         this.id = id;
+        this.itemName = itemName;
         this.itemOCode = itemOCode;
         this.itemNCode = itemNCode;
         this.qty = qty;
@@ -56,6 +66,8 @@ public class Item {
     }
 
     public Item(String itemOCode, String itemNCode, double qty, double price, String unit, String imagePath, String itemKind, String tax) {
+    public Item(String itemName, String itemOCode, String itemNCode, String qty, String price, String unit, String imagePath, String itemKind, String tax) {
+        this.itemName = itemName;
         this.itemOCode = itemOCode;
         this.itemNCode = itemNCode;
         this.qty = qty;
@@ -83,6 +95,14 @@ public class Item {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public String getItemName() {
+        return itemName;
+    }
+
+    public void setItemName(String itemName) {
+        this.itemName = itemName;
     }
 
     public String getItemOCode() {

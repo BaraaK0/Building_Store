@@ -29,52 +29,88 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="start|center_vertical"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="25dp"
             android:text="@string/wrong_username_or_password"
             android:textAllCaps="false"
-            android:textColor="@color/red"
+            android:textColor="?attr/colorError"
             android:visibility="invisible"
             app:drawableStartCompat="@drawable/ic_error" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputUname"
-            style="@style/parent">
+            android:id="@+id/unameTextField"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/username"
+            app:endIconMode="clear_text"
+            app:startIconDrawable="@drawable/ic_baseline_person_24">
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/unameEdt"
-                style="@style/modifiedEditText"
-                android:hint="@string/username"
-                android:text="1"
-                android:inputType="textPersonName"
-                android:maxLines="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
                 android:textAlignment="viewStart"
-                android:textColor="@color/black"
-                android:textColorHint="@color/purple_500" />
+                />
+
         </com.google.android.material.textfield.TextInputLayout>
+
+        <!--        <com.google.android.material.textfield.TextInputLayout-->
+        <!--            android:id="@+id/textInputUname"-->
+        <!--            style="@style/parent">-->
+
+        <!--            <EditText-->
+        <!--                android:id="@+id/unameEdt"-->
+        <!--                style="@style/modifiedEditText"-->
+        <!--                android:hint="@string/username"-->
+        <!--                android:inputType="textPersonName"-->
+        <!--                android:maxLines="1"-->
+        <!--                android:textAlignment="viewStart"-->
+        <!--                android:textColor="@color/black"-->
+        <!--                android:textColorHint="@color/purple_500" />-->
+        <!--        </com.google.android.material.textfield.TextInputLayout>-->
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputPassword"
-            style="@style/parent"
-            android:layout_marginTop="@dimen/loginViewsMargin">
+            android:id="@+id/passTextField"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:hint="@string/password"
+            app:endIconMode="password_toggle"
+            app:startIconDrawable="@drawable/ic_baseline_vpn_key_24">
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passEdt"
-                style="@style/modifiedEditText"
-                android:hint="@string/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:maxLines="1"
-                android:text="1234"
                 android:textAlignment="viewStart"
-                android:textColor="@color/black"
-                android:textColorHint="@color/purple_500" />
+                />
+
         </com.google.android.material.textfield.TextInputLayout>
+        <!--        <com.google.android.material.textfield.TextInputLayout-->
+        <!--            android:id="@+id/textInputPassword"-->
+        <!--            style="@style/parent"-->
+        <!--            android:layout_marginTop="@dimen/loginViewsMargin">-->
+
+        <!--            <EditText-->
+        <!--                android:id="@+id/passEdt"-->
+        <!--                style="@style/modifiedEditText"-->
+        <!--                android:hint="@string/password"-->
+        <!--                android:inputType="textPassword"-->
+        <!--                android:maxLines="1"-->
+        <!--                android:textAlignment="viewStart"-->
+        <!--                android:textColor="@color/black"-->
+        <!--                android:textColorHint="@color/purple_500" />-->
+        <!--        </com.google.android.material.textfield.TextInputLayout>-->
 
         <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
             android:id="@+id/loginBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="182dp"
+            android:layout_height="54dp"
             android:layout_gravity="center_horizontal"
-            android:layout_marginTop="31dp"
+            android:layout_marginTop="26dp"
             android:background="@drawable/login_button_bk"
             android:text="@string/loginTitle"
             android:textColor="@color/white"
