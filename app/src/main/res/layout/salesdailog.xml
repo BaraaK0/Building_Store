@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:orientation="vertical"
+
+    android:background="@drawable/back_border_shape"
+    android:layout_height="150dp">
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent">
+        <TextView
+
+            android:textStyle="bold|normal"
+
+            android:layout_width="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:text="@string/qty"
+            android:padding="5dp"
+            android:inputType="number"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:layout_height="match_parent"/>
+
+        <EditText
+            android:id="@+id/ITEMqty"
+            android:textStyle="bold|italic|normal"
+            android:background="@drawable/background_container"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+
+            android:padding="5dp"
+            android:textColor="@color/black"
+            android:textSize="11sp"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent">
+        <TextView
+
+            android:textStyle="bold|normal"
+
+            android:layout_width="match_parent"
+            android:layout_weight="3"
+            android:text="@string/discount"
+            android:padding="5dp"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:layout_height="match_parent"/>
+
+        <EditText
+            android:id="@+id/ITEMdiscount"
+            android:textStyle="bold|italic|normal"
+android:inputType="number"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/background_container"
+            android:padding="5dp"
+            android:textColor="@color/black"
+            android:textSize="11sp"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent">
+        <TextView
+
+            android:textStyle="bold|italic|normal"
+            android:background="@drawable/savebtn"
+            android:layout_width="match_parent"
+            android:layout_weight="2"
+            android:text="@string/save"
+            android:padding="5dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:gravity="center"
+android:visibility="invisible"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/save"
+            android:textStyle="bold|italic|normal"
+android:background="@drawable/savebtn"
+            android:layout_width="match_parent"
+            android:layout_weight="2"
+android:text="@string/save"
+            android:padding="5dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:gravity="center"
+
+            android:layout_height="match_parent"/>
+        <TextView
+
+            android:textStyle="bold|italic|normal"
+            android:layout_width="3dp"
+            android:visibility="invisible"
+            android:layout_height="match_parent"/>
+        <TextView
+            android:id="@+id/cancelBtn"
+            android:textStyle="bold|italic|normal"
+            android:background="@drawable/cancel_btn"
+            android:layout_width="match_parent"
+            android:layout_weight="2"
+            android:text="@string/cancel"
+            android:padding="5dp"
+            android:textColor="@color/red"
+            android:textSize="18sp"
+            android:gravity="center"
+
+            android:layout_height="match_parent"/>
+        <TextView
+
+            android:textStyle="bold|italic|normal"
+            android:background="@drawable/savebtn"
+            android:layout_width="match_parent"
+            android:layout_weight="2"
+            android:text="@string/save"
+            android:padding="5dp"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:layout_height="match_parent"/>
+    </LinearLayout>
+
+
+
+</LinearLayout>

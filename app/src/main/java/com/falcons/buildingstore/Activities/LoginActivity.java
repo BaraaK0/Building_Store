@@ -3,6 +3,7 @@ package com.falcons.buildingstore.Activities;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
@@ -136,6 +137,8 @@ public class LoginActivity extends AppCompatActivity {
 
                     loginBtn.revertAnimation();
                     errorMsg.setVisibility(View.INVISIBLE);
+                    Intent intent=new Intent(LoginActivity.this,HomeActivity.class);
+                    startActivity(intent);
                     Toast.makeText(LoginActivity.this, "SUCCESS!", Toast.LENGTH_SHORT).show();
 
                 } else {

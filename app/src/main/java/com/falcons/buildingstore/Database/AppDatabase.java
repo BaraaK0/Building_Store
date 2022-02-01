@@ -17,7 +17,7 @@ import com.falcons.buildingstore.Database.Entities.OrderMaster;
 import com.falcons.buildingstore.Database.Entities.TempOrder;
 import com.falcons.buildingstore.Database.Entities.User;
 
-@Database(entities = {Item.class, CustomerInfo.class, TempOrder.class, OrderMaster.class, User.class}, version = 1)
+@Database(entities = {Item.class, CustomerInfo.class, TempOrder.class, OrderMaster.class, User.class}, version = 3)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract Items_Dao itemsDao();

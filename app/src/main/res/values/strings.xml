@@ -11,5 +11,15 @@
     <string name="ip_settings">IP Settings</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="itemNCode">itemNCode</string>
+    <string name="qty">qty</string>
+    <string name="price">price</string>
+    <string name="unit">unit</string>
+    <string name="itemKind">itemKind</string>
+    <string name="tax">tax</string>
+    <string name="area"> area</string>
+    <string name="discount"> Discount</string>
 
+    <string name="save"> Save</string>
 </resources>

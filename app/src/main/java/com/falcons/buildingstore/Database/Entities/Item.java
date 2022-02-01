@@ -16,8 +16,8 @@ public class Item {
     @ColumnInfo(name = "Item_NCode")
     public String itemNCode;
 
-    @ColumnInfo(name = "Qty")
-    public String qty;
+    @ColumnInfo(name = "Avi_Qty")
+    public double Aviqty;
 
     @ColumnInfo(name = "Price")
     public String price;
@@ -34,7 +34,12 @@ public class Item {
     @ColumnInfo(name = "Tax")
     public String tax;
 
-    public Item(int id, String itemOCode, String itemNCode, String qty, String price, String unit, String imagePath, String itemKind, String tax) {
+    @ColumnInfo(name = "Qty")
+    public double qty;
+    @ColumnInfo(name = "Item_Discount")
+    double Discount;
+    public String area;
+    public Item(int id, String itemOCode, String itemNCode, double qty, String price, String unit, String imagePath, String itemKind, String tax) {
         this.id = id;
         this.itemOCode = itemOCode;
         this.itemNCode = itemNCode;
@@ -46,7 +51,7 @@ public class Item {
         this.tax = tax;
     }
 
-    public Item(String itemOCode, String itemNCode, String qty, String price, String unit, String imagePath, String itemKind, String tax) {
+    public Item(String itemOCode, String itemNCode, double qty, String price, String unit, String imagePath, String itemKind, String tax) {
         this.itemOCode = itemOCode;
         this.itemNCode = itemNCode;
         this.qty = qty;
@@ -58,6 +63,14 @@ public class Item {
     }
 
     public Item() {
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
     }
 
     public int getId() {
@@ -84,12 +97,13 @@ public class Item {
         this.itemNCode = itemNCode;
     }
 
-    public String getQty() {
-        return qty;
+
+    public double getDiscount() {
+        return Discount;
     }
 
-    public void setQty(String qty) {
-        this.qty = qty;
+    public void setDiscount(double discount) {
+        Discount = discount;
     }
 
     public String getPrice() {
@@ -132,4 +146,19 @@ public class Item {
         this.tax = tax;
     }
 
+    public double getAviqty() {
+        return Aviqty;
+    }
+
+    public void setAviqty(double aviqty) {
+        Aviqty = aviqty;
+    }
+
+    public double getQty() {
+        return qty;
+    }
+
+    public void setQty(double qty) {
+        this.qty = qty;
+    }
 }
