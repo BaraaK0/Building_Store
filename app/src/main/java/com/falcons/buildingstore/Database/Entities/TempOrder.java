@@ -24,10 +24,12 @@ public class TempOrder {
     private String itemName;
 
     @ColumnInfo(name = "Qty")
-    private String qty;
+
+    public Double qty;
 
     @ColumnInfo(name = "Discount")
-    private String discount;
+
+    public Double discount;
 
     @ColumnInfo(name = "Tax")
     private String tax;
@@ -36,10 +38,12 @@ public class TempOrder {
     private String area;
 
     @ColumnInfo(name = "Total")
-    private String total;
+    public double total;
+
 
     @ColumnInfo(name = "Price")
-    private String price;
+    public double price;
+
 
     @ColumnInfo(name = "Customer_ID")
     private int customerId;
@@ -47,7 +51,7 @@ public class TempOrder {
     @ColumnInfo(name = "Confirm_Status", defaultValue = "0")
     private int confStatus;
 
-    public TempOrder(int vhfNo, String date, String time, String itemNo, String itemName, String qty, String discount, String tax, String area, String total, String price, int customerId, int confStatus) {
+    public TempOrder(int vhfNo, String date, String time, String itemNo, String itemName, double qty, double discount, String tax, String area, double total, double price, int customerId, int confStatus) {
         this.vhfNo = vhfNo;
         this.date = date;
         this.time = time;
@@ -63,7 +67,7 @@ public class TempOrder {
         this.confStatus = confStatus;
     }
 
-    public TempOrder(String date, String time, String itemNo, String itemName, String qty, String discount, String tax, String area, String total, String price, int customerId, int confStatus) {
+    public TempOrder(String date, String time, String itemNo, String itemName, double qty, double discount, String tax, String area, double total, double price, int customerId, int confStatus) {
         this.date = date;
         this.time = time;
         this.itemNo = itemNo;
@@ -121,19 +125,19 @@ public class TempOrder {
         this.itemName = itemName;
     }
 
-    public String getQty() {
+    public double getQty() {
         return qty;
     }
 
-    public void setQty(String qty) {
+    public void setQty(double qty) {
         this.qty = qty;
     }
 
-    public String getDiscount() {
+    public double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(String discount) {
+    public void setDiscount(double discount) {
         this.discount = discount;
     }
 
@@ -153,19 +157,19 @@ public class TempOrder {
         this.area = area;
     }
 
-    public String getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(String total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 

@@ -51,7 +51,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         holder.itemName.setText(itemsList.get(position).getItemName());
         holder.itemCode.setText(itemsList.get(position).getItemOCode());
         holder.itemKind.setText(itemsList.get(position).getItemKind());
-        holder.itemPrice.setText(itemsList.get(position).getPrice());
+        holder.itemPrice.setText(itemsList.get(position).getPrice()+"");
         holder.tax.setText(itemsList.get(position).getTax());
 
 
