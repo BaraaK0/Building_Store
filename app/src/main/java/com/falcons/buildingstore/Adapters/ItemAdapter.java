@@ -155,7 +155,7 @@ public  class ItemAdapter extends BaseAdapter {
 
             itemNCode.setText(list.get(position).getItemNCode());
             tax.setText(list.get(position).getTax());
-            price.setText(1);
+            price.setText(1+"");
 
                 if(list.get(position).getUnit().equals("1"))
                     RB_box.setChecked(true);

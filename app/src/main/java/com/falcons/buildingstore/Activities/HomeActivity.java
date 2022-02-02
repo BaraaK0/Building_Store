@@ -55,23 +55,21 @@ public class HomeActivity extends AppCompatActivity {
   public static   ArrayList<Item>vocher_Items=new ArrayList<>();
   Button temporderbtn;
     Spinner Catg_SP;
-
+    public static ArrayAdapter<String> arrayAdapter;
     public static Spinner customersSpinner;
     FloatingActionButton addCustomerBtn;
-    List<CustomerInfo> customersList_sp;
-    List<Item> itemList_rv;
+    static List<CustomerInfo> customersList_sp;
+    public static List<Item> itemList_rv;
     public static List<String> customerNames_sp;
     public static Dialog custmsDialog;
-    RecyclerView itemsRV;
 
 
+    public static    ItemsAdapter itemsAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        gridView=findViewById(R.id.simpleGridView);
-        Catg_SP=findViewById(R.id.Catg_SP);
-        temporderbtn=findViewById(R.id.temporderbtn);
+        init();
         temporderbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,38 +139,6 @@ public class HomeActivity extends AppCompatActivity {
         gridView.setNumColumns(  itemList.size());
 
 
-    }
-
-    public static Bitmap drawableToBitmap (Drawable drawable) {
-        Bitmap bitmap = null;
-
-        if (drawable instanceof BitmapDrawable) {
-            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
-            if(bitmapDrawable.getBitmap() != null) {
-                return bitmapDrawable.getBitmap();
-            }
-        }
-
-        if(drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
-            bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
-        } else {
-            bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        }
-
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
-        return bitmap;
-    }
-    public static void  FillrecyclerView_Items(Context context, ArrayList<Item>items){
-        recyclerView_Items  .setLayoutManager(new LinearLayoutManager(context));
-       voherItemAdapter=new VoherItemAdapter(items,context);
-
-        recyclerView_Items.setAdapter(voherItemAdapter);
-
-        init();
-
-        customerNames_sp.add(getString(R.string.customerName));
         for (int i = 0; i < 5; i++) {
 
             customerNames_sp.add("Customer" + i);
@@ -182,11 +148,7 @@ public class HomeActivity extends AppCompatActivity {
         customersList_sp.add(new CustomerInfo("Customer" + 5, "078" + 5 + (5 + 1) + (5 + 1)));
 
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, customerNames_sp);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        customersSpinner.setAdapter(arrayAdapter);
-        customersSpinner.setSelection(0);
+        fillcustomerNamesadapter(HomeActivity.this);
         addCustomerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -220,31 +182,67 @@ public class HomeActivity extends AppCompatActivity {
         });
 
 
-        /* Initializing RecyclerView */
 
-        for (int i = 0; i < 6; i++) {
 
-            itemList_rv.add(new Item("ItemName" + i, "10000" + i, "20000" + i,
-                    "3" + i, "13" + i, "JD", "*******", "FOOD", i + "%"));
 
-        }
 
-        ItemsAdapter itemsAdapter = new ItemsAdapter(itemList_rv, this);
-        itemsRV.setAdapter(itemsAdapter);
+
+
+
 
 
     }
+
+    public static Bitmap drawableToBitmap (Drawable drawable) {
+        Bitmap bitmap = null;
+
+        if (drawable instanceof BitmapDrawable) {
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+            if(bitmapDrawable.getBitmap() != null) {
+                return bitmapDrawable.getBitmap();
+            }
+        }
+
+        if(drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
+            bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
+        } else {
+            bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        }
+
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+        return bitmap;
+    }
+    public static void  FillrecyclerView_Items(Context context, ArrayList<Item>items){
+        recyclerView_Items  .setLayoutManager(new LinearLayoutManager(context));
+       voherItemAdapter=new VoherItemAdapter(items,context);
+
+        recyclerView_Items.setAdapter(voherItemAdapter);
+
+
+
+       // customerNames_sp.add(getString(R.string.customerName).toString());
+
+
+
+
+    }
+
+
 
     void init() {
 
         customersSpinner = findViewById(R.id.customersSpinner);
         addCustomerBtn = findViewById(R.id.addCustomerBtn);
-        itemsRV = findViewById(R.id.itemsRV);
+
         customersList_sp = new ArrayList<>();
         customerNames_sp = new ArrayList<>();
         itemList_rv = new ArrayList<>();
 
-
+        gridView=findViewById(R.id.simpleGridView);
+        Catg_SP=findViewById(R.id.Catg_SP);
+        temporderbtn=findViewById(R.id.temporderbtn);
         SharedPreferences sharedPref = getSharedPreferences(SETTINGS_PREFERENCES, MODE_PRIVATE);
         String ipAddress = sharedPref.getString(IP_PREF, "");
 
@@ -253,5 +251,12 @@ public class HomeActivity extends AppCompatActivity {
         Log.e("CONO_PREF2", sharedPref.getInt(CONO_PREF, 0) + "");
 
     }
+public  static void fillcustomerNamesadapter(Context context){
+        Log.e("customerNames_sp==",customerNames_sp.size()+"");
+       arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, customerNames_sp);
+        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
+        customersSpinner.setAdapter(arrayAdapter);
+        customersSpinner.setSelection(0);
+}
 }

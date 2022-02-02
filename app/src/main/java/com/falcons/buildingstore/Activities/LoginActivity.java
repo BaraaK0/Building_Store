@@ -180,9 +180,10 @@ public class LoginActivity extends AppCompatActivity {
     void showSettingsDialog() {
 
         final Dialog ip_settings_dialog = new Dialog(LoginActivity.this);
+        ip_settings_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         ip_settings_dialog.setCancelable(false);
         ip_settings_dialog.setContentView(R.layout.ip_settings_dialog);
-        ip_settings_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(ip_settings_dialog.getWindow().getAttributes());
         lp.width = (int) (getResources().getDisplayMetrics().widthPixels / 1.15);

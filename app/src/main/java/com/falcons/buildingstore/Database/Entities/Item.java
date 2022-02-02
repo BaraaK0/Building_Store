@@ -18,18 +18,16 @@ public class Item {
 
     @ColumnInfo(name = "Item_NCode")
     public String itemNCode;
-    @ColumnInfo(name = "Item_Name")
-    public String item_Name;
+
     @ColumnInfo(name = "Avi_Qty")
     public double Aviqty;
-    private String itemNCode;
 
-    @ColumnInfo(name = "Qty")
-    private String qty;
+
+
 
     @ColumnInfo(name = "Price")
     public double price;
-    private String price;
+
 
     @ColumnInfo(name = "Unit")
     private String unit;
@@ -42,8 +40,6 @@ public class Item {
 
     @ColumnInfo(name = "Tax")
     private String tax;
-
-    public Item(int id, String itemName, String itemOCode, String itemNCode, String qty, String price, String unit, String imagePath, String itemKind, String tax) {
     @ColumnInfo(name = "Qty")
     public double qty;
     @ColumnInfo(name = "Item_Discount")
@@ -52,30 +48,22 @@ public class Item {
     public int Cus_Id;
 
     public String area;
-    public Item(int id, String itemOCode, String itemNCode, double qty, double price, String unit, String imagePath, String itemKind, String tax) {
+
+    public Item(int id, String itemName, String itemOCode, String itemNCode, double aviqty, double price, String unit, String imagePath, String itemKind, String tax, double qty, double discount, int cus_Id, String area) {
         this.id = id;
         this.itemName = itemName;
         this.itemOCode = itemOCode;
         this.itemNCode = itemNCode;
-        this.qty = qty;
+        Aviqty = aviqty;
         this.price = price;
         this.unit = unit;
         this.imagePath = imagePath;
         this.itemKind = itemKind;
         this.tax = tax;
-    }
-
-    public Item(String itemOCode, String itemNCode, double qty, double price, String unit, String imagePath, String itemKind, String tax) {
-    public Item(String itemName, String itemOCode, String itemNCode, String qty, String price, String unit, String imagePath, String itemKind, String tax) {
-        this.itemName = itemName;
-        this.itemOCode = itemOCode;
-        this.itemNCode = itemNCode;
         this.qty = qty;
-        this.price = price;
-        this.unit = unit;
-        this.imagePath = imagePath;
-        this.itemKind = itemKind;
-        this.tax = tax;
+        Discount = discount;
+        Cus_Id = cus_Id;
+        this.area = area;
     }
 
     public Item() {
@@ -103,6 +91,26 @@ public class Item {
 
     public void setItemName(String itemName) {
         this.itemName = itemName;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public String getItemKind() {
+        return itemKind;
+    }
+
+    public int getCus_Id() {
+        return Cus_Id;
     }
 
     public String getItemOCode() {
@@ -134,33 +142,16 @@ public class Item {
         return price;
     }
 
-    public void setPrice(double price) {
-        this.price = price;
-    }
 
-    public String getUnit() {
-        return unit;
-    }
-
-    public int getCus_Id() {
-        return Cus_Id;
-    }
-
-    public String getItem_Name() {
-        return item_Name;
-    }
 
     public void setItem_Name(String item_Name) {
-        this.item_Name = item_Name;
+        this.itemName = item_Name;
     }
 
     public void setCus_Id(int cus_Id) {
         Cus_Id = cus_Id;
     }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
 
     public String getImagePath() {
         return imagePath;
@@ -170,9 +161,7 @@ public class Item {
         this.imagePath = imagePath;
     }
 
-    public String getItemKind() {
-        return itemKind;
-    }
+
 
     public void setItemKind(String itemKind) {
         this.itemKind = itemKind;

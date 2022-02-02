@@ -24,11 +24,11 @@ public class TempOrder {
     private String itemName;
 
     @ColumnInfo(name = "Qty")
-    private String qty;
+
     public Double qty;
 
     @ColumnInfo(name = "Discount")
-    private String discount;
+
     public Double discount;
 
     @ColumnInfo(name = "Tax")
@@ -39,11 +39,11 @@ public class TempOrder {
 
     @ColumnInfo(name = "Total")
     public double total;
-    private String total;
+
 
     @ColumnInfo(name = "Price")
     public double price;
-    private String price;
+
 
     @ColumnInfo(name = "Customer_ID")
     private int customerId;
