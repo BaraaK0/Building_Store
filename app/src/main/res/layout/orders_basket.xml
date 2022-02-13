@@ -1,8 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/semi_white_bg">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/backBtnCard"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_below="@+id/logo_remove"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="26dp"
+        android:layout_marginTop="44dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="4dp">
+
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="26dp"
+            android:layout_marginTop="62dp"
+            android:background="@drawable/back_arrow"
+            android:elevation="10dp" />
+
+    </com.google.android.material.card.MaterialCardView>
 
     <ImageView
         android:id="@+id/logo_remove"
@@ -12,5 +37,126 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="54dp"
         android:background="@drawable/logo" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/basketListCard"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_below="@+id/logo_remove"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="26dp"
+        android:layout_marginTop="44dp"
+        app:cardCornerRadius="15dp"
+        app:cardElevation="4dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="23dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/alegreya"
+                    android:gravity="start"
+                    android:lineHeight="19sp"
+                    android:text="@string/item_Name_"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/alegreya"
+                    android:gravity="center"
+                    android:lineHeight="19sp"
+                    android:text="@string/item_Code"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/alegreya"
+                    android:gravity="end"
+                    android:lineHeight="19sp"
+                    android:text="@string/qty"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="11dp"
+                android:background="@color/primaryTextColor" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/basketListRV"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </LinearLayout>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/orderBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/basketListCard"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="95dp"
+        android:layout_marginTop="47dp"
+        android:background="@drawable/bg_btn"
+        android:fontFamily="@font/alegreya_sans_medium"
+        android:letterSpacing="0.08"
+        android:lineHeight="30sp"
+        android:padding="15dp"
+        android:text="Order"
+        android:textColor="@color/white"
+        android:textSize="25sp" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/saveBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom_navigation"
+        android:layout_below="@+id/orderBtn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="95dp"
+        android:layout_marginTop="17dp"
+        android:background="@drawable/save_btn_bg"
+        android:fontFamily="@font/alegreya_sans_medium"
+        android:letterSpacing="0.08"
+        android:lineHeight="30sp"
+        android:outlineAmbientShadowColor="@color/primaryTextColor"
+        android:outlineSpotShadowColor="@color/primaryTextColor"
+        android:padding="15dp"
+        android:shadowColor="@color/primaryTextColor"
+        android:shadowDx="2"
+        android:shadowDy="2"
+        android:shadowRadius="4"
+        android:text="@string/save"
+        android:textColor="#F5FCFF"
+        android:textSize="25sp" />
+
+    <include
+        layout="@layout/bottom_nav_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>

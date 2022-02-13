@@ -157,11 +157,13 @@
                 android:padding="15dp"
                 android:text="@string/loginTitle"
                 android:textColor="@color/white"
-                android:textSize="23sp"
+                android:textSize="25sp"
                 app:initialCornerAngle="27dp"
                 app:spinning_bar_color="@color/white"
                 app:spinning_bar_padding="6dp"
-                app:spinning_bar_width="4dp" />
+                app:spinning_bar_width="4dp"
+                android:fontFamily="@font/alegreya_sans_medium"
+                android:letterSpacing="0.08"/>
 
             <LinearLayout
                 android:id="@+id/request_ip_"

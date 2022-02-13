@@ -35,6 +35,11 @@
     <string name="box">صندوق</string>
     <string name="meter">متر</string>
     <string name="save">حفظ</string>
+    <string name="item_Name_">اسم المادة</string>
+    <string name="qty">الكمية</string>
+    <string name="item_Code">رقم المادة</string>
+
+
 
 
     <string-array name="user_type">
