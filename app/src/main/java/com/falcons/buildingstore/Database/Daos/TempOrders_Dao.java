@@ -17,6 +17,8 @@ public interface TempOrders_Dao {
 
     @Insert
     void insertAllOrders(TempOrder... tempOrders);
+    @Insert
+    void insertOrder(TempOrder tempOrders);
 
     @Delete
     void deleteOrder(TempOrder tempOrder);

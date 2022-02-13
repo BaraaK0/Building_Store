@@ -17,8 +17,11 @@ public interface OrdersMaster_Dao {
 
     @Insert
     void insertAllOrders(OrderMaster... orderMasters);
+    @Insert
+    void insertOrder(OrderMaster  orderMasters);
 
     @Delete
     void deleteOrder(OrderMaster orderMaster);
-
+    @Query("UPDATE Orders_Master SET  IS_Posted='1' WHERE IS_Posted='0' ")
+    int updateVoucher();
 }

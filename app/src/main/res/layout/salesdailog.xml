@@ -4,10 +4,119 @@
     android:layout_width="300dp"
     android:orientation="vertical"
 
-    android:background="@drawable/back_border_shape"
-    android:layout_height="150dp">
+    android:background="@drawable/back_border_shape3"
+    android:layout_height="200dp">
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
 
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent">
+        <TextView
+
+            android:textStyle="bold|normal"
+             android:id="@+id/itemname"
+            android:layout_width="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+
+            android:padding="2dp"
+            android:inputType="number"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:layout_height="match_parent"/>
+        <TextView
+
+            android:textStyle="bold|normal"
+            android:id="@+id/itemno"
+            android:layout_width="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+
+            android:padding="2dp"
+            android:inputType="number"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:background="@color/white"
+        android:layout_height="2dp">
+
+    </View>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+
+        android:layout_marginEnd="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent">
+        <TextView
+
+            android:textStyle="bold|normal"
+
+            android:layout_width="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+android:text="@string/avlqty"
+            android:padding="2dp"
+            android:inputType="number"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:layout_height="match_parent"/>
+        <TextView
+
+            android:textStyle="bold|normal"
+
+            android:layout_width="match_parent"
+            android:layout_weight="3"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:padding="2dp"
+            android:inputType="number"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:layout_height="match_parent"/>
+
+        <TextView
+
+            android:textStyle="bold|normal"
+            android:id="@+id/aviqty"
+            android:layout_width="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+android:background="@color/layer7"
+            android:padding="2dp"
+            android:inputType="number"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:layout_height="match_parent"/>
+        <TextView
+
+            android:textStyle="bold|normal"
+
+            android:layout_width="match_parent"
+            android:layout_weight="2.5"
+            android:gravity="center"
+         android:visibility="invisible"
+            android:padding="2dp"
+            android:inputType="number"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
@@ -26,7 +135,7 @@
             android:layout_weight="3"
             android:gravity="center"
             android:text="@string/qty"
-            android:padding="5dp"
+            android:padding="2dp"
             android:inputType="number"
             android:textColor="@color/white"
             android:textSize="15sp"
@@ -39,7 +148,7 @@
             android:layout_width="match_parent"
             android:layout_weight="1"
 
-            android:padding="5dp"
+            android:padding="2dp"
             android:textColor="@color/black"
             android:textSize="11sp"
             android:layout_height="match_parent"/>
@@ -62,7 +171,7 @@
             android:layout_width="match_parent"
             android:layout_weight="3"
             android:text="@string/discount"
-            android:padding="5dp"
+            android:padding="2dp"
             android:gravity="center"
             android:textColor="@color/white"
             android:textSize="15sp"
@@ -75,7 +184,7 @@ android:inputType="number"
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:background="@drawable/background_container"
-            android:padding="5dp"
+            android:padding="2dp"
             android:textColor="@color/black"
             android:textSize="11sp"
             android:layout_height="match_parent"/>

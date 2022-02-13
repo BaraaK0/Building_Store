@@ -45,4 +45,9 @@
         <item>User</item>
     </string-array>
 
+    <string name="invaledZero">Invaled Zero</string>
+
+    <string name="emptyList">Empty List</string>
+
+    <string name="avlqty">Available Qty</string>
 </resources>

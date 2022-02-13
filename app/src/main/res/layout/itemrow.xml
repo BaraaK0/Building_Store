@@ -46,11 +46,19 @@
 
 
             </ImageView>
+<!--            <View-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:paddingStart="4dp"-->
+<!--                android:paddingEnd="4dp"-->
+<!--                android:background="@color/purple_500"-->
+<!--                android:layout_height="3dp">-->
 
+<!--            </View>-->
 <!--            <ScrollView-->
 <!--                android:layout_width="match_parent"-->
 <!--                android:layout_height="match_parent"-->
 <!--                android:layout_weight="1"-->
+<!--                android:scrollbars="vertical"-->
 <!--                android:fillViewport="true">-->
 
                 <LinearLayout
@@ -64,6 +72,37 @@
 
                     android:orientation="vertical"
                     android:layout_height="match_parent">
+                    <LinearLayout
+                        android:background="@drawable/background_container"
+
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent">
+                        <TextView
+                            android:layout_weight="2"
+                            android:textStyle="bold|italic|normal"
+
+                            android:layout_width="match_parent"
+                            android:textSize="11sp"
+                            android:text="@string/itemName"
+                            android:padding="1dp"
+                            android:textColor="@color/purple_500"
+                            android:layout_height="wrap_content"/>
+                        <TextView
+                            android:id="@+id/itemname"
+                            android:layout_width="match_parent"
+                            android:textSize="10sp"
+                            android:layout_weight="2"
+                            android:textStyle="bold|italic|normal"
+
+
+                            android:padding="2dp"
+                            android:textColor="@color/black"
+                            android:layout_height="wrap_content"/>
+
+
+                    </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_weight="1"
@@ -90,7 +129,7 @@
                             android:layout_width="match_parent"
                             android:textStyle="bold|italic|normal"
 
-                            android:padding="5dp"
+                            android:padding="2dp"
                             android:textColor="@color/black"
                             android:textSize="11sp"
                             android:layout_height="wrap_content"/>
@@ -124,7 +163,7 @@
                             android:layout_width="match_parent"
                             android:layout_weight="1"
 
-                            android:padding="5dp"
+                            android:padding="2dp"
                             android:textColor="@color/black"
                             android:textSize="11sp"
                             android:layout_height="wrap_content"/>
@@ -154,7 +193,7 @@
                             android:layout_width="match_parent"
                             android:layout_weight="1"
 
-                            android:padding="5dp"
+                            android:padding="2dp"
                             android:textColor="@color/black"
                             android:textSize="11sp"
                             android:layout_height="wrap_content"/>
@@ -185,7 +224,7 @@
                             android:layout_width="match_parent"
                             android:layout_weight="1"
 
-                            android:padding="5dp"
+                            android:padding="2dp"
                             android:textColor="@color/black"
                             android:textSize="11sp"
                             android:layout_height="wrap_content"/>
@@ -215,6 +254,7 @@
                             android:layout_width="wrap_content">
                             <RadioButton
                                 android:text="box"
+
                                 android:id="@+id/RB_box"
                                 android:layout_weight="2"
                                 android:layout_height="match_parent"
@@ -223,6 +263,7 @@
 
                             </RadioButton>
                             <RadioButton
+
                                 android:text="Mt"
                                 android:layout_weight="2"
                                 android:layout_height="match_parent"
@@ -260,7 +301,7 @@
                             android:textStyle="bold|italic|normal"
 
 
-                            android:padding="5dp"
+                            android:padding="2dp"
                             android:textColor="@color/black"
                             android:layout_height="wrap_content"/>
                     </LinearLayout>
@@ -272,7 +313,7 @@
                         android:layout_weight="1"
                         android:layout_height="match_parent">
                         <TextView
-                            android:layout_weight="1"
+                            android:layout_weight="1.5"
                             android:textStyle="bold|italic|normal"
 
                             android:layout_width="match_parent"
@@ -285,13 +326,25 @@
                             android:id="@+id/area"
                             android:layout_width="match_parent"
                             android:textSize="10sp"
-                            android:layout_weight="1"
+                            android:layout_weight="2"
                             android:textStyle="bold|italic|normal"
 
-                            android:text=""
-                            android:padding="5dp"
+
+                            android:padding="2dp"
                             android:textColor="@color/black"
                             android:layout_height="wrap_content"/>
+                        <TextView
+
+                            android:layout_width="match_parent"
+                            android:textSize="10sp"
+                            android:layout_weight="1.9"
+                            android:textStyle="bold|italic|normal"
+                            android:visibility="invisible"
+                            android:text=""
+                            android:padding="2dp"
+                            android:textColor="@color/black"
+                            android:layout_height="wrap_content"/>
+
                     </LinearLayout>
                 </LinearLayout>
 
@@ -309,7 +362,7 @@
 android:id="@+id/salesDailog"
 
     android:background="@drawable/shopcart"
-    android:layout_height="50dp">
+    android:layout_height="40dp">
 
 </TextView>
 <!--        <de.hdodenhof.circleimageview.CircleImageView-->

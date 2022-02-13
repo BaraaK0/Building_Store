@@ -1,8 +1,13 @@
 package com.falcons.buildingstore.Database.Entities;
 
+import android.util.Log;
+
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 @Entity(tableName = "Orders_Master")
 public class OrderMaster {
@@ -17,54 +22,27 @@ public class OrderMaster {
     @ColumnInfo(name = "Time")
     private String time;
 
-    @ColumnInfo(name = "Item_No")
-    private String itemNo;
-
-    @ColumnInfo(name = "Item_Name")
-    private String itemName;
 
     @ColumnInfo(name = "Qty")
-    private String qty;
+    private double qty;
 
     @ColumnInfo(name = "Discount")
-    private String discount;
+    private double discount;
 
     @ColumnInfo(name = "Tax")
     private String tax;
 
-    @ColumnInfo(name = "Area")
-    private String area;
-
     @ColumnInfo(name = "Total")
-    private String total;
+    private double total;
 
     @ColumnInfo(name = "Price")
-    private String price;
+    private double price;
 
     @ColumnInfo(name = "Customer_ID")
     private int customerId;
 
     @ColumnInfo(name = "IS_Posted", defaultValue = "0")
     private int isPosted;
-
-    public OrderMaster(int vhfNo, String date, String time, String itemNo, String itemName, String qty, String discount, String tax, String area, String total, String price, int customerId, int isPosted) {
-        this.vhfNo = vhfNo;
-        this.date = date;
-        this.time = time;
-        this.itemNo = itemNo;
-        this.itemName = itemName;
-        this.qty = qty;
-        this.discount = discount;
-        this.tax = tax;
-        this.area = area;
-        this.total = total;
-        this.price = price;
-        this.customerId = customerId;
-        this.isPosted = isPosted;
-    }
-
-    public OrderMaster() {
-    }
 
     public int getVhfNo() {
         return vhfNo;
@@ -90,35 +68,19 @@ public class OrderMaster {
         this.time = time;
     }
 
-    public String getItemNo() {
-        return itemNo;
-    }
-
-    public void setItemNo(String itemNo) {
-        this.itemNo = itemNo;
-    }
-
-    public String getItemName() {
-        return itemName;
-    }
-
-    public void setItemName(String itemName) {
-        this.itemName = itemName;
-    }
-
-    public String getQty() {
+    public double getQty() {
         return qty;
     }
 
-    public void setQty(String qty) {
+    public void setQty(double qty) {
         this.qty = qty;
     }
 
-    public String getDiscount() {
+    public double getDiscount() {
         return discount;
     }
 
-    public void setDiscount(String discount) {
+    public void setDiscount(double discount) {
         this.discount = discount;
     }
 
@@ -130,27 +92,19 @@ public class OrderMaster {
         this.tax = tax;
     }
 
-    public String getArea() {
-        return area;
-    }
-
-    public void setArea(String area) {
-        this.area = area;
-    }
-
-    public String getTotal() {
+    public double getTotal() {
         return total;
     }
 
-    public void setTotal(String total) {
+    public void setTotal(double total) {
         this.total = total;
     }
 
-    public String getPrice() {
+    public double getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
@@ -168,5 +122,39 @@ public class OrderMaster {
 
     public void setIsPosted(int isPosted) {
         this.isPosted = isPosted;
+    }
+
+    public JSONObject getJSONObjectDelphi() {
+        JSONObject obj = new JSONObject();
+        String voucherDateFormet="";
+        //"JSN":[{"COMAPNYNO":290,"VOUCHERYEAR":"2021","VOUCHERNO":"1212","VOUCHERTYPE":"3","VOUCHERDATE":"24/03/2020",
+        //      "SALESMANNO":"5","CUSTOMERNO":"123456","VOUCHERDISCOUNT":"50",
+        //    "VOUCHERDISCOUNTPERCENT":"10","NOTES":"AAAAAA","CACR":"1","ISPOSTED":"0","PAYMETHOD":"1","NETSALES":"150.720"}]}
+        try {
+            obj.put("COMAPNYNO", "");
+            obj.put("VOUCHERNO", vhfNo);
+            obj.put("VOUCHERTYPE", 508);
+
+            obj.put("VOUCHERDATE", date);
+            obj.put("SALESMANNO", 1);
+            obj.put("VOUCHERDISCOUNT", discount);
+            obj.put("VOUCHERDISCOUNTPERCENT", discount);
+
+                obj.put("NOTES", "");
+
+
+            obj.put("CACR", 1);
+            obj.put("ISPOSTED", "0");
+            obj.put("NETSALES", total);
+            obj.put("CUSTOMERNO", customerId);
+            obj.put("VOUCHERYEAR", 2022);
+
+            obj.put("PAYMETHOD", "");
+
+
+        } catch (JSONException e) {
+            Log.e("Tag" , "JSONException");
+        }
+        return obj;
     }
 }
