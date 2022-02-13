@@ -40,6 +40,7 @@ import com.falcons.buildingstore.Adapters.CustomersAdapter;
 import com.falcons.buildingstore.Adapters.ItemsAdapter;
 import com.falcons.buildingstore.Database.Entities.CustomerInfo;
 import com.falcons.buildingstore.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
@@ -67,6 +68,8 @@ public class HomeActivity extends AppCompatActivity {
 
     public static RecyclerView itemsRecycler;
 
+    BottomNavigationView bottom_navigation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,28 +77,6 @@ public class HomeActivity extends AppCompatActivity {
 
         init();
 
-//        temporderbtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                for (int i = 0; i < vocher_Items.size(); i++) {
-//                    TempOrder tempOrder = new TempOrder();
-//                    tempOrder.setItemNo(vocher_Items.get(i).getItemNCode());
-//                    tempOrder.setItemName(vocher_Items.get(i).getItemNCode());
-//                    tempOrder.setQty(vocher_Items.get(i).getQty());
-//                    tempOrder.setArea(vocher_Items.get(i).getArea());
-//                    tempOrder.setTax(vocher_Items.get(i).getTax());
-//                    tempOrder.setCustomerId(vocher_Items.get(i).getCus_Id());
-//                    tempOrder.setDiscount(vocher_Items.get(i).getDiscount());
-//                    tempOrder.setPrice(vocher_Items.get(i).getPrice());
-//                    tempOrder.setTotal(vocher_Items.get(i).getPrice());
-//                    tempOrder.setConfStatus(1);
-//
-//                    tempOrder.setDate("");
-//                    tempOrder.setTime("");
-//                }
-//            }
-//        });
-//        recyclerView_Items = findViewById(R.id.recyclerView_Items);
         ArrayList<Item> itemList = new ArrayList<>();
 
         Item item = new Item();
@@ -212,149 +193,16 @@ public class HomeActivity extends AppCompatActivity {
         itemsRecycler.setAdapter(itemsAdapter);
         itemsRecycler.setSaveEnabled(false);
 
-//        Log.e("itemList", itemList.size() + "");
-//        ItemAdapter itemItemAdapter = new ItemAdapter(HomeActivity.this, itemList);
-//        gridView.setAdapter(itemItemAdapter);
-
-
-//        Item item4 = new Item();
-//        item4.setItemNCode("FILTERS");
-//        item4.setPrice(10);
-//        item4.setUnit("10");
-//        itemList.add(0, item4);
-//        CustomAdapter customAdapter = new CustomAdapter(HomeActivity.this, itemList);
-//
-//        Catg_SP.setAdapter(customAdapter);
-//        Catg_SP.setSelection(0);
-//
-//        gridView.setNumColumns(itemList.size());
-//
-//
-//        for (int i = 0; i < 100; i++) {
-//
-//            customersList.add(new CustomerInfo("Customer" + i, "078" + i + (i + 1) + (i + 1)));
-//
-//        }
-//        customersList.add(new CustomerInfo("Customer" + 5, "078" + 5 + (5 + 1) + (5 + 1)));
-//
-////        fillCustomerNamesAdapter(HomeActivity.this);
-//        addCustomerBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                custmsDialog = new Dialog(HomeActivity.this);
-//                custmsDialog.setCancelable(false);
-//                custmsDialog.setContentView(R.layout.customers_dialog);
-//                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-//                lp.copyFrom(custmsDialog.getWindow().getAttributes());
-//                lp.width = (int) (getResources().getDisplayMetrics().widthPixels / 1.15);
-//                lp.height = (int) (getResources().getDisplayMetrics().heightPixels / 1.7);
-//                custmsDialog.getWindow().setAttributes(lp);
-//                custmsDialog.show();
-//
-//                ImageButton closeBtn = custmsDialog.findViewById(R.id.closeBtn);
-//                EditText searchCustomers = custmsDialog.findViewById(R.id.searchCustomers);
-//
-//                RecyclerView customersRV = custmsDialog.findViewById(R.id.customersRV);
-//
-//                CustomersAdapter customersAdapter = new CustomersAdapter(HomeActivity.this, customersList);
-//
-//                customersRV.setAdapter(customersAdapter);
-//
-//                searchCustomers.addTextChangedListener(new TextWatcher() {
-//                    @Override
-//                    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//                    }
-//
-//                    @Override
-//                    public void afterTextChanged(Editable s) {
-//
-//                        String searchedName = s.toString().trim().toLowerCase();
-//                        List<CustomerInfo> tempCustomers = new ArrayList<>();
-//
-//                        for (int c = 0; c < customersList.size(); c++) {
-//
-//                            if (customersList.get(c).getCustomerName().trim().toLowerCase().contains(searchedName)) {
-//                                tempCustomers.add(customersList.get(c));
-//                            }
-//
-//                        }
-//
-//                        CustomersAdapter customersAdapter2 = new CustomersAdapter(HomeActivity.this, tempCustomers);
-//
-//                        customersRV.setAdapter(customersAdapter2);
-//
-//                    }
-//                });
-//
-//                closeBtn.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View v) {
-//                        custmsDialog.dismiss();
-//                    }
-//                });
-//
-//            }
-//        });
-
 
     }
 
-    public static Bitmap drawableToBitmap(Drawable drawable) {
-        Bitmap bitmap = null;
-
-        if (drawable instanceof BitmapDrawable) {
-            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
-            if (bitmapDrawable.getBitmap() != null) {
-                return bitmapDrawable.getBitmap();
-            }
-        }
-
-        if (drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
-            bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
-        } else {
-            bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
-        }
-
-        Canvas canvas = new Canvas(bitmap);
-        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
-        drawable.draw(canvas);
-        return bitmap;
-    }
-
-//    public static void FillrecyclerView_Items(Context context, ArrayList<Item> items) {
-//        recyclerView_Items.setLayoutManager(new LinearLayoutManager(context));
-//        voherItemAdapter = new VoherItemAdapter(items, context);
-//
-//        recyclerView_Items.setAdapter(voherItemAdapter);
-//
-//
-//        // customerNames_sp.add(getString(R.string.customerName).toString());
-//
-//
-//    }
 
 
     void init() {
 
-//        customerNameTV = findViewById(R.id.customerNameTV);
-//        addCustomerBtn = findViewById(R.id.addCustomerBtn);
-//
-//        customersList = new ArrayList<>();
-//        customerNames = new ArrayList<>();
+        bottom_navigation = findViewById(R.id.bottom_navigation);
         itemsRecycler = findViewById(R.id.itemsRecycler);
         itemList_rv = new ArrayList<>();
-
-//        gridView = findViewById(R.id.simpleGridView);
-//        Catg_SP = findViewById(R.id.Catg_SP);
-//        temporderbtn = findViewById(R.id.temporderbtn);
-
 
         SharedPreferences sharedPref = getSharedPreferences(SETTINGS_PREFERENCES, MODE_PRIVATE);
         ipAddress = sharedPref.getString(IP_PREF, "");
@@ -366,12 +214,5 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-//    public static void fillCustomerNamesAdapter(Context context) {
-//        Log.e("customerNames_sp==", customerNames.size() + "");
-//        arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, customerNames);
-//        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//
-////        customersSpinner.setAdapter(arrayAdapter);
-////        customersSpinner.setSelection(0);
-//    }
+
 }

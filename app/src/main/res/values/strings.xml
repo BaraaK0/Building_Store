@@ -15,7 +15,7 @@
     <string name="required">*Required</string>
     <string name="title_activity_maps">MapsActivity</string>
     <string name="itemNCode">itemNCode</string>
-    <string name="qty">qty</string>
+    <string name="qty">Quantity</string>
     <string name="unit">unit</string>
     <string name="itemKind">itemKind</string>
 
@@ -26,6 +26,8 @@
     <string name="login_as">Login as:</string>
     <string name="request">Request</string>
 
+    <string name="item_Code">Item Code</string>
+    <string name="item_Name_">Item Name</string>
     <string name="item_name">Item name:</string>
     <string name="item_Ncode">Item Ncode:</string>
     <string name="item_kind">Item kind:</string>
