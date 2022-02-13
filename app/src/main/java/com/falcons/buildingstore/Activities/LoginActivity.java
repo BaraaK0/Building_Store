@@ -43,8 +43,7 @@ public class LoginActivity extends AppCompatActivity {
     public final static String IP_PREF = "IP_Address";
     public final static String PORT_PREF = "IP_Port";
     public final static String CONO_PREF = "Company_No";
-
-    String ipAddress, ipPort, coNo;
+  String ipAddress, ipPort, coNo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

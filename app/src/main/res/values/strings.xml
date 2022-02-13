@@ -21,9 +21,6 @@
     <string name="itemKind">itemKind</string>
 
 
-    <string name="tax">tax</string>
-    <string name="area"> area</string>
-    <string name="discount"> Discount</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="reqired_filled">*Required</string>

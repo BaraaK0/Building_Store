@@ -51,6 +51,7 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
     GridView gridView;
+    public static  RecyclerView  itemsRecycler;
     ArrayList<String>catgoris=new ArrayList<>();
     public static   RecyclerView recyclerView_Items;
     public static    VoherItemAdapter voherItemAdapter;
@@ -67,73 +68,75 @@ public class HomeActivity extends AppCompatActivity {
 GeneralMethod generalMethod;
 AppDatabase appDatabase;
     public static    ItemsAdapter itemsAdapter;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
         init();
-        orderbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(vocher_Items.size()==0)
-                {
-                     GeneralMethod.showSweetDialog(HomeActivity.this,3,getResources().getString(R.string.emptyList),"");
-                }
-                else
-                {  for(int i=0;i<vocher_Items.size();i++) {
-                    OrderMaster orderMaster = new OrderMaster();
-              //     orderMaster.setItemNo(vocher_Items.get(i).getItemNCode());
-               //  orderMaster.setItemName(vocher_Items.get(i).getItemName());
-                    orderMaster.setQty(vocher_Items.get(i).getQty());
-               //   orderMaster.setArea(vocher_Items.get(i).getArea());
-                    orderMaster.setTax(vocher_Items.get(i).getTax());
-                    orderMaster.setCustomerId(vocher_Items.get(i).getCus_Id());
-                    orderMaster.setDiscount(vocher_Items.get(i).getDiscount());
-                    orderMaster.setPrice(vocher_Items.get(i).getPrice());
-                    orderMaster.setTotal(CalculateVochTotal());
+//        orderbtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(vocher_Items.size()==0)
+//                {
+//                     GeneralMethod.showSweetDialog(HomeActivity.this,3,getResources().getString(R.string.emptyList),"");
+//                }
+//                else
+//                {  for(int i=0;i<vocher_Items.size();i++) {
+//                    OrderMaster orderMaster = new OrderMaster();
+//              //     orderMaster.setItemNo(vocher_Items.get(i).getItemNCode());
+//               //  orderMaster.setItemName(vocher_Items.get(i).getItemName());
+//                    orderMaster.setQty(vocher_Items.get(i).getQty());
+//               //   orderMaster.setArea(vocher_Items.get(i).getArea());
+//                    orderMaster.setTax(vocher_Items.get(i).getTax());
+//                    orderMaster.setCustomerId(vocher_Items.get(i).getCus_Id());
+//                    orderMaster.setDiscount(vocher_Items.get(i).getDiscount());
+//                    orderMaster.setPrice(vocher_Items.get(i).getPrice());
+//                    orderMaster.setTotal(CalculateVochTotal());
+//
+//                    orderMaster.setIsPosted(0);
+//                    orderMaster.setDate(generalMethod.getCurentTimeDate(1));
+//                    orderMaster.setTime(generalMethod.getCurentTimeDate(2));
+//                    appDatabase.ordersMasterDao().insertOrder(orderMaster);
+//
+//                }
+//
+//                    vocher_Items.clear();
+//                }
+//            }
+//        });
+//        temporderbtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if(vocher_Items.size()==0)
+//                {
+//                    GeneralMethod.showSweetDialog(HomeActivity.this,3,getResources().getString(R.string.emptyList),"");        }
+//                else
+//                {  for(int i=0;i<vocher_Items.size();i++) {
+//                    TempOrder tempOrder = new TempOrder();
+//                    tempOrder.setItemNo(vocher_Items.get(i).getItemNCode());
+//                    tempOrder.setItemName(vocher_Items.get(i).getItemName());
+//                    tempOrder.setQty(vocher_Items.get(i).getQty());
+//                    tempOrder.setArea(vocher_Items.get(i).getArea());
+//                    tempOrder.setTax(vocher_Items.get(i).getTax());
+//                    tempOrder.setCustomerId(vocher_Items.get(i).getCus_Id());
+//                    tempOrder.setDiscount(vocher_Items.get(i).getDiscount());
+//                    tempOrder.setPrice(vocher_Items.get(i).getPrice());
+//                    tempOrder.setTotal(CalculateVochTotal());
+//                    tempOrder.setConfStatus(0);
+//
+//                    tempOrder.setDate(generalMethod.getCurentTimeDate(1));
+//                    tempOrder.setTime(generalMethod.getCurentTimeDate(2));
+//                    appDatabase.tempOrdersDao().insertOrder(tempOrder);
+//                }
+//                    vocher_Items.clear();
+//
+//                }
+//            }
+//        });
 
-                    orderMaster.setIsPosted(0);
-                    orderMaster.setDate(generalMethod.getCurentTimeDate(1));
-                    orderMaster.setTime(generalMethod.getCurentTimeDate(2));
-                    appDatabase.ordersMasterDao().insertOrder(orderMaster);
-
-                }
-
-                    vocher_Items.clear();
-                }
-            }
-        });
-        temporderbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(vocher_Items.size()==0)
-                {
-                    GeneralMethod.showSweetDialog(HomeActivity.this,3,getResources().getString(R.string.emptyList),"");        }
-                else
-                {  for(int i=0;i<vocher_Items.size();i++) {
-                    TempOrder tempOrder = new TempOrder();
-                    tempOrder.setItemNo(vocher_Items.get(i).getItemNCode());
-                    tempOrder.setItemName(vocher_Items.get(i).getItemName());
-                    tempOrder.setQty(vocher_Items.get(i).getQty());
-                    tempOrder.setArea(vocher_Items.get(i).getArea());
-                    tempOrder.setTax(vocher_Items.get(i).getTax());
-                    tempOrder.setCustomerId(vocher_Items.get(i).getCus_Id());
-                    tempOrder.setDiscount(vocher_Items.get(i).getDiscount());
-                    tempOrder.setPrice(vocher_Items.get(i).getPrice());
-                    tempOrder.setTotal(CalculateVochTotal());
-                    tempOrder.setConfStatus(0);
-
-                    tempOrder.setDate(generalMethod.getCurentTimeDate(1));
-                    tempOrder.setTime(generalMethod.getCurentTimeDate(2));
-                    appDatabase.tempOrdersDao().insertOrder(tempOrder);
-                }
-                    vocher_Items.clear();
-
-                }
-            }
-        });
-        recyclerView_Items=findViewById(R.id.recyclerView_Items);
         ArrayList<Item> itemList=new ArrayList<>();
 
         Item item=new Item();
@@ -149,7 +152,7 @@ AppDatabase appDatabase;
         Item item2 = new Item();
         item2.setItem_Name("Item Number 2");
         item2.setItemNCode("2222222222");
-        Item item2=new Item();
+
         item2.setItemName("bbbbb");
         item2.setItemNCode("123456538");
         item2.setPrice(10);
@@ -254,7 +257,7 @@ AppDatabase appDatabase;
         itemsRecycler.setAdapter(itemsAdapter);
         itemsRecycler.setSaveEnabled(false);
 
-        Item item4=new Item();
+
         item4.setItemNCode("FILTERS");
         item4.setPrice(10);
         item4.setUnit("10");
@@ -262,7 +265,7 @@ AppDatabase appDatabase;
         CustomAdapter customAdapter=new  CustomAdapter ( HomeActivity.this,itemList);
 
 
-        gridView.setNumColumns(  itemList.size());
+     //   gridView.setNumColumns(  itemList.size());
 
 
         for (int i = 0; i < 5; i++) {
@@ -275,7 +278,7 @@ AppDatabase appDatabase;
 
 
         fillcustomerNamesadapter(HomeActivity.this);
-        addCustomerBtn.setOnClickListener(new View.OnClickListener() {
+   /*     addCustomerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -307,7 +310,7 @@ AppDatabase appDatabase;
             }
         });
 
-
+*/
 
 
 
@@ -360,23 +363,21 @@ AppDatabase appDatabase;
     void init() {
   appDatabase= AppDatabase.getInstanceDatabase(HomeActivity.this);
         generalMethod=new GeneralMethod(HomeActivity.this);
-        customersSpinner = findViewById(R.id.customersSpinner);
-        addCustomerBtn = findViewById(R.id.addCustomerBtn);
-        orderbtn = findViewById(R.id.orderbtn);
+       // customersSpinner = findViewById(R.id.customersSpinner);
+      //  addCustomerBtn = findViewById(R.id.addCustomerBtn);
+      //  orderbtn = findViewById(R.id.orderbtn);
         customersList_sp = new ArrayList<>();
         customerNames_sp = new ArrayList<>();
         itemList_rv = new ArrayList<>();
-
-        gridView=findViewById(R.id.simpleGridView);
-        Catg_SP=findViewById(R.id.Catg_SP);
-        temporderbtn=findViewById(R.id.temporderbtn);
+        itemsRecycler=findViewById(R.id.itemsRecycler);
+    //    gridView=findViewById(R.id.simpleGridView);
+   //     Catg_SP=findViewById(R.id.Catg_SP);
+   //     temporderbtn=findViewById(R.id.temporderbtn);
         SharedPreferences sharedPref = getSharedPreferences(SETTINGS_PREFERENCES, MODE_PRIVATE);
-        ipAddress = sharedPref.getString(IP_PREF, "");
-        ipPort = sharedPref.getString(PORT_PREF, "");
-        coNo = sharedPref.getString(CONO_PREF, "");
-        Log.e("IP_PREF2", ipAddress + "");
-        Log.e("PORT_PREF2", ipPort);
-        Log.e("CONO_PREF2", coNo);
+//  ipAddress = sharedPref.getString(IP_PREF, "");
+// ipPort = sharedPref.getString(PORT_PREF, "");
+//        coNo = sharedPref.getString(CONO_PREF, "");
+
 
     }
 public  static void fillcustomerNamesadapter(Context context){
@@ -384,8 +385,8 @@ public  static void fillcustomerNamesadapter(Context context){
        arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, customerNames_sp);
         arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-        customersSpinner.setAdapter(arrayAdapter);
-        customersSpinner.setSelection(0);
+   //     customersSpinner.setAdapter(arrayAdapter);
+      //  customersSpinner.setSelection(0);
 }
 public double CalculateVochTotal(){
 double total=0;

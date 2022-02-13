@@ -19,6 +19,7 @@
         <entry key="..\:/Users/FALCONS_1/Desktop/ay/aya/New folder (6)/New folder (6)/New folder/New folder/AYA/Building_Store/app/src/main/res/drawable/back_border_shape2.xml" value="0.24166666666666667" />
         <entry key="..\:/Users/FALCONS_1/Desktop/ay/aya/New folder (6)/New folder (6)/New folder/New folder/AYA/Building_Store/app/src/main/res/drawable/back_border_shape3.xml" value="0.2" />
         <entry key="..\:/Users/FALCONS_1/Desktop/ay/aya/New folder (6)/New folder (6)/New folder/New folder/AYA/Building_Store/app/src/main/res/drawable/background_container.xml" value="0.11388888888888889" />
+        <entry key="..\:/Users/FALCONS_1/Desktop/ay/aya/New folder (6)/New folder (6)/New folder/New folder/AYA/Building_Store/app/src/main/res/drawable/bg_btn.xml" value="0.15364583333333334" />
         <entry key="..\:/Users/FALCONS_1/Desktop/ay/aya/New folder (6)/New folder (6)/New folder/New folder/AYA/Building_Store/app/src/main/res/drawable/blue_gray_gradient.xml" value="0.2" />
         <entry key="..\:/Users/FALCONS_1/Desktop/ay/aya/New folder (6)/New folder (6)/New folder/New folder/AYA/Building_Store/app/src/main/res/drawable/blue_outline.xml" value="0.28854166666666664" />
         <entry key="..\:/Users/FALCONS_1/Desktop/ay/aya/New folder (6)/New folder (6)/New folder/New folder/AYA/Building_Store/app/src/main/res/drawable/cancel_btn.xml" value="0.26205128205128203" />
@@ -49,12 +50,15 @@
         <entry key="..\:/Users/FALCONS_1/Desktop/ay/aya/New folder (6)/New folder (6)/New folder/New folder/AYA/Building_Store/app/src/main/res/layout/customer_card.xml" value="0.16576086956521738" />
         <entry key="..\:/Users/FALCONS_1/Desktop/ay/aya/New folder (6)/New folder (6)/New folder/New folder/AYA/Building_Store/app/src/main/res/layout/customers_dialog.xml" value="0.1641337386018237" />
         <entry key="..\:/Users/FALCONS_1/Desktop/ay/aya/New folder (6)/New folder (6)/New folder/New folder/AYA/Building_Store/app/src/main/res/layout/ip_settings_dialog.xml" value="0.1641337386018237" />
+        <entry key="..\:/Users/FALCONS_1/Desktop/ay/aya/New folder (6)/New folder (6)/New folder/New folder/AYA/Building_Store/app/src/main/res/layout/item_row.xml" value="0.2033514492753623" />
         <entry key="..\:/Users/FALCONS_1/Desktop/ay/aya/New folder (6)/New folder (6)/New folder/New folder/AYA/Building_Store/app/src/main/res/layout/itemrow.xml" value="0.25" />
         <entry key="..\:/Users/FALCONS_1/Desktop/ay/aya/New folder (6)/New folder (6)/New folder/New folder/AYA/Building_Store/app/src/main/res/layout/items_card.xml" value="0.14356884057971014" />
         <entry key="..\:/Users/FALCONS_1/Desktop/ay/aya/New folder (6)/New folder (6)/New folder/New folder/AYA/Building_Store/app/src/main/res/layout/itemspinner.xml" value="0.16394927536231885" />
         <entry key="..\:/Users/FALCONS_1/Desktop/ay/aya/New folder (6)/New folder (6)/New folder/New folder/AYA/Building_Store/app/src/main/res/layout/layout_login.xml" value="0.1641337386018237" />
+        <entry key="..\:/Users/FALCONS_1/Desktop/ay/aya/New folder (6)/New folder (6)/New folder/New folder/AYA/Building_Store/app/src/main/res/layout/orders_basket.xml" value="0.14221014492753623" />
         <entry key="..\:/Users/FALCONS_1/Desktop/ay/aya/New folder (6)/New folder (6)/New folder/New folder/AYA/Building_Store/app/src/main/res/layout/recyclerview_items_row.xml" value="0.13405797101449277" />
         <entry key="..\:/Users/FALCONS_1/Desktop/ay/aya/New folder (6)/New folder (6)/New folder/New folder/AYA/Building_Store/app/src/main/res/layout/salesdailog.xml" value="0.33" />
+        <entry key="..\:/Users/FALCONS_1/Desktop/ay/aya/New folder (6)/New folder (6)/New folder/New folder/AYA/Building_Store/app/src/main/res/layout/splashfile.xml" value="0.14221014492753623" />
       </map>
     </option>
   </component>
