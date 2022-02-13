@@ -19,4 +19,27 @@
     <string name="emptyList">قائمة فارغة</string>
     <string name="itemName">اسم المادة</string>
     <string name="avlqty">الكمية المتوفرة</string>
+    <string name="sign_in">تسجيل الدخول</string>
+    <string name="sign_in_with">سجل الدخول باستخدام اسم المستخدم وكلمة المرور الخاصة بك !</string>
+    <string name="login_as">التسجيل كَـ:</string>
+    <string name="request">تغيير</string>
+
+    <string name="item_name">اسم المادة:</string>
+    <string name="item_Ncode">رقم المادة:</string>
+    <string name="item_kind">نوع المادة:</string>
+    <string name="tax">الضريبة:</string>
+    <string name="price">السعر:</string>
+    <string name="discount">خصم:</string>
+    <string name="quantity">الكمية:</string>
+    <string name="area">الموقع:</string>
+    <string name="box">صندوق</string>
+    <string name="meter">متر</string>
+    <string name="save">حفظ</string>
+
+
+    <string-array name="user_type">
+        <item>آدمن</item>
+        <item>مستخدم عادي</item>
+    </string-array>
+
 </resources>

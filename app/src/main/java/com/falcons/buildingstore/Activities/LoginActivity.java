@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,9 +14,12 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,12 +35,16 @@ public class LoginActivity extends AppCompatActivity {
     TextInputLayout unameTextField, passTextField;
     CircularProgressButton loginBtn;
     TextView errorMsg;
-    ImageView settingsIc;
+//    ImageView settingsIc;
+    AutoCompleteTextView uTypeEdt;
+    LinearLayout request_ip_;
 
     public final static String SETTINGS_PREFERENCES = "SETTINGS_PREFERENCES";
     public final static String IP_PREF = "IP_Address";
     public final static String PORT_PREF = "IP_Port";
     public final static String CONO_PREF = "Company_No";
+
+    String ipAddress, ipPort, coNo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,18 +54,9 @@ public class LoginActivity extends AppCompatActivity {
 
         init();
 
-        SharedPreferences sharedPref = getSharedPreferences(SETTINGS_PREFERENCES, MODE_PRIVATE);
-        String ipAddress = sharedPref.getString(IP_PREF, "");
-
-        Log.e("IP_PREF", ipAddress + "");
-        Log.e("PORT_PREF", sharedPref.getInt(PORT_PREF, 0) + "");
-        Log.e("CONO_PREF", sharedPref.getInt(CONO_PREF, 0) + "");
-
-        if ((ipAddress + "").trim().equals("")) {
-
+        if (!checkIpSettings())
             showSettingsDialog();
 
-        }
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,7 +64,12 @@ public class LoginActivity extends AppCompatActivity {
 
                 loginBtn.startAnimation();
 
-                checkUnameAndPass();
+                if (!checkIpSettings()) {
+                    showSettingsDialog();
+                    loginBtn.revertAnimation();
+                }
+                else
+                    checkUnameAndPass();
 
             }
         });
@@ -72,7 +77,6 @@ public class LoginActivity extends AppCompatActivity {
         unameEdt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
 
 
             }
@@ -111,7 +115,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        settingsIc.setOnClickListener(new View.OnClickListener() {
+        request_ip_.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -119,6 +123,23 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
+    }
+
+    private boolean checkIpSettings() {
+
+        SharedPreferences sharedPref = getSharedPreferences(SETTINGS_PREFERENCES, MODE_PRIVATE);
+        ipAddress = sharedPref.getString(IP_PREF, "");
+        ipPort = sharedPref.getString(PORT_PREF, "");
+        coNo = sharedPref.getString(CONO_PREF, "");
+
+        Log.e("IP_PREF", ipAddress + "");
+        Log.e("PORT_PREF", ipPort);
+        Log.e("CONO_PREF", coNo);
+
+        return !(ipAddress + "").trim().equals("") &&
+                !(ipPort + "").trim().equals("") &&
+                !(coNo + "").trim().equals("");
 
     }
 
@@ -130,7 +151,14 @@ public class LoginActivity extends AppCompatActivity {
         unameTextField = findViewById(R.id.unameTextField);
         passTextField = findViewById(R.id.passTextField);
         errorMsg = findViewById(R.id.errorMsg);
-        settingsIc = findViewById(R.id.settingsIc);
+//        settingsIc = findViewById(R.id.settingsIc);
+        uTypeEdt = findViewById(R.id.uTypeEdt);
+        request_ip_ = findViewById(R.id.request_ip_);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.user_type));
+
+        uTypeEdt.setAdapter(adapter);
 
     }
 
@@ -186,14 +214,21 @@ public class LoginActivity extends AppCompatActivity {
 
         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
         lp.copyFrom(ip_settings_dialog.getWindow().getAttributes());
-        lp.width = (int) (getResources().getDisplayMetrics().widthPixels / 1.15);
+        lp.width = (int) (getResources().getDisplayMetrics().widthPixels / 1.19);
         ip_settings_dialog.getWindow().setAttributes(lp);
+
+        ip_settings_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
         ip_settings_dialog.show();
 
-        EditText ipEdt, portEdt, coNoEdt;
+        TextInputEditText ipEdt, portEdt, coNoEdt;
         ipEdt = ip_settings_dialog.findViewById(R.id.ipEdt);
         portEdt = ip_settings_dialog.findViewById(R.id.portEdt);
         coNoEdt = ip_settings_dialog.findViewById(R.id.coNoEdt);
+        TextInputLayout textInputIpAddress, textInputPort, textInputCoNo;
+        textInputIpAddress = ip_settings_dialog.findViewById(R.id.textInputIpAddress);
+        textInputPort = ip_settings_dialog.findViewById(R.id.textInputPort);
+        textInputCoNo = ip_settings_dialog.findViewById(R.id.textInputCoNo);
 
         Button okBtn, cancelBtn;
         okBtn = ip_settings_dialog.findViewById(R.id.okBtn);
@@ -202,8 +237,8 @@ public class LoginActivity extends AppCompatActivity {
         SharedPreferences sharedPref = getSharedPreferences(SETTINGS_PREFERENCES, MODE_PRIVATE);
 
         ipEdt.setText(sharedPref.getString(IP_PREF, ""));
-        portEdt.setText(sharedPref.getInt(PORT_PREF, 0) + "");
-        coNoEdt.setText(sharedPref.getInt(CONO_PREF, 0) + "");
+        portEdt.setText(sharedPref.getString(PORT_PREF, ""));
+        coNoEdt.setText(sharedPref.getString(CONO_PREF, ""));
 
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -213,6 +248,65 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
+        ipEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                textInputIpAddress.setError(null);
+
+            }
+        });
+
+        portEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                textInputPort.setError(null);
+
+            }
+        });
+
+        coNoEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                textInputCoNo.setError(null);
+
+            }
+        });
+
+
 
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -230,29 +324,29 @@ public class LoginActivity extends AppCompatActivity {
 
                             SharedPreferences.Editor editor = getSharedPreferences(SETTINGS_PREFERENCES, MODE_PRIVATE).edit();
                             editor.putString(IP_PREF, ipAddress);
-                            editor.putInt(PORT_PREF, Integer.parseInt(port));
-                            editor.putInt(CONO_PREF, Integer.parseInt(coNo));
+                            editor.putString(PORT_PREF, port);
+                            editor.putString(CONO_PREF, coNo);
                             editor.apply();
 
                             ip_settings_dialog.dismiss();
 
                         } else {
 
-                            coNoEdt.setError("");
+                            textInputCoNo.setError(getString(R.string.required));
 
 
                         }
 
                     } else {
 
-                        portEdt.setError("");
+                        textInputPort.setError(getString(R.string.required));
 
 
                     }
 
                 } else {
 
-                    ipEdt.setError("");
+                    textInputIpAddress.setError(getString(R.string.required));
 
 
                 }
