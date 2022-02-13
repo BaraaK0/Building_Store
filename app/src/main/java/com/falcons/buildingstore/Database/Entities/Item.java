@@ -22,7 +22,16 @@ public class Item {
     @ColumnInfo(name = "Avi_Qty")
     public double Aviqty;
 
+    public double getCategoryId() {
+        return CategoryId;
+    }
 
+    public void setCategoryId(double categoryId) {
+        CategoryId = categoryId;
+    }
+
+    @ColumnInfo(name = "CategoryId")
+    public double CategoryId;
 
 
     @ColumnInfo(name = "Price")

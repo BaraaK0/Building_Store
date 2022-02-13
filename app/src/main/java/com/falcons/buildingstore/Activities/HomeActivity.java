@@ -32,8 +32,11 @@ import android.widget.Spinner;
 
 import com.falcons.buildingstore.Adapters.CustomAdapter;
 import com.falcons.buildingstore.Adapters.VoherItemAdapter;
+import com.falcons.buildingstore.Database.AppDatabase;
+import com.falcons.buildingstore.Database.Entities.GeneralMethod;
 import com.falcons.buildingstore.Database.Entities.Item;
 import com.falcons.buildingstore.Adapters.ItemAdapter;
+import com.falcons.buildingstore.Database.Entities.OrderMaster;
 import com.falcons.buildingstore.Database.Entities.TempOrder;
 import com.falcons.buildingstore.Adapters.CustomersAdapter;
 import com.falcons.buildingstore.Adapters.ItemsAdapter;
@@ -53,7 +56,7 @@ public class HomeActivity extends AppCompatActivity {
     public static   RecyclerView recyclerView_Items;
     public static    VoherItemAdapter voherItemAdapter;
   public static   ArrayList<Item>vocher_Items=new ArrayList<>();
-  Button temporderbtn;
+  Button temporderbtn,orderbtn;
     Spinner Catg_SP;
     public static ArrayAdapter<String> arrayAdapter;
     public static Spinner customersSpinner;
@@ -62,32 +65,71 @@ public class HomeActivity extends AppCompatActivity {
     public static List<Item> itemList_rv;
     public static List<String> customerNames_sp;
     public static Dialog custmsDialog;
-
-
+GeneralMethod generalMethod;
+AppDatabase appDatabase;
     public static    ItemsAdapter itemsAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         init();
+        orderbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(vocher_Items.size()==0)
+                {
+                     GeneralMethod.showSweetDialog(HomeActivity.this,3,getResources().getString(R.string.emptyList),"");
+                }
+                else
+                {  for(int i=0;i<vocher_Items.size();i++) {
+                    OrderMaster orderMaster = new OrderMaster();
+              //     orderMaster.setItemNo(vocher_Items.get(i).getItemNCode());
+               //  orderMaster.setItemName(vocher_Items.get(i).getItemName());
+                    orderMaster.setQty(vocher_Items.get(i).getQty());
+               //   orderMaster.setArea(vocher_Items.get(i).getArea());
+                    orderMaster.setTax(vocher_Items.get(i).getTax());
+                    orderMaster.setCustomerId(vocher_Items.get(i).getCus_Id());
+                    orderMaster.setDiscount(vocher_Items.get(i).getDiscount());
+                    orderMaster.setPrice(vocher_Items.get(i).getPrice());
+                    orderMaster.setTotal(CalculateVochTotal());
+
+                    orderMaster.setIsPosted(0);
+                    orderMaster.setDate(generalMethod.getCurentTimeDate(1));
+                    orderMaster.setTime(generalMethod.getCurentTimeDate(2));
+                    appDatabase.ordersMasterDao().insertOrder(orderMaster);
+
+                }
+
+                    vocher_Items.clear();
+                }
+            }
+        });
         temporderbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                for(int i=0;i<vocher_Items.size();i++) {
+                if(vocher_Items.size()==0)
+                {
+                    GeneralMethod.showSweetDialog(HomeActivity.this,3,getResources().getString(R.string.emptyList),"");        }
+                else
+                {  for(int i=0;i<vocher_Items.size();i++) {
                     TempOrder tempOrder = new TempOrder();
                     tempOrder.setItemNo(vocher_Items.get(i).getItemNCode());
-                    tempOrder.setItemName(vocher_Items.get(i).getItemNCode());
+                    tempOrder.setItemName(vocher_Items.get(i).getItemName());
                     tempOrder.setQty(vocher_Items.get(i).getQty());
                     tempOrder.setArea(vocher_Items.get(i).getArea());
                     tempOrder.setTax(vocher_Items.get(i).getTax());
                     tempOrder.setCustomerId(vocher_Items.get(i).getCus_Id());
                     tempOrder.setDiscount(vocher_Items.get(i).getDiscount());
                     tempOrder.setPrice(vocher_Items.get(i).getPrice());
-                    tempOrder.setTotal(vocher_Items.get(i).getPrice());
-                    tempOrder.setConfStatus(1);
+                    tempOrder.setTotal(CalculateVochTotal());
+                    tempOrder.setConfStatus(0);
 
-                    tempOrder.setDate("");
-                    tempOrder.setTime("");
+                    tempOrder.setDate(generalMethod.getCurentTimeDate(1));
+                    tempOrder.setTime(generalMethod.getCurentTimeDate(2));
+                    appDatabase.tempOrdersDao().insertOrder(tempOrder);
+                }
+                    vocher_Items.clear();
+
                 }
             }
         });
@@ -95,6 +137,7 @@ public class HomeActivity extends AppCompatActivity {
         ArrayList<Item> itemList=new ArrayList<>();
 
         Item item=new Item();
+        item.setItemName("aaaaaa");
         item.setItemNCode("234755966");
         item.setPrice(10);
         item.setUnit("10");
@@ -102,6 +145,7 @@ public class HomeActivity extends AppCompatActivity {
         item.setQty(10);
         itemList.add(item);
         Item item2=new Item();
+        item2.setItemName("bbbbb");
         item2.setItemNCode("123456538");
         item2.setPrice(10);
         item2.setUnit("1");
@@ -109,6 +153,7 @@ public class HomeActivity extends AppCompatActivity {
         item2.setQty(10);
 
         Item item3=new Item();
+        item3.setItemName("ccccccc");
         item3.setItemNCode("983578445");
         item3.setPrice(10);
         item3.setUnit("0");
@@ -126,11 +171,11 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
-        Item item4=new Item();
+        /*Item item4=new Item();
         item4.setItemNCode("FILTERS");
         item4.setPrice(10);
         item4.setUnit("10");
-        itemList.add(0,  item4);
+        itemList.add(0,  item4);*/
         CustomAdapter customAdapter=new  CustomAdapter ( HomeActivity.this,itemList);
 
         Catg_SP.setAdapter( customAdapter);
@@ -232,10 +277,11 @@ public class HomeActivity extends AppCompatActivity {
 
 
     void init() {
-
+  appDatabase= AppDatabase.getInstanceDatabase(HomeActivity.this);
+        generalMethod=new GeneralMethod(HomeActivity.this);
         customersSpinner = findViewById(R.id.customersSpinner);
         addCustomerBtn = findViewById(R.id.addCustomerBtn);
-
+        orderbtn = findViewById(R.id.orderbtn);
         customersList_sp = new ArrayList<>();
         customerNames_sp = new ArrayList<>();
         itemList_rv = new ArrayList<>();
@@ -258,5 +304,13 @@ public  static void fillcustomerNamesadapter(Context context){
 
         customersSpinner.setAdapter(arrayAdapter);
         customersSpinner.setSelection(0);
+}
+public double CalculateVochTotal(){
+double total=0;
+    for (int i = 0; i < vocher_Items.size(); i++) {
+        total+=vocher_Items.get(i).getPrice()*vocher_Items.get(i).getQty();
+    }
+
+    return total;
 }
 }

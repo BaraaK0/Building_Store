@@ -14,5 +14,9 @@
     <string name="cancel">إالغاء</string>
     <string name="customerName">اسم العميل</string>
     <string name="required">*مطلوب</string>
-
+    <string name="reqired_filled">مطلوب*</string>
+    <string name="invaledZero">Invaled Zero</string>
+    <string name="emptyList">قائمة فارغة</string>
+    <string name="itemName">اسم المادة</string>
+    <string name="avlqty">الكمية المتوفرة</string>
 </resources>

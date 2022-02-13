@@ -78,7 +78,12 @@ public  class ItemAdapter extends BaseAdapter {
                     dialog.show();
                     TextView save=dialog.findViewById(R.id.save);
                     TextView cancelBtn=dialog.findViewById(R.id.cancelBtn);
-
+                    TextView itemname=dialog.findViewById(R.id.itemname);
+                    TextView itemno=dialog.findViewById(R.id.itemno);
+                    TextView aviqty=dialog.findViewById(R.id.aviqty);
+                    aviqty.setText(list.get(position).getAviqty()+"");
+                    itemname.setText( list.get(position).getItemName());
+                    itemno.setText( list.get(position).getItemNCode());
                     EditText ITEMqty=dialog.findViewById(R.id.ITEMqty);
                     EditText ITEMdiscount=dialog.findViewById(R.id.ITEMdiscount);
                     if(IsExistsInList( list.get(position).getItemNCode()))
@@ -102,13 +107,8 @@ public  class ItemAdapter extends BaseAdapter {
                     save.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-
-//                            Vocher vocher=new Vocher();
-//                            vocher.setItemCode(list.get(position).getItemNCode());
-//                            vocher.setCustomerId("1");
-//                            vocher.setQty(Double.parseDouble(ITEMqty.getText().toString()));
-//                            vocher.setDiscount(Double.parseDouble(ITEMdiscount.getText().toString()));
-//
+                            if(!ITEMdiscount.getText().toString().equals("")&&
+                           ! ITEMqty.getText().toString().equals("")   ){
                             list.get(position).setDiscount(Double.parseDouble(ITEMdiscount.getText().toString()));
                             list.get(position).setQty(Double.parseDouble(ITEMqty.getText().toString()));
 
@@ -145,7 +145,7 @@ public  class ItemAdapter extends BaseAdapter {
                         }
                             dialog.dismiss();
 
-                        }
+                        }}
                     });
 
                 }
