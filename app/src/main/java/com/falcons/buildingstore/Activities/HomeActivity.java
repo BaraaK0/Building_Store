@@ -52,7 +52,7 @@ public class HomeActivity extends AppCompatActivity {
 //    ArrayList<String> categories = new ArrayList<>();
 //    public static RecyclerView recyclerView_Items;
 //    public static VoherItemAdapter voherItemAdapter;
-//    public static ArrayList<Item> vocher_Items = new ArrayList<>();
+   public static ArrayList<Item> vocher_Items = new ArrayList<>();
 //    Button temporderbtn;
 //    Spinner Catg_SP;
 //    public static ArrayAdapter<String> arrayAdapter;
