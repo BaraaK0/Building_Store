@@ -22,12 +22,8 @@ public class Item {
     @ColumnInfo(name = "Avi_Qty")
     public double Aviqty;
 
-
-
-
     @ColumnInfo(name = "Price")
     public double price;
-
 
     @ColumnInfo(name = "Unit")
     private String unit;

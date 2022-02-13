@@ -1,15 +1,13 @@
 package com.falcons.buildingstore.Adapters;
 
-import static com.falcons.buildingstore.Activities.HomeActivity.custmsDialog;
-import static com.falcons.buildingstore.Activities.HomeActivity.customerNames_sp;
-import static com.falcons.buildingstore.Activities.HomeActivity.customersSpinner;
+//import static com.falcons.buildingstore.Activities.HomeActivity.custmsDialog;
+//import static com.falcons.buildingstore.Activities.HomeActivity.customerNameTV;
 
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -51,21 +49,11 @@ public class CustomersAdapter extends RecyclerView.Adapter<CustomersAdapter.View
             @Override
             public void onClick(View v) {
 
-                if (!customerNames_sp.contains(customersList.get(holder.getAdapterPosition()).getCustomerName())) {
 
-                    Log.e("Customer", "Added");
-                    customerNames_sp.add(customersList.get(holder.getAdapterPosition()).getCustomerName());
-                    customersSpinner.setAdapter(new ArrayAdapter<>(context, android.R.layout.simple_spinner_item, customerNames_sp));
-                    customersSpinner.setSelection(customerNames_sp.size() - 1);
-
-                } else {
-
-                    Log.e("Customer", "Already Exist");
-                    customersSpinner.setSelection(customerNames_sp.indexOf(customersList.get(holder.getAdapterPosition()).getCustomerName()));
-
-                }
-
-                custmsDialog.dismiss();
+                Log.e("Customer_Selected", customersList.get(holder.getAdapterPosition()).getCustomerName());
+//                customerNameTV.setText(customersList.get(holder.getAdapterPosition()).getCustomerName());
+//
+//                custmsDialog.dismiss();
 
             }
         });

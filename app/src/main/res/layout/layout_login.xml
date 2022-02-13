@@ -38,12 +38,13 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/unameTextField"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/username"
             app:endIconMode="clear_text"
-            app:startIconDrawable="@drawable/ic_baseline_person_24">
+            app:startIconDrawable="@drawable/ic_baseline_person_24"
+            app:boxBackgroundColor="@color/white">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/unameEdt"
@@ -73,13 +74,15 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/passTextField"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/password"
             app:endIconMode="password_toggle"
-            app:startIconDrawable="@drawable/ic_baseline_vpn_key_24">
+            app:startIconDrawable="@drawable/ic_baseline_vpn_key_24"
+            app:boxBackgroundColor="@color/white"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passEdt"

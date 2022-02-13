@@ -13,7 +13,9 @@
     <color name="blue">#5C98FF</color>
     <color name="red">#FF0000</color>
 
-    <color name="primaryTextColor">#00a5ff</color>
+    <color name="primaryTextColor">#115571</color>
+    <color name="main_bg">#E5E5E5</color>
+    <color name="semi_white_bg">#FCFCFD</color>
     <color name="loginBkColor">#f0f0f0</color>
 
     <color name="orange">#FF9F00</color>

@@ -16,12 +16,31 @@
     <string name="title_activity_maps">MapsActivity</string>
     <string name="itemNCode">itemNCode</string>
     <string name="qty">qty</string>
-    <string name="price">price</string>
     <string name="unit">unit</string>
     <string name="itemKind">itemKind</string>
-    <string name="tax">tax</string>
-    <string name="area"> area</string>
-    <string name="discount"> Discount</string>
+
 
     <string name="save"> Save</string>
+    <string name="sign_in">Sign In</string>
+    <string name="sign_in_with">Sign in now with your username and password !</string>
+    <string name="login_as">Login as:</string>
+    <string name="request">Request</string>
+
+    <string name="item_name">Item name:</string>
+    <string name="item_Ncode">Item Ncode:</string>
+    <string name="item_kind">Item kind:</string>
+    <string name="tax">Tax:</string>
+    <string name="price">Price:</string>
+    <string name="discount">Discount:</string>
+    <string name="quantity">Quantity:</string>
+    <string name="area">Area:</string>
+    <string name="box">Box</string>
+    <string name="meter">Meter</string>
+
+
+    <string-array name="user_type">
+        <item>Admin</item>
+        <item>User</item>
+    </string-array>
+
 </resources>
