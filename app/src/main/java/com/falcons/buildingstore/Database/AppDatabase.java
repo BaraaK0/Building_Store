@@ -21,9 +21,10 @@ import com.falcons.buildingstore.Database.Entities.OrderMaster;
 import com.falcons.buildingstore.Database.Entities.OrdersDetails;
 import com.falcons.buildingstore.Database.Entities.TempOrder;
 import com.falcons.buildingstore.Database.Entities.User;
+import com.falcons.buildingstore.Database.Entities.UserLogs;
 
-@Database(entities = {Item.class, CustomerInfo.class, TempOrder.class, OrderMaster.class, User.class, OrdersDetails.class}, version = 10)
-@Database(entities = {Item.class, CustomerInfo.class, TempOrder.class, OrderMaster.class, User.class, OrdersDetails.class}, version = 5)
+@Database(entities = {Item.class, CustomerInfo.class, TempOrder.class, OrderMaster.class, User.class, OrdersDetails.class, UserLogs.class}, version = 10)
+
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract Items_Dao itemsDao();
@@ -40,26 +41,13 @@ public abstract class AppDatabase extends RoomDatabase {
 
     private static AppDatabase InstanceDatabase;
     public static String DatabaseName = "BuildingStore_Database";
-    static final Migration MIGRATION_8_9 = new Migration(8, 9) {
-        @Override
-        public void migrate(SupportSQLiteDatabase database) {
 
-
-        }
-    };
-    static final Migration MIGRATION_9_10 = new Migration(9, 10) {
-        @Override
-        public void migrate(SupportSQLiteDatabase database) {
-
-
-        }
-    };
     public static synchronized AppDatabase getInstanceDatabase(Context context) {
 
         if (InstanceDatabase == null) {
 
             InstanceDatabase = Room.databaseBuilder(context, AppDatabase.class, DatabaseName)
-                    .allowMainThreadQueries().addMigrations(MIGRATION_8_9 ,MIGRATION_9_10)
+                    .allowMainThreadQueries()
                     .fallbackToDestructiveMigration()
                     .build();
 

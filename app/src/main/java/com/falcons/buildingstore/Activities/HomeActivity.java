@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.Gravity;
@@ -30,14 +31,16 @@ import android.widget.ImageView;
 
 import com.falcons.buildingstore.Database.AppDatabase;
 import com.falcons.buildingstore.Database.Entities.CustomerInfo;
+
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
-import com.falcons.buildingstore.DataManipulation.ExportData;
+
 import com.falcons.buildingstore.Database.Entities.Item;
 import com.falcons.buildingstore.Adapters.ItemsAdapter;
 import com.falcons.buildingstore.R;
+import com.falcons.buildingstore.Utilities.ExportData;
 import com.falcons.buildingstore.Utilities.ImportData;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
@@ -77,9 +80,11 @@ public class HomeActivity extends BaseActivity {
     public static final int REQUEST_Camera_Barcode = 1;
 
     ExportData exportData;
-    public static  TextView itemcount;
-    public static  int   item_count=0;
-    public static  ArrayList<Item> itemList;
+    public static TextView itemcount;
+    public static int item_count = 0;
+    public static ArrayList<Item> itemList;
+    public static ArrayList<Item> vocher_Items = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -140,48 +145,49 @@ public class HomeActivity extends BaseActivity {
 
 
         /* Items Search Handling */
-        searchItemsEdt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-                String eTxt = s.toString().trim().toLowerCase();
-
-                if (!eTxt.equals("")) {
-
-                    search_itemList.clear();
-                    for (int i = 0; i < allItemList_rv.size(); i++) {
-
-                        if (allItemList_rv.get(i).getItemName().toLowerCase().contains(eTxt) ||
-                                allItemList_rv.get(i).getItemNCode().toLowerCase().contains(eTxt.replaceAll("\\s+", ""))) {
-
-                            search_itemList.add(allItemList_rv.get(i));
-
-                        }
-
-                    }
-
-                    ItemsAdapter itemsAdapter1 = new ItemsAdapter(search_itemList, HomeActivity.this);
-                    itemsRecycler.setAdapter(itemsAdapter1);
-
-                } else {
-
-                    itemsAdapter = new ItemsAdapter(allItemList_rv, HomeActivity.this);
-                    itemsRecycler.setAdapter(itemsAdapter);
-
-                }
-
-            }
-        });
+//        searchItemsEdt.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//
+//                String eTxt = s.toString().trim().toLowerCase();
+//
+//                if (!eTxt.equals("")) {
+//
+//                    search_itemList.clear();
+//                    for (int i = 0; i < allItemList_rv.size(); i++) {
+//
+//                        if (allItemList_rv.get(i).getItemName().toLowerCase().contains(eTxt) ||
+//                                allItemList_rv.get(i).getItemNCode().toLowerCase().contains(eTxt.replaceAll("\\s+", ""))) {
+//
+//                            search_itemList.add(allItemList_rv.get(i));
+//
+//                        }
+//
+//                    }
+//
+//                    ItemsAdapter itemsAdapter1 = new ItemsAdapter(search_itemList, HomeActivity.this);
+//                    itemsRecycler.setAdapter(itemsAdapter1);
+//
+//                }
+//                else {
+//
+//                    itemsAdapter = new ItemsAdapter(allItemList_rv, HomeActivity.this);
+//                    itemsRecycler.setAdapter(itemsAdapter);
+//
+//                }
+//
+//            }
+//        });
 
         searchItems_textField.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
@@ -203,6 +209,8 @@ public class HomeActivity extends BaseActivity {
                     i.putExtra("key", "1");
                     startActivity(i);
                 }
+            }
+        });
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
@@ -212,19 +220,19 @@ public class HomeActivity extends BaseActivity {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
-                            case R.id.cartPage:
-                                Intent intent=new Intent(HomeActivity.this,BasketActivity.class);
+                            case R.id.action_cart:
+                                Intent intent = new Intent(HomeActivity.this, BasketActivity.class);
                                 startActivity(intent);
 
                                 break;
-                            case R.id.  exportdata:
-                                exportData . exportSalesVoucherM();
+                            case R.id.exportdata:
+                                exportData.exportSalesVoucherM();
                                 break;
-                            case R.id. reportPage:
-                                Intent intent1=new Intent(HomeActivity.this,ShowPreviousOrder.class);
+                            case R.id.action_report:
+                                Intent intent1 = new Intent(HomeActivity.this, ShowPreviousOrder.class);
                                 startActivity(intent1);
                                 break;
-                            case R.id. addPage:
+                            case R.id.action_add:
 
                                 final Dialog dialog = new Dialog(HomeActivity.this);
                                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -235,21 +243,20 @@ public class HomeActivity extends BaseActivity {
                                 lp.gravity = Gravity.CENTER;
                                 dialog.getWindow().setAttributes(lp);
                                 dialog.show();
-            }
-        });
 
-                              dialog.findViewById(R.id.addCustomer).setOnClickListener(new View.OnClickListener() {
-                                  @Override
-                                  public void onClick(View view) {
-                                      Intent intent2=new Intent(HomeActivity.this,AddNewCustomer.class);
-                                      startActivity(intent2);
-                                      dialog.dismiss();
-                                  }
-                              });
+
+                                dialog.findViewById(R.id.addCustomer).setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        Intent intent2 = new Intent(HomeActivity.this, AddNewCustomer.class);
+                                        startActivity(intent2);
+                                        dialog.dismiss();
+                                    }
+                                });
                                 dialog.findViewById(R.id.adduser).setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        Intent intent2=new Intent(HomeActivity.this,AddNewUser.class);
+                                        Intent intent2 = new Intent(HomeActivity.this, AddNewUser.class);
                                         startActivity(intent2);
                                         dialog.dismiss();
                                     }
@@ -274,15 +281,15 @@ public class HomeActivity extends BaseActivity {
 
 
     void init() {
-        exportData=new ExportData(HomeActivity.this);
+        exportData = new ExportData(HomeActivity.this);
 
         importData = new ImportData(this);
         appDatabase = AppDatabase.getInstanceDatabase(this);
 
         bottom_navigation = findViewById(R.id.bottom_navigation);
         itemsRecycler = findViewById(R.id.itemsRecycler);
-        itemList_rv = new ArrayList<>();
-        itemcount= findViewById(R.id.itemcount);
+
+        itemcount = findViewById(R.id.itemcount);
         customer_textInput = findViewById(R.id.customer_textInput);
         customerTv = findViewById(R.id.customerTv);
         searchItemsEdt = findViewById(R.id.searchItemsEdt);

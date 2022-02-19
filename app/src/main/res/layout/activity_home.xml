@@ -19,6 +19,47 @@
         android:layout_marginTop="40dp"
         android:background="@drawable/logo" />
 
+    <ScrollView
+        android:id="@+id/parentScroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom_navigation"
+        android:layout_below="@+id/filtersLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="44dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/itemsRecycler"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="23dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/itemcount"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="35dp"
+        android:layout_marginBottom="18dp"
+        android:textColor="@color/red"
+        android:textSize="12sp"
+        android:textStyle="bold" />
+
+    <!--    <RelativeLayout-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content">-->
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/filtersLayout"
         android:layout_width="match_parent"
@@ -26,8 +67,7 @@
         android:layout_below="@+id/logo_remove"
         android:layout_centerHorizontal="true"
         android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="25dp"
-        >
+        android:layout_marginTop="25dp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/customer_textInput"
@@ -49,8 +89,7 @@
             app:layout_constraintEnd_toStartOf="@+id/searchItems_textField"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.47"
-            >
+            app:layout_constraintWidth_percent="0.47">
 
             <AutoCompleteTextView
                 android:id="@+id/customerTv"
@@ -132,54 +171,17 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ScrollView
-        android:id="@+id/parentScroll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/bottom_navigation"
-        android:layout_below="@+id/filtersLayout"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="44dp">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/itemsRecycler"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="23dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-        </LinearLayout>
-    </ScrollView>
-
-<!--    <RelativeLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content">-->
-
     <include
+        android:id="@+id/bottom_navigation"
         layout="@layout/bottom_nav_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        android:textColor="@color/red"
-        android:layout_marginStart="35dp"
-        android:id="@+id/itemcount"
-        android:layout_marginBottom="18dp"
-        android:layout_alignParentLeft="true"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        />
-<!--    </RelativeLayout>-->
+        android:layout_centerHorizontal="true"/>
+    <!--    </RelativeLayout>-->
 
 </RelativeLayout>
+
     <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
     <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
     <!--    xmlns:tools="http://schemas.android.com/tools"-->
@@ -197,9 +199,9 @@
     <!--        android:orientation="horizontal"-->
     <!--        android:padding="3dp"-->
     <!--        android:paddingTop="4dp">-->
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true" />
+    <!--        android:layout_height="50dp"-->
+    <!--        android:layout_alignParentBottom="true"-->
+    <!--        android:layout_centerHorizontal="true" />-->
 
 
-</RelativeLayout>
+    <!--</RelativeLayout>-->

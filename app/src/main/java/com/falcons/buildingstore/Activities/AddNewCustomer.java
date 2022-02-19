@@ -9,7 +9,7 @@ import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
 
 import com.falcons.buildingstore.Database.AppDatabase;
 import com.falcons.buildingstore.Database.Entities.CustomerInfo;
-import com.falcons.buildingstore.Database.Entities.GeneralMethod;
+import com.falcons.buildingstore.Utilities.GeneralMethod;
 import com.falcons.buildingstore.R;
 public class AddNewCustomer extends AppCompatActivity {
 EditText cus_name,phoneNo;

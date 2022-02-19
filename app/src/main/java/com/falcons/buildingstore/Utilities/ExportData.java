@@ -37,7 +37,7 @@ import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-class ExportData {
+public class ExportData {
 
     List<OrderMaster> vouchers;
     private Context context;
@@ -68,7 +68,7 @@ class ExportData {
 
     }
 
-    private void exportSalesVoucherM() {
+    public void exportSalesVoucherM() {
         getVouchers();
 
         pdVoucher = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);

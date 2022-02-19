@@ -43,7 +43,7 @@ public class Item {
     @ColumnInfo(name = "Qty")
     public double qty;
 
-    @ColumnInfo(name = "Item_Discount")
+
     @ColumnInfo(name = "Item_Discount",defaultValue = "0")
     double Discount;
 

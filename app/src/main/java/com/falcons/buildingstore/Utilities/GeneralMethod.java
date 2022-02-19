@@ -49,7 +49,7 @@ public class GeneralMethod {
         }
     }
 
-    public String getCurrentTimeDate(int flag) {
+    public String getCurentTimeDate(int flag) {
         String dateCurent = "", timeCurrent, dateTime = "";
         Date currentTimeAndDate;
         SimpleDateFormat dateFormat, timeformat;

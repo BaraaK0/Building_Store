@@ -14,5 +14,5 @@ public interface UserLogsDao {
     void insertUser(UserLogs userLogs);
 
     @Query("SELECT * FROM UserLogs where SERIAL= (SELECT MAX(SERIAL) FROM UserLogs)")
-    int getLastuserLogin ( );
+    UserLogs getLastuserLogin ( );
 }

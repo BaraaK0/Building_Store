@@ -25,7 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.falcons.buildingstore.Database.AppDatabase;
-import com.falcons.buildingstore.Database.Entities.GeneralMethod;
+import com.falcons.buildingstore.Utilities.GeneralMethod;
 import com.falcons.buildingstore.Database.Entities.UserLogs;
 import com.falcons.buildingstore.Database.AppDatabase;
 import com.falcons.buildingstore.Database.Entities.CustomerInfo;
@@ -70,8 +70,7 @@ GeneralMethod generalMethod;
 
     ImportData importData;
 
-  String ipAddress, ipPort, coNo;
-AppDatabase  appDatabase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

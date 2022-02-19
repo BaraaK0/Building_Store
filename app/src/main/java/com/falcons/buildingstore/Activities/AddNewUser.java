@@ -10,7 +10,7 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.falcons.buildingstore.Database.AppDatabase;
-import com.falcons.buildingstore.Database.Entities.GeneralMethod;
+import com.falcons.buildingstore.Utilities.GeneralMethod;
 import com.falcons.buildingstore.Database.Entities.User;
 import com.falcons.buildingstore.R;
 import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
