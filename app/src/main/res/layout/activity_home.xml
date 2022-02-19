@@ -9,22 +9,137 @@
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
+
     <ImageView
         android:id="@+id/logo_remove"
         android:layout_width="74dp"
         android:layout_height="62dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="57dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/logo" />
 
-    <ScrollView
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/filtersLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/bottom_navigation"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/logo_remove"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="40dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="25dp"
+        >
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/customer_textInput"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="5dp"
+            android:gravity="center"
+            android:hint="Customer"
+            app:boxBackgroundColor="@color/white"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxStrokeColor="@color/primaryTextColor"
+            app:boxStrokeWidth="1dp"
+            app:endIconTint="@color/primaryTextColor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/searchItems_textField"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.47"
+            >
+
+            <AutoCompleteTextView
+                android:id="@+id/customerTv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textAutoComplete"
+                android:textAlignment="center"
+                android:textColor="@color/black" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--        <Spinner-->
+        <!--            android:id="@+id/customer_spinner"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
+        <!--            app:layout_constraintEnd_toStartOf="@+id/search_items"-->
+        <!--            app:layout_constraintStart_toStartOf="parent"-->
+        <!--            app:layout_constraintTop_toTopOf="parent"-->
+        <!--            app:layout_constraintWidth_percent="0.5"-->
+        <!--            android:background="@drawable/spinner_style"/>-->
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/searchItems_textField"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="Search Items .."
+            app:boxBackgroundColor="@color/white"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxStrokeColor="@color/primaryTextColor"
+            app:boxStrokeWidth="1dp"
+            app:endIconCheckable="true"
+            app:endIconDrawable="@drawable/ic_camera_24"
+            app:endIconMode="custom"
+            app:endIconTint="@color/primaryTextColor"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/customer_textInput"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="0.5">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/searchItemsEdt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!--        <EditText-->
+        <!--            android:id="@+id/searchItemsEdt"-->
+        <!--            android:layout_width="0dp"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:layout_marginStart="5dp"-->
+        <!--            android:background="@drawable/save_btn_bg"-->
+        <!--            android:hint="Search Items .."-->
+        <!--            android:paddingStart="10dp"-->
+        <!--            android:paddingVertical="10dp"-->
+        <!--            android:paddingEnd="25dp"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@+id/customer_textInput"-->
+        <!--            app:layout_constraintEnd_toEndOf="parent"-->
+        <!--            app:layout_constraintStart_toEndOf="@+id/customer_textInput"-->
+        <!--            app:layout_constraintTop_toTopOf="@+id/customer_textInput"-->
+        <!--            app:layout_constraintWidth_percent="0.5" />-->
+
+        <!--        <ImageButton-->
+        <!--            android:id="@+id/scanCodeBtn"-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginEnd="5dp"-->
+        <!--            android:background="@drawable/ic_camera_24"-->
+        <!--            app:layout_constraintBottom_toBottomOf="@+id/searchItemsEdt"-->
+        <!--            app:layout_constraintEnd_toEndOf="@+id/searchItemsEdt"-->
+        <!--            app:layout_constraintTop_toTopOf="@+id/searchItemsEdt" />-->
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:id="@+id/parentScroll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom_navigation"
+        android:layout_below="@+id/filtersLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="44dp">
 
         <LinearLayout
@@ -82,245 +197,9 @@
     <!--        android:orientation="horizontal"-->
     <!--        android:padding="3dp"-->
     <!--        android:paddingTop="4dp">-->
-
-    <!--        <TextView-->
-    <!--            android:id="@+id/customerNameTV"-->
-    <!--            android:layout_width="0dp"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:layout_weight="1"-->
-    <!--            android:background="@drawable/back_border_edit"-->
-    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--            app:layout_constraintEnd_toStartOf="@+id/Catg_SP"-->
-    <!--            app:layout_constraintStart_toStartOf="parent"-->
-    <!--            app:layout_constraintTop_toTopOf="parent"-->
-    <!--            android:text="@string/customerName"-->
-    <!--            android:gravity="center_vertical|start"-->
-    <!--            android:padding="8dp"-->
-    <!--            android:textStyle="bold"/>-->
-
-    <!--        <com.google.android.material.floatingactionbutton.FloatingActionButton-->
-    <!--            android:id="@+id/addCustomerBtn"-->
-    <!--            android:layout_width="wrap_content"-->
-    <!--            android:layout_height="wrap_content"-->
-    <!--            android:contentDescription="Add Customer"-->
-    <!--            android:src="@android:drawable/ic_input_add"-->
-    <!--            app:fabSize="mini"-->
-    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--            app:layout_constraintEnd_toEndOf="@+id/customerNameTV"-->
-    <!--            app:layout_constraintTop_toTopOf="parent" />-->
-
-    <!--        <Spinner-->
-    <!--            android:id="@+id/Catg_SP"-->
-    <!--            android:layout_width="0dp"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:layout_weight="1"-->
-    <!--            android:background="@drawable/back_border_shape"-->
-    <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-    <!--            app:layout_constraintEnd_toEndOf="parent"-->
-    <!--            app:layout_constraintStart_toEndOf="@+id/customerNameTV"-->
-    <!--            app:layout_constraintTop_toTopOf="parent"-->
-    <!--            android:layout_marginStart="10dp"/>-->
-    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
-
-    <!--    <LinearLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:layout_weight="7"-->
-    <!--        android:background="@color/white">-->
-
-    <!--        <HorizontalScrollView-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="fill_parent"-->
-    <!--            android:layout_below="@+id/seatLegendLayout">-->
-
-    <!--            <FrameLayout-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="match_parent">-->
-
-    <!--                <LinearLayout-->
-    <!--                    android:id="@+id/linearLayout_gridtableLayout"-->
-    <!--                    android:layout_width="900dp"-->
-    <!--                    android:layout_height="match_parent"-->
-    <!--                    android:background="@color/white"-->
-    <!--                    android:orientation="horizontal">-->
-
-    <!--                    <GridView-->
-    <!--                        android:id="@+id/simpleGridView"-->
-    <!--                        android:layout_width="match_parent"-->
-    <!--                        android:layout_height="match_parent"-->
-    <!--                        android:layout_margin="4dp"-->
-    <!--                        android:columnWidth="100dp"-->
-    <!--                        android:gravity="center"-->
-    <!--                        android:horizontalSpacing="1dp"-->
-    <!--                        android:numColumns="1"-->
-    <!--                        android:scrollbarAlwaysDrawHorizontalTrack="true"-->
-    <!--                        android:scrollbarAlwaysDrawVerticalTrack="true"-->
-    <!--                        android:scrollbars="horizontal"-->
-
-    <!--                        android:verticalSpacing="1dp">-->
-
-    <!--                    </GridView>-->
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
 
 
-    <!--                </LinearLayout>-->
-    <!--            </FrameLayout>-->
-    <!--        </HorizontalScrollView>-->
-
-    <!--    </LinearLayout>-->
-
-    <!--    <ScrollView-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:layout_weight="7.5"-->
-    <!--        android:background="@color/white"-->
-    <!--        android:fillViewport="true"-->
-    <!--        android:scrollbars="vertical">-->
-
-    <!--        <LinearLayout-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:layout_weight="1"-->
-    <!--            android:orientation="vertical">-->
-
-    <!--            <LinearLayout-->
-    <!--                android:layout_width="match_parent"-->
-    <!--                android:layout_height="match_parent"-->
-    <!--                android:layout_margin="2dp"-->
-    <!--                android:layout_weight="3"-->
-    <!--                android:orientation="vertical">-->
-
-    <!--                <LinearLayout-->
-    <!--                    android:id="@+id/serialtable"-->
-    <!--                    android:layout_width="match_parent"-->
-
-    <!--                    android:layout_height="40dp"-->
-
-    <!--                    android:layout_margin="2dp"-->
-    <!--                    android:background="@drawable/back_border_shape"-->
-    <!--                    android:gravity="center"-->
-    <!--                    android:padding="2dp">-->
-
-    <!--                    <TextView-->
-    <!--                        android:layout_width="match_parent"-->
-    <!--                        android:layout_height="match_parent"-->
-
-    <!--                        android:layout_weight="1"-->
-    <!--                        android:gravity="center"-->
-    <!--                        android:text="ItemName"-->
-
-    <!--                        android:textColor="@color/white"-->
-    <!--                        android:textSize="12sp"-->
-    <!--                        android:textStyle="bold" />-->
-
-    <!--                    <TextView-->
-    <!--                        android:layout_width="2dp"-->
-    <!--                        android:layout_height="match_parent"-->
-    <!--                        android:layout_margin="10dp"-->
-    <!--                        android:background="@color/white"-->
-    <!--                        android:gravity="center"-->
-    <!--                        android:textSize="12sp"-->
-    <!--                        android:textStyle="bold" />-->
-
-    <!--                    <TextView-->
-    <!--                        android:layout_width="match_parent"-->
-    <!--                        android:layout_height="match_parent"-->
-    <!--                        android:layout_weight="1"-->
-    <!--                        android:gravity="center"-->
-
-    <!--                        android:text="ItemCode"-->
-    <!--                        android:textColor="@color/white"-->
-    <!--                        android:textSize="12sp"-->
-    <!--                        android:textStyle="bold" />-->
-
-    <!--                    <TextView-->
-    <!--                        android:layout_width="2dp"-->
-    <!--                        android:layout_height="match_parent"-->
-    <!--                        android:layout_margin="10dp"-->
-    <!--                        android:background="@color/white"-->
-    <!--                        android:gravity="center"-->
-    <!--                        android:textSize="12sp"-->
-    <!--                        android:textStyle="bold" />-->
-
-    <!--                    <TextView-->
-    <!--                        android:layout_width="match_parent"-->
-    <!--                        android:layout_height="match_parent"-->
-    <!--                        android:layout_weight="1"-->
-    <!--                        android:gravity="center"-->
-
-    <!--                        android:text="Qty"-->
-    <!--                        android:textColor="@color/white"-->
-    <!--                        android:textSize="12sp"-->
-    <!--                        android:textStyle="bold" />-->
-
-    <!--                </LinearLayout>-->
-
-    <!--                <androidx.recyclerview.widget.RecyclerView-->
-    <!--                    android:id="@+id/recyclerView_Items"-->
-    <!--                    android:layout_width="match_parent"-->
-    <!--                    android:layout_height="match_parent"-->
-
-    <!--                    android:layout_margin="2dp"-->
-    <!--                    android:layout_weight="2"-->
-    <!--                    android:background="@drawable/edt_back"-->
-    <!--                    android:orientation="vertical"-->
-
-    <!--                    android:padding="2dp">-->
-
-    <!--                </androidx.recyclerview.widget.RecyclerView>-->
-
-    <!--            </LinearLayout>-->
-    <!--        </LinearLayout>-->
-    <!--    </ScrollView>-->
-
-    <!--    <LinearLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_margin="3dp">-->
-
-
-    <!--        <TextView-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:layout_weight="2" />-->
-
-    <!--        <androidx.appcompat.widget.AppCompatButton-->
-    <!--            android:id="@+id/temporderbtn"-->
-    <!--            android:layout_width="match_parent"-->
-
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:layout_weight="1.5"-->
-    <!--            android:background="@drawable/back_border_shape"-->
-    <!--            android:paddingTop="2dp"-->
-
-    <!--            android:text="حفظ عرض "-->
-    <!--            android:textColor="@color/white"-->
-    <!--            android:textSize="20sp"-->
-    <!--            android:textStyle="bold" />-->
-
-    <!--        <TextView-->
-    <!--            android:layout_width="20dp"-->
-    <!--            android:layout_height="match_parent">-->
-
-    <!--        </TextView>-->
-
-    <!--        <androidx.appcompat.widget.AppCompatButton-->
-    <!--            android:id="@+id/btn1"-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:layout_weight="1.5"-->
-
-    <!--            android:background="@drawable/back_border_shape2"-->
-    <!--            android:paddingTop="2dp"-->
-    <!--            android:text="طلب"-->
-    <!--            android:textColor="@color/purple_500"-->
-    <!--            android:textSize="30sp" />-->
-
-    <!--        <TextView-->
-    <!--            android:layout_width="match_parent"-->
-    <!--            android:layout_height="match_parent"-->
-    <!--            android:layout_weight="2" />-->
-
-    <!--    </LinearLayout>-->
-
-
-    <!--</LinearLayout>-->
+</RelativeLayout>

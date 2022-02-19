@@ -7,16 +7,29 @@ import static com.falcons.buildingstore.Activities.LoginActivity.SETTINGS_PREFER
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.Manifest;
+import android.content.Intent;
 import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
+import android.widget.EditText;
+import android.widget.ImageView;
+
+import com.falcons.buildingstore.Database.AppDatabase;
+import com.falcons.buildingstore.Database.Entities.CustomerInfo;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
@@ -25,28 +38,24 @@ import com.falcons.buildingstore.DataManipulation.ExportData;
 import com.falcons.buildingstore.Database.Entities.Item;
 import com.falcons.buildingstore.Adapters.ItemsAdapter;
 import com.falcons.buildingstore.R;
+import com.falcons.buildingstore.Utilities.ImportData;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class HomeActivity extends AppCompatActivity {
-    //    GridView gridView;
-//    ArrayList<String> categories = new ArrayList<>();
-//    public static RecyclerView recyclerView_Items;
-//    public static VoherItemAdapter voherItemAdapter;
-   public static ArrayList<Item> vocher_Items = new ArrayList<>();
-//    Button temporderbtn;
-//    Spinner Catg_SP;
-//    public static ArrayAdapter<String> arrayAdapter;
-//    public static TextView customerNameTV;
-//    FloatingActionButton addCustomerBtn;
-//    static List<CustomerInfo> customersList;
-    public static List<Item> itemList_rv;
-    //    public static List<String> customerNames;
-//    public static Dialog custmsDialog;
+public class HomeActivity extends BaseActivity {
+
+    public static List<Item> allItemList_rv;
+    private List<Item> search_itemList;
+
+    private List<CustomerInfo> allCustomers;
+    public static ArrayList<String> customerNames;
+
     private String ipAddress, ipPort, coNo;
 
     public ItemsAdapter itemsAdapter;
@@ -54,6 +63,19 @@ public class HomeActivity extends AppCompatActivity {
     public static RecyclerView itemsRecycler;
 
     BottomNavigationView bottom_navigation;
+
+    ImportData importData;
+
+    private AppDatabase appDatabase;
+
+    public static TextInputLayout customer_textInput;
+    public static AutoCompleteTextView customerTv;
+    public static EditText searchItemsEdt;
+    private TextInputLayout searchItems_textField;
+    private ImageView scanCodeBtn;
+
+    public static final int REQUEST_Camera_Barcode = 1;
+
     ExportData exportData;
     public static  TextView itemcount;
     public static  int   item_count=0;
@@ -65,121 +87,122 @@ public class HomeActivity extends AppCompatActivity {
 
         init();
 
-    itemList = new ArrayList<>();
+        bottom_navigation.setSelectedItemId(R.id.action_home);
 
-        Item item = new Item();
-        item.setItem_Name("Item Number 1");
-        item.setItemNCode("111111");
-        item.setPrice(10);
-        item.setUnit("10");
-        item.setItemKind("granet");
-        item.setAviqty(10);
-        item.setTax("4543");
-        item.setImagePath("https://img.freepik.com/free-photo/modern-office-building-low-angle-view-skyscrapers-city-singapore-modern-office-building-low-angle-view-skyscrapers-city-singapore_231208-1463.jpg?size=626&ext=jpg");
-        itemList.add(item);
+        bottom_navigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
 
-        Item item2 = new Item();
-        item2.setItem_Name("Item Number 2");
-        item2.setItemNCode("2222222222");
-        item2.setPrice(10);
-        item2.setUnit("1");
-        item2.setTax("23");
-        item2.setItemKind("das");
-        item2.setAviqty(10);
-        item2.setImagePath("https://i.pinimg.com/originals/d2/5b/75/d25b7588872867460b4628c508ab1eab.jpg");
+                    case R.id.action_home:
+                        return true;
 
+                    case R.id.action_cart:
+                        Intent intent = new Intent(HomeActivity.this, BasketActivity.class);
+                        intent.putExtra("previous", "Home");
+                        startActivity(intent);
+                        return true;
 
-        Item item3 = new Item();
-        item3.setItem_Name("Item Number 3");
-        item3.setItemNCode("333333333");
-        item3.setPrice(10);
-        item3.setUnit("0");
-        item3.setItemKind("sda");
-        item3.setTax("231");
-        item3.setAviqty(10);
-        item3.setImagePath("https://i.pinimg.com/originals/1d/37/a7/1d37a7adf8302ac094de5b515159fc72.jpg");
+                    case R.id.action_add:
+                        return true;
+
+                    case R.id.action_report:
+                        return true;
 
 
-        Item item4 = new Item(), item5 = new Item(), item6 = new Item(), item7 = new Item(), item8 = new Item(), item9 = new Item(), item10 = new Item();
-
-        item4.setItem_Name("Item Number 4");
-        item4.setImagePath("https://images.adsttc.com/media/images/5a03/7af5/b22e/38c7/1f00/00d2/large_jpg/Hufton___Crow.jpg?1510177522");
-        item4.setItemNCode("44444444");
-        item4.setPrice(10);
-        item4.setUnit("0");
-        item4.setItemKind("df");
-        item4.setTax("45");
-        item4.setAviqty(56);
-
-        item5.setItem_Name("Item Number 5");
-        item5.setImagePath("https://i.pinimg.com/originals/62/3a/a8/623aa8f9933ee9a286871bf6e0782538.jpg");
-        item5.setItemNCode("5555555555");
-        item5.setPrice(89);
-        item5.setUnit("7");
-        item5.setItemKind("65");
-        item5.setTax("451");
-        item5.setAviqty(15);
-
-        item6.setItem_Name("Item Number 6");
-        item6.setImagePath("https://www.almrsal.com/wp-content/uploads/2019/08/%D8%A3%D8%B4%D9%87%D8%B1-%D8%A3%D9%86%D9%88%D8%A7%D8%B9-%D8%A7%D9%84%D8%A3%D9%86%D9%85%D9%8A.jpg");
-        item6.setItemNCode("6666666666");
-        item6.setPrice(7898);
-        item6.setUnit("56");
-        item6.setItemKind("lksjd");
-        item6.setTax("787");
-        item6.setAviqty(45);
-
-        item7.setItem_Name("Item Number 7");
-        item7.setImagePath("https://pbs.twimg.com/profile_images/1265442011987017728/UyunmQzA_400x400.jpg");
-        item7.setItemNCode("77777777");
-        item7.setPrice(65);
-        item7.setUnit("34");
-        item7.setItemKind("fhfg");
-        item7.setTax("898");
-        item7.setAviqty(23);
+                }
+                return false;
+            }
+        });
 
 
-        item8.setItem_Name("Item Number 8");
-        item8.setImagePath("https://www.almrsal.com/wp-content/uploads/2019/08/%D8%A3%D8%B4%D9%87%D8%B1-%D8%A3%D9%86%D9%88%D8%A7%D8%B9-%D8%A7%D9%84%D8%A3%D9%86%D9%85%D9%8A.jpg");
-        item8.setItemNCode("77777777");
-        item8.setPrice(65);
-        item8.setUnit("34");
-        item8.setItemKind("fhfg");
-        item8.setTax("898");
-        item8.setAviqty(23);
+        /*  Initialize Items  */
+        allItemList_rv = appDatabase.itemsDao().getAllItems();
 
-        item9.setItem_Name("Item Number 9");
-        item9.setImagePath("https://www.almrsal.com/wp-content/uploads/2019/08/%D8%A3%D8%B4%D9%87%D8%B1-%D8%A3%D9%86%D9%88%D8%A7%D8%B9-%D8%A7%D9%84%D8%A3%D9%86%D9%85%D9%8A.jpg");
-        item9.setItemNCode("77777777");
-        item9.setPrice(65);
-        item9.setUnit("34");
-        item9.setItemKind("fhfg");
-        item9.setTax("898");
-        item9.setAviqty(23);
-
-        item10.setItem_Name("Item Number 10");
-        item10.setImagePath("https://cdn.vox-cdn.com/thumbor/Z6PAPzGfqK5n4Q7oBnUk5aNOL6Q=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/22814568/jbareham_210827_ecl1072_summer_streaming_2021_anime.jpg");
-        item10.setItemNCode("77777777");
-        item10.setPrice(65);
-        item10.setUnit("34");
-        item10.setItemKind("fhfg");
-        item10.setTax("898");
-        item10.setAviqty(23);
-
-        itemList.add(item2);
-        itemList.add(item3);
-
-        itemList.add(item4);
-        itemList.add(item5);
-        itemList.add(item6);
-        itemList.add(item7);
-        itemList.add(item8);
-        itemList.add(item9);
-        itemList.add(item10);
-
-        itemsAdapter = new ItemsAdapter(itemList, HomeActivity.this);
+        itemsAdapter = new ItemsAdapter(allItemList_rv, HomeActivity.this);
         itemsRecycler.setAdapter(itemsAdapter);
-        itemsRecycler.setSaveEnabled(false);
+        itemsRecycler.setSaveEnabled(true);
+
+        /*  Initialize Customers  */
+        allCustomers = appDatabase.customersDao().getAllCustms();
+        customerNames = new ArrayList<>();
+
+        for (int i = 0; i < allCustomers.size(); i++) {
+
+            customerNames.add(allCustomers.get(i).getCustomerName());
+
+        }
+
+        ArrayAdapter<String> customersAdapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_dropdown_item_1line, customerNames);
+
+        customerTv.setAdapter(customersAdapter);
+
+
+        /* Items Search Handling */
+        searchItemsEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                String eTxt = s.toString().trim().toLowerCase();
+
+                if (!eTxt.equals("")) {
+
+                    search_itemList.clear();
+                    for (int i = 0; i < allItemList_rv.size(); i++) {
+
+                        if (allItemList_rv.get(i).getItemName().toLowerCase().contains(eTxt) ||
+                                allItemList_rv.get(i).getItemNCode().toLowerCase().contains(eTxt.replaceAll("\\s+", ""))) {
+
+                            search_itemList.add(allItemList_rv.get(i));
+
+                        }
+
+                    }
+
+                    ItemsAdapter itemsAdapter1 = new ItemsAdapter(search_itemList, HomeActivity.this);
+                    itemsRecycler.setAdapter(itemsAdapter1);
+
+                } else {
+
+                    itemsAdapter = new ItemsAdapter(allItemList_rv, HomeActivity.this);
+                    itemsRecycler.setAdapter(itemsAdapter);
+
+                }
+
+            }
+        });
+
+        searchItems_textField.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Log.e("Helloooo", "HHHHHHEEEEEEEEHHHEE");
+
+                if (ContextCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(HomeActivity.this, new String[]{Manifest.permission.CAMERA}, REQUEST_Camera_Barcode);
+                    if (ContextCompat.checkSelfPermission(HomeActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {//just for first time
+                        Log.e("requestResult", "PERMISSION_GRANTED");
+                        Intent i = new Intent(HomeActivity.this, ScanActivity.class);
+                        i.putExtra("key", "1");
+                        startActivity(i);
+
+                    }
+                } else {
+                    Intent i = new Intent(HomeActivity.this, ScanActivity.class);
+                    i.putExtra("key", "1");
+                    startActivity(i);
+                }
 
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
@@ -212,6 +235,8 @@ public class HomeActivity extends AppCompatActivity {
                                 lp.gravity = Gravity.CENTER;
                                 dialog.getWindow().setAttributes(lp);
                                 dialog.show();
+            }
+        });
 
                               dialog.findViewById(R.id.addCustomer).setOnClickListener(new View.OnClickListener() {
                                   @Override
@@ -237,14 +262,36 @@ public class HomeActivity extends AppCompatActivity {
                 });
     }
 
+    @Override
+    int getLayoutId() {
+        return R.layout.activity_home;
+    }
+
+    @Override
+    int getBottomNavigationMenuItemId() {
+        return R.id.action_home;
+    }
 
 
     void init() {
         exportData=new ExportData(HomeActivity.this);
+
+        importData = new ImportData(this);
+        appDatabase = AppDatabase.getInstanceDatabase(this);
+
         bottom_navigation = findViewById(R.id.bottom_navigation);
         itemsRecycler = findViewById(R.id.itemsRecycler);
         itemList_rv = new ArrayList<>();
         itemcount= findViewById(R.id.itemcount);
+        customer_textInput = findViewById(R.id.customer_textInput);
+        customerTv = findViewById(R.id.customerTv);
+        searchItemsEdt = findViewById(R.id.searchItemsEdt);
+        searchItems_textField = findViewById(R.id.searchItems_textField);
+
+        allItemList_rv = new ArrayList<>();
+        search_itemList = new ArrayList<>();
+        allCustomers = new ArrayList<>();
+
         SharedPreferences sharedPref = getSharedPreferences(SETTINGS_PREFERENCES, MODE_PRIVATE);
         ipAddress = sharedPref.getString(IP_PREF, "");
         ipPort = sharedPref.getString(PORT_PREF, "");
@@ -254,25 +301,6 @@ public class HomeActivity extends AppCompatActivity {
         Log.e("CONO_PREF2", coNo);
 
     }
-
-//    @Override
-//    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-//
-//        int id = item.getItemId();
-//        Log.e("id", "onNavigationItemSelected " + id);
-//        switch (id) {
-//
-//            case R.id.cartPage:
-//                Intent intent=new Intent(HomeActivity.this,BasketActivity.class);
-//                startActivity(intent);
-//            break;
-//
-//        }
-//
-//
-//        return true;
-//
-//    }
 
 
 }

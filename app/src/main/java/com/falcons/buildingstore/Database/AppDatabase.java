@@ -23,6 +23,7 @@ import com.falcons.buildingstore.Database.Entities.TempOrder;
 import com.falcons.buildingstore.Database.Entities.User;
 
 @Database(entities = {Item.class, CustomerInfo.class, TempOrder.class, OrderMaster.class, User.class, OrdersDetails.class}, version = 10)
+@Database(entities = {Item.class, CustomerInfo.class, TempOrder.class, OrderMaster.class, User.class, OrdersDetails.class}, version = 5)
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract Items_Dao itemsDao();
@@ -59,6 +60,7 @@ public abstract class AppDatabase extends RoomDatabase {
 
             InstanceDatabase = Room.databaseBuilder(context, AppDatabase.class, DatabaseName)
                     .allowMainThreadQueries().addMigrations(MIGRATION_8_9 ,MIGRATION_9_10)
+                    .fallbackToDestructiveMigration()
                     .build();
 
         }

@@ -22,21 +22,11 @@ public class Item {
     @ColumnInfo(name = "Avi_Qty")
     public double Aviqty;
 
-    public double getCategoryId() {
-        return CategoryId;
-    }
-
-    public void setCategoryId(double categoryId) {
-        CategoryId = categoryId;
-    }
-
     @ColumnInfo(name = "CategoryId")
-    public double CategoryId;
-
+    public String categoryId;
 
     @ColumnInfo(name = "Price")
     public double price;
-
 
     @ColumnInfo(name = "Unit")
     private String unit;
@@ -49,16 +39,17 @@ public class Item {
 
     @ColumnInfo(name = "Tax")
     private String tax;
+
     @ColumnInfo(name = "Qty")
     public double qty;
+
+    @ColumnInfo(name = "Item_Discount")
     @ColumnInfo(name = "Item_Discount",defaultValue = "0")
     double Discount;
-    @ColumnInfo(name = "CUS_ID")
-    public int Cus_Id;
 
     public String area;
 
-    public Item(int id, String itemName, String itemOCode, String itemNCode, double aviqty, double price, String unit, String imagePath, String itemKind, String tax, double qty, double discount, int cus_Id, String area) {
+    public Item(int id, String itemName, String itemOCode, String itemNCode, double aviqty, double price, String unit, String imagePath, String itemKind, String tax, double qty, double discount, String area) {
         this.id = id;
         this.itemName = itemName;
         this.itemOCode = itemOCode;
@@ -71,11 +62,18 @@ public class Item {
         this.tax = tax;
         this.qty = qty;
         Discount = discount;
-        Cus_Id = cus_Id;
         this.area = area;
     }
 
     public Item() {
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
     }
 
     public String getArea() {
@@ -118,10 +116,6 @@ public class Item {
         return itemKind;
     }
 
-    public int getCus_Id() {
-        return Cus_Id;
-    }
-
     public String getItemOCode() {
         return itemOCode;
     }
@@ -152,15 +146,9 @@ public class Item {
     }
 
 
-
     public void setItem_Name(String item_Name) {
         this.itemName = item_Name;
     }
-
-    public void setCus_Id(int cus_Id) {
-        Cus_Id = cus_Id;
-    }
-
 
     public String getImagePath() {
         return imagePath;
@@ -169,8 +157,6 @@ public class Item {
     public void setImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
-
-
 
     public void setItemKind(String itemKind) {
         this.itemKind = itemKind;

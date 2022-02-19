@@ -1,6 +1,9 @@
 package com.falcons.buildingstore.Adapters;
 
 
+import static com.falcons.buildingstore.Activities.HomeActivity.customerNames;
+import static com.falcons.buildingstore.Activities.HomeActivity.customerTv;
+import static com.falcons.buildingstore.Activities.HomeActivity.customer_textInput;
 import static com.falcons.buildingstore.Activities.HomeActivity.itemcount;
 import static com.falcons.buildingstore.Activities.HomeActivity.itemsRecycler;
 import static com.falcons.buildingstore.Activities.HomeActivity.vocher_Items;
@@ -23,6 +26,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -93,8 +97,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                 itemsRecycler.smoothScrollToPosition(currPosition);
             }
         });
-
-        Picasso.get().load(itemsList.get(currPosition).getImagePath()).fit().centerCrop().into(holder.itemImage);
+        if (!itemsList.get(currPosition).getImagePath().equals(""))
+            Picasso.get().load(itemsList.get(currPosition).getImagePath()).fit().centerCrop().into(holder.itemImage);
 
       UserLogs userLogs= appDatabase.userLogsDao().getLastuserLogin();
 
@@ -123,7 +127,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
         /////////// Expanded /////////////
 
-        Picasso.get().load(itemsList.get(currPosition).getImagePath()).fit().centerCrop().into(holder.itemImg2);
+        if (!itemsList.get(currPosition).getImagePath().equals(""))
+            Picasso.get().load(itemsList.get(currPosition).getImagePath()).fit().centerCrop().into(holder.itemImg2);
 
         holder.itemNameTV.setText(itemsList.get(currPosition).getItemName());
         holder.itemCodeTV.setText(itemsList.get(currPosition).getItemNCode());
@@ -144,6 +149,23 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         holder.addToCartBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
+                String selectedCustomer = customerTv.getText().toString().trim();
+
+                if (customerNames.contains(selectedCustomer) && !selectedCustomer.equals("")) {
+
+                    customer_textInput.setError(null);
+
+                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which){
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    //Yes button clicked
+                                    openSalesDailog(currPosition);
+                                    dialog.dismiss();
+                                    break;
                 DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -155,17 +177,22 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                                 dialog.dismiss();
                                 break;
 
-                            case DialogInterface.BUTTON_NEGATIVE:
-                                dialog.dismiss();
-                                //No button clicked
-                                break;
-                        }
+                                case DialogInterface.BUTTON_NEGATIVE:
+                                    //No button clicked
+                                    break;
+
                     }
                 };
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("Add item to cart?").setPositiveButton("Yes", dialogClickListener)
-                        .setNegativeButton("No", dialogClickListener).show();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setMessage("Add item to cart?").setPositiveButton("Yes", dialogClickListener)
+                            .setNegativeButton("No", dialogClickListener).show();
+
+                } else {
+
+                    customer_textInput.setError("*");
+
+                }
             }
         });
         holder.itemAreaEdt.addTextChangedListener(new TextWatcher() {

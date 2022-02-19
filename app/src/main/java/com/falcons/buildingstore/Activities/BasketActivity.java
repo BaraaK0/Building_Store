@@ -1,11 +1,17 @@
 package com.falcons.buildingstore.Activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.view.View;
 import android.widget.Button;
 
@@ -18,10 +24,20 @@ import com.falcons.buildingstore.Database.Entities.OrderMaster;
 import com.falcons.buildingstore.Database.Entities.OrdersDetails;
 import com.falcons.buildingstore.DataManipulation.*;
 import com.falcons.buildingstore.R;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.navigation.NavigationBarView;
 
-import java.util.ArrayList;
+public class BasketActivity extends BaseActivity {
 
-public class BasketActivity extends AppCompatActivity {
+    ImageButton backBtn;
+    RecyclerView basketListRV;
+    Button orderBtn, saveBtn;
+    BottomNavigationView bottom_navigation;
+    private String prevPage;
+
+
+
+
 RecyclerView BasketItem;
 RecyclerView.LayoutManager layoutManager;
 Button orderBtn,saveBtn;
@@ -127,4 +143,18 @@ fillListAdapter();
         Intent intent=new Intent(BasketActivity.this,HomeActivity.class);
         startActivity(intent);
     }
+
+    @Override
+    int getBottomNavigationMenuItemId() {
+        return R.id.action_cart;
+    }
+
+//    @Override
+//    public void onBackPressed() {
+//
+//        finish();
+//
+//    }
+
+
 }

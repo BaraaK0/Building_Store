@@ -1,4 +1,7 @@
-package com.falcons.buildingstore.DataManipulation;
+package com.falcons.buildingstore.Utilities;
+
+import static com.falcons.buildingstore.Activities.LoginActivity.IP_PREF;
+import static com.falcons.buildingstore.Activities.LoginActivity.PORT_PREF;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -34,10 +37,8 @@ import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-import static com.falcons.buildingstore.Activities.LoginActivity.IP_PREF;
-import static com.falcons.buildingstore.Activities.LoginActivity.PORT_PREF;
+class ExportData {
 
-public  class ExportData {
     List<OrderMaster> vouchers;
     private Context context;
     List<OrdersDetails> items;
@@ -56,15 +57,18 @@ public  class ExportData {
         ipAddress = IP_PREF;
         ipWithPort = PORT_PREF;
     }
+
     private void exportVoucherDetail() {//2
         getVouchersDetail();
         new JSONTaskDelphiDetail().execute();
     }
+
     private void saveExpot() {
 //        new JSONTaskSaveVouchers().execute();
 
     }
- public void exportSalesVoucherM() {
+
+    private void exportSalesVoucherM() {
         getVouchers();
 
         pdVoucher = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
@@ -77,11 +81,12 @@ public  class ExportData {
     }
 
     private void updateVoucherExported() {// 3
-        Log.e("updateVoucherExported","trueee");
+        Log.e("updateVoucherExported", "trueee");
         mHandler.ordersMasterDao().updateVoucher();
         mHandler.ordersDetails_dao().updateVoucherDetails();
-        Log.e("onPostExecute","updateVoucherExported---3---");
+        Log.e("onPostExecute", "updateVoucherExported---3---");
     }
+
     private void getVouchersDetail() {
         items = mHandler.ordersDetails_dao().getAllOrders();
         jsonArrayItems = new JSONArray();
@@ -123,8 +128,6 @@ public  class ExportData {
     }
 
 
-
-
     private class JSONTaskDelphiDetail extends AsyncTask<String, String, String> {
         private String JsonResponse = null;
         private HttpURLConnection urlConnection = null;
@@ -148,13 +151,12 @@ public  class ExportData {
             //  URL_TO_HIT = "http://"+ipAddress.trim()+":" + ipWithPort.trim() +"/ExportSALES_VOUCHER_D?CONO="+CONO.trim()+"&JSONSTR="+vouchersObject.toString().trim();
 
 //
-            String link = "http://"+ipAddress.trim()+":" + ipWithPort.trim() +headerDll.trim()+ "/ExportSALES_VOUCHER_D";
-            Log.e("link==", link+"");
+            String link = "http://" + ipAddress.trim() + ":" + ipWithPort.trim() + headerDll.trim() + "/ExportSALES_VOUCHER_D";
+            Log.e("link==", link + "");
 
 
             String ipAddress = "";
             Log.e("tagexPORT", "JsonResponse");
-
 
 
             try {
@@ -169,7 +171,7 @@ public  class ExportData {
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
                 nameValuePairs.add(new BasicNameValuePair("CONO", CONO.trim()));
                 nameValuePairs.add(new BasicNameValuePair("JSONSTR", vouchersObject.toString().trim()));
-                Log.e("nameValuePairs","Details=JSONSTR"+vouchersObject.toString().trim());
+                Log.e("nameValuePairs", "Details=JSONSTR" + vouchersObject.toString().trim());
 
 
                 request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
@@ -195,7 +197,6 @@ public  class ExportData {
                 Log.e("JsonResponse", "ExportSerial" + JsonResponse);
 
 
-
                 //*******************************************
 
 
@@ -213,8 +214,7 @@ public  class ExportData {
             // Log.e("onPostExecute","ExportSALES_VOUCHER_D"+result);
             pdVoucher.setTitle("Export SALES_VOUCHER_Detail");
             if (result != null && !result.equals("")) {
-                if(result.contains("Saved Successfully"))
-                {
+                if (result.contains("Saved Successfully")) {
 //                    Toast.makeText(context, "onPostExecute"+result, Toast.LENGTH_SHORT).show();
 
 
@@ -237,7 +237,8 @@ public  class ExportData {
         private HttpURLConnection urlConnection = null;
         private BufferedReader reader = null;
 
-        public  String salesNo="",finalJson;
+        public String salesNo = "", finalJson;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -254,14 +255,12 @@ public  class ExportData {
                 if (!ipAddress.equals("")) {
 
 
-
                     //  String data= "{\"JSN\":[{\"COMAPNYNO\":290,\"VOUCHERYEAR\":\"2021\",\"VOUCHERNO\":\"1212\",\"VOUCHERTYPE\":\"3\",\"VOUCHERDATE\":\"24/03/2020\",\"SALESMANNO\":\"5\",\"CUSTOMERNO\":\"123456\",\"VOUCHERDISCOUNT\":\"50\",\"VOUCHERDISCOUNTPERCENT\":\"10\",\"NOTES\":\"AAAAAA\",\"CACR\":\"1\",\"ISPOSTED\":\"0\",\"PAYMETHOD\":\"1\",\"NETSALES\":\"150.720\"}]}";
 
-                    URL_TO_HIT = "http://"+ipAddress.trim()+":" + ipWithPort.trim() +headerDll.trim()+"/ExportSALES_VOUCHER_M";
+                    URL_TO_HIT = "http://" + ipAddress.trim() + ":" + ipWithPort.trim() + headerDll.trim() + "/ExportSALES_VOUCHER_M";
 
 
-
-                    Log.e("URL_TO_HIT",""+URL_TO_HIT);
+                    Log.e("URL_TO_HIT", "" + URL_TO_HIT);
                 }
             } catch (Exception e) {
                 //progressDialog.dismiss();
@@ -271,7 +270,6 @@ public  class ExportData {
 //********************************************************
             String ipAddress = "";
             Log.e("tagexPORT", "JsonResponse");
-
 
 
             try {
@@ -297,7 +295,7 @@ public  class ExportData {
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
                 nameValuePairs.add(new BasicNameValuePair("CONO", CONO.trim()));
                 nameValuePairs.add(new BasicNameValuePair("JSONSTR", vouchersObject.toString().trim()));
-                Log.e("nameValuePairs","JSONSTR"+vouchersObject.toString().trim());
+                Log.e("nameValuePairs", "JSONSTR" + vouchersObject.toString().trim());
 
 
                 request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
@@ -323,7 +321,6 @@ public  class ExportData {
                 Log.e("JsonResponse", "ExporVoucher" + JsonResponse);
 
 
-
                 //*******************************************
 
 
@@ -338,14 +335,13 @@ public  class ExportData {
         protected void onPostExecute(final String result) {
             super.onPostExecute(result);
 //            progressDialog.dismiss();
-            Log.e("onPostExecute","---1---"+result);
+            Log.e("onPostExecute", "---1---" + result);
 
             if (result != null && !result.equals("")) {
-                if(result.contains("Saved Successfully"))
-                {
+                if (result.contains("Saved Successfully")) {
 
-                 exportVoucherDetail();// 2
-                }else {
+                    exportVoucherDetail();// 2
+                } else {
                     pdVoucher.dismissWithAnimation();
                 }
 //                Toast.makeText(context, "onPostExecute"+result, Toast.LENGTH_SHORT).show();

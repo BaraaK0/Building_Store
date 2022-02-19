@@ -2,25 +2,26 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/cartPage"
+        android:id="@+id/action_home"
+        android:enabled="true"
+        android:icon="@drawable/ic_home_22"
+        android:title="Home"/>
+
+    <item
+        android:id="@+id/action_cart"
         android:enabled="true"
         android:icon="@drawable/cart_ic"
         android:title="Cart"/>
     <item
-        android:id="@+id/addPage"
+        android:id="@+id/action_add"
         android:enabled="true"
         android:icon="@drawable/add_ic"
         android:title="Add"/>
     <item
-        android:id="@+id/reportPage"
+        android:id="@+id/action_report"
         android:enabled="true"
         android:icon="@drawable/report_ic"
         android:title="Report"/>
-    <item
-        android:id="@+id/filterPage"
-        android:enabled="true"
-        android:icon="@drawable/filter_ic"
-        android:title="Filter"/>
 
     <item
         android:id="@+id/exportdata"
