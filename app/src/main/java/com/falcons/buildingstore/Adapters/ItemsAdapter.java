@@ -5,13 +5,19 @@ import static com.falcons.buildingstore.Activities.HomeActivity.customerNames;
 import static com.falcons.buildingstore.Activities.HomeActivity.customerTv;
 import static com.falcons.buildingstore.Activities.HomeActivity.customer_textInput;
 import static com.falcons.buildingstore.Activities.HomeActivity.itemsRecycler;
+import static com.falcons.buildingstore.Activities.HomeActivity.vocher_Items;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -29,6 +35,7 @@ import com.falcons.buildingstore.Database.Entities.Item;
 import com.falcons.buildingstore.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -123,6 +130,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             @Override
             public void onClick(View v) {
 
+
                 String selectedCustomer = customerTv.getText().toString().trim();
 
                 if (customerNames.contains(selectedCustomer) && !selectedCustomer.equals("")) {
@@ -132,18 +140,19 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                     DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-
-                            switch (which) {
+                            switch (which){
                                 case DialogInterface.BUTTON_POSITIVE:
                                     //Yes button clicked
+                                    openSalesDailog(currPosition);
+                                    dialog.dismiss();
                                     break;
 
                                 case DialogInterface.BUTTON_NEGATIVE:
                                     //No button clicked
                                     break;
-                            }
-                        }
-                    };
+
+                    }
+                };
 
                     AlertDialog.Builder builder = new AlertDialog.Builder(context);
                     builder.setMessage("Add item to cart?").setPositiveButton("Yes", dialogClickListener)
@@ -202,5 +211,37 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
         }
     }
+   public void openSalesDailog(int currPosition){
+       final Dialog dialog = new Dialog(context);
+       dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+       dialog.setCancelable(false);
+       dialog.setContentView(R.layout.salesdailog);
+       WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+       lp.copyFrom(dialog.getWindow().getAttributes());
+       lp.gravity = Gravity.CENTER;
+       dialog.getWindow().setAttributes(lp);
+       dialog.show();
+       TextView save = dialog.findViewById(R.id.save);
+       TextView cancelBtn = dialog.findViewById(R.id.cancelBtn);
+       TextView ITEMqty = dialog.findViewById(R.id.ITEMqty);
+       TextView ITEMdiscount = dialog.findViewById(R.id.ITEMdiscount);
 
+       TextView aviqty = dialog.findViewById(R.id.aviqty);
+       aviqty.setText(itemsList.get(currPosition).getAviqty()+"");
+       save.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               if(!ITEMqty.getText().toString().equals("")
+               &&!ITEMdiscount.getText().toString().equals(""))
+               vocher_Items.add(itemsList.get(currPosition));
+               dialog.dismiss();
+           }
+       });
+       cancelBtn.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               dialog.dismiss();
+           }
+       });
+   }
 }

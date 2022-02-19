@@ -20,6 +20,9 @@
     <string name="itemKind">itemKind</string>
 
 
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+    <string name="reqired_filled">*Required</string>
     <string name="save"> Save</string>
     <string name="sign_in">Sign In</string>
     <string name="sign_in_with">Sign in now with your username and password !</string>
