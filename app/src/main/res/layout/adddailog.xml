@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="100dp">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="2.2"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_height="match_parent">
+
+    <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
+        android:id="@+id/addCustomer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+
+        android:background="@drawable/bg_btn"
+        android:fontFamily="@font/alegreya_sans_medium"
+        android:letterSpacing="0.08"
+
+        android:text="@string/addnewcustomer"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+
+        />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="2.2"
+            android:layout_marginStart="50dp"
+            android:layout_marginEnd="50dp"
+            android:layout_height="match_parent">
+
+        <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
+        android:id="@+id/adduser"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+
+        android:background="@drawable/bg_btn"
+        android:fontFamily="@font/alegreya_sans_medium"
+        android:letterSpacing="0.08"
+
+        android:text="@string/addnewuser"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+
+        />
+        </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"/>
+</LinearLayout>

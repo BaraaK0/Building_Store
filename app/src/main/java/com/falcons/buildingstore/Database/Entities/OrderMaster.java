@@ -12,7 +12,7 @@ import org.json.JSONObject;
 @Entity(tableName = "Orders_Master")
 public class OrderMaster {
 
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "VHFNO")
     private int vhfNo;
 
@@ -43,6 +43,16 @@ public class OrderMaster {
 
     @ColumnInfo(name = "IS_Posted", defaultValue = "0")
     private int isPosted;
+    @ColumnInfo(name = "ConfirmState")
+    private int ConfirmState;
+
+    public int getConfirmState() {
+        return ConfirmState;
+    }
+
+    public void setConfirmState(int confirmState) {
+        ConfirmState = confirmState;
+    }
 
     public int getVhfNo() {
         return vhfNo;

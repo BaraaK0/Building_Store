@@ -109,6 +109,8 @@ public  class ItemAdapter extends BaseAdapter {
                         public void onClick(View view) {
                             if(!ITEMdiscount.getText().toString().equals("")&&
                            ! ITEMqty.getText().toString().equals("")   ){
+
+
                             list.get(position).setDiscount(Double.parseDouble(ITEMdiscount.getText().toString()));
                             list.get(position).setQty(Double.parseDouble(ITEMqty.getText().toString()));
 
@@ -117,7 +119,7 @@ public  class ItemAdapter extends BaseAdapter {
 
                         {
                             HomeActivity. vocher_Items.add(list.get(position));
-                            HomeActivity.  FillrecyclerView_Items(context,HomeActivity. vocher_Items);
+                          //  HomeActivity.  FillrecyclerView_Items(context,HomeActivity. vocher_Items);
 
                         }
 
@@ -127,7 +129,7 @@ public  class ItemAdapter extends BaseAdapter {
                                    {
                                        Log.e("case2vocher_Items=",  HomeActivity. vocher_Items.size()+"");
                                        HomeActivity.vocher_Items.add(list.get(position));
-                                       HomeActivity.voherItemAdapter.notifyItemInserted(HomeActivity.vocher_Items.size() - 1);
+                                 //      HomeActivity.voherItemAdapter.notifyItemInserted(HomeActivity.vocher_Items.size() - 1);
                                    }
 
                                    else // item already added
@@ -137,7 +139,7 @@ public  class ItemAdapter extends BaseAdapter {
 
                                        list.get(index).setDiscount(Double.parseDouble(ITEMdiscount.getText().toString()));
                                        list.get(index).setQty(Double.parseDouble(ITEMqty.getText().toString()));
-                                       HomeActivity.voherItemAdapter.notifyItemChanged(index);
+                                    //   HomeActivity.voherItemAdapter.notifyItemChanged(index);
 
 
                                    }

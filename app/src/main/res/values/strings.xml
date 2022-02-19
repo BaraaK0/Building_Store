@@ -2,8 +2,8 @@
 
     <string name="app_name">Building Store</string>
     <string name="loginTitle">Login</string>
-    <string name="username">Username</string>
-    <string name="password">Password</string>
+    <string name="username">Username:</string>
+    <string name="password">Password:</string>
     <string name="wrong_username_or_password">Wrong username or password !</string>
     <string name="ip_address">IP Address</string>
     <string name="ip_port">IP Port</string>
@@ -18,8 +18,8 @@
     <string name="qty">Quantity</string>
     <string name="unit">unit</string>
     <string name="itemKind">itemKind</string>
-
-
+    <string name="preview">Preview</string>
+    <string name="date">Date</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="reqired_filled">*Required</string>
@@ -35,22 +35,34 @@
     <string name="item_Ncode">Item Ncode:</string>
     <string name="item_kind">Item kind:</string>
     <string name="tax">Tax:</string>
+    <string name="total">Total price</string>
+    <string name="tax_">Tax</string>
     <string name="price">Price:</string>
+    <string name="price_">Price</string>
     <string name="discount">Discount:</string>
+    <string name="discount_">Discount</string>
     <string name="quantity">Quantity:</string>
     <string name="area">Area:</string>
     <string name="box">Box</string>
     <string name="meter">Meter</string>
-
-
-    <string-array name="user_type">
-        <item>Admin</item>
-        <item>User</item>
-    </string-array>
-
+    <string name="show">Show</string>
+    <string name="VoHNO">OrderNO</string>
+    <string name="addnewuser">Add New User</string>
+    <string name="addnewcustomer">Add New Customer</string>
     <string name="invaledZero">Invaled Zero</string>
 
     <string name="emptyList">Empty List</string>
 
     <string name="avlqty">Available Qty</string>
+    <string name="type">Type:</string>
+    <string name="dis_per">Can add discount?</string>
+    <string name="mobilnum">Mobile number:</string>
+    <string name="Empty">Empty</string>
+    <string name="savedSuccsesfule">Saved Successfully</string>
+    <string name="Order">Order</string>
+
+    <string-array name="user_type">
+        <item>Admin</item>
+        <item>User</item>
+    </string-array>
 </resources>

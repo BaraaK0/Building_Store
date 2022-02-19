@@ -23,8 +23,14 @@ public interface Users_Dao {
 
     @Insert
     void insertAllUsers(User... users);
-
+    @Insert
+    void insertUser(User user);
     @Delete
     void deleteUser(User user);
+
+    @Query("SELECT Disc_Permission FROM Users_Table where User_ID= :id")
+    int getuserPer ( int id);
+
+
 
 }

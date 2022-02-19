@@ -3,8 +3,8 @@
 
     <string name="app_name">Building Store</string>
     <string name="loginTitle">تسجيل الدخول</string>
-    <string name="username">اسم المستخدم</string>
-    <string name="password">كلمة المرور</string>
+    <string name="username">اسم المستخدم:</string>
+    <string name="password">كلمة المرور:</string>
     <string name="wrong_username_or_password">خطأ في اسم المستخدم أو كلمة المرور !</string>
     <string name="ip_address">عنوان الIP</string>
     <string name="ip_port">منفذ الIP</string>
@@ -23,13 +23,18 @@
     <string name="sign_in_with">سجل الدخول باستخدام اسم المستخدم وكلمة المرور الخاصة بك !</string>
     <string name="login_as">التسجيل كَـ:</string>
     <string name="request">تغيير</string>
-
+    <string name="date">التاريخ</string>
+    <string name="preview">عرض</string>
     <string name="item_name">اسم المادة:</string>
     <string name="item_Ncode">رقم المادة:</string>
     <string name="item_kind">نوع المادة:</string>
     <string name="tax">الضريبة:</string>
+    <string name="total"> مجموع السعر</string>
+    <string name="tax_">الضريبة</string>
     <string name="price">السعر:</string>
+    <string name="price_">السعر</string>
     <string name="discount">خصم:</string>
+    <string name="discount_">خصم</string>
     <string name="quantity">الكمية:</string>
     <string name="area">الموقع:</string>
     <string name="box">صندوق</string>
@@ -38,11 +43,19 @@
     <string name="item_Name_">اسم المادة</string>
     <string name="qty">الكمية</string>
     <string name="item_Code">رقم المادة</string>
-
-
-
-
+    <string name="VoHNO">رقم الطلب</string>
+    <string name="show">Show</string>
+    <string name="addnewuser">إضافة مستخدم</string>
+    <string name="addnewcustomer">إضافة عميل</string>
+    <string name="type">النوع:</string>
+    <string name="dis_per">Can add discount?</string>
+    <string name="Empty">حقل فارغ</string>
+    <string name="mobilnum">رقم الهاتف:</string>
+    <string name="savedSuccsesfule">تم الحفظ بنجاح</string>
+    <string name="Order">Order</string>
     <string-array name="user_type">
+
+
         <item>آدمن</item>
         <item>مستخدم عادي</item>
     </string-array>

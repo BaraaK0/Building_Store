@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.hardware.usb.UsbRequest;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -23,6 +24,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.falcons.buildingstore.Database.AppDatabase;
+import com.falcons.buildingstore.Database.Entities.GeneralMethod;
+import com.falcons.buildingstore.Database.Entities.UserLogs;
 import com.falcons.buildingstore.R;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -38,13 +42,13 @@ public class LoginActivity extends AppCompatActivity {
 //    ImageView settingsIc;
     AutoCompleteTextView uTypeEdt;
     LinearLayout request_ip_;
-
+GeneralMethod generalMethod;
     public final static String SETTINGS_PREFERENCES = "SETTINGS_PREFERENCES";
     public final static String IP_PREF = "IP_Address";
     public final static String PORT_PREF = "IP_Port";
     public final static String CONO_PREF = "Company_No";
   String ipAddress, ipPort, coNo;
-
+AppDatabase  appDatabase;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -143,7 +147,8 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void init() {
-
+        appDatabase=AppDatabase.getInstanceDatabase(LoginActivity.this);
+        generalMethod=new GeneralMethod(LoginActivity.this);
         loginBtn = findViewById(R.id.loginBtn);
         unameEdt = findViewById(R.id.unameEdt);
         passEdt = findViewById(R.id.passEdt);
@@ -176,6 +181,8 @@ public class LoginActivity extends AppCompatActivity {
                     errorMsg.setVisibility(View.INVISIBLE);
                     Toast.makeText(LoginActivity.this, "SUCCESS LOGIN!", Toast.LENGTH_SHORT).show();
 
+
+                    addUserLogs();
                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                     startActivity(intent);
 
@@ -354,5 +361,12 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
-
+  void  addUserLogs(){
+      UserLogs userLogs=new UserLogs();
+      userLogs.setUserID(unameEdt.getText().toString().trim());
+      userLogs.setPassword(passEdt.getText().toString().trim());
+      userLogs.setDate(generalMethod.getCurentTimeDate(1));
+      userLogs.setTime(generalMethod.getCurentTimeDate(2));
+      appDatabase.userLogsDao().insertUser(userLogs);
+  }
 }

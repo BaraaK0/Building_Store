@@ -22,4 +22,10 @@
         android:icon="@drawable/filter_ic"
         android:title="Filter"/>
 
+    <item
+        android:id="@+id/exportdata"
+        android:enabled="true"
+        android:icon="@drawable/ic_baseline_arrow_circle_up_24"
+        android:title="Export Data"/>
+
 </menu>

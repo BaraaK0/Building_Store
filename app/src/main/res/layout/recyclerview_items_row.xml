@@ -10,63 +10,79 @@
         android:orientation="vertical"
         >
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
 
-            android:layout_margin="2dp"
-
-            android:gravity="center"
-            android:id="@+id/serialtable"
-
-            android:padding="2dp"
-            >
             <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-android:id="@+id/itemNCode"
+
+                android:id="@+id/itemNCode"
+                android:layout_width="150dp"
+                android:textSize="14sp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="center"
-
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                android:textStyle="bold" />
+                android:fontFamily="@font/alegreya"
+                android:gravity="start"
+                android:lineHeight="19sp"
+                android:text="@string/item_Code"
+                android:textColor="@color/black"/>
             <TextView
-                android:layout_width="2dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_margin="10dp"
-                android:background="@color/white"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="12sp"
+                android:id="@+id/item_name"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-
+                android:fontFamily="@font/alegreya"
                 android:gravity="center"
+                android:lineHeight="19sp"
+                android:text="@string/item_Name_"
+                android:textSize="14sp"
+                android:textColor="@color/black"/>
+            <TextView
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/alegreya"
+                android:gravity="end"
+                android:lineHeight="19sp"
+                android:text="@string/qty"
+                  android:textSize="14sp"
                 android:id="@+id/qty"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
+                android:textColor="@color/black"/>
             <TextView
-                android:layout_width="2dp"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_margin="10dp"
-                android:background="@color/white"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textSize="12sp"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:fontFamily="@font/alegreya"
+                android:gravity="end"
+                android:lineHeight="19sp"
+                android:text="@string/price_"
+                 android:textSize="14sp"
+                android:id="@+id/price"
 
-                android:gravity="center"
+                android:textColor="@color/black"/>
+
+            <TextView
                 android:id="@+id/discount"
-                android:textColor="@color/black"
-                android:textStyle="bold" />
-
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/alegreya"
+                android:gravity="end"
+                android:lineHeight="19sp"
+                android:text="@string/discount_"
+                  android:textSize="14sp"
+                android:textColor="@color/black"/>
+            <TextView
+                android:id="@+id/taxx"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/alegreya"
+                android:gravity="end"
+                android:lineHeight="19sp"
+                android:text="@string/tax_"
+                   android:textSize="14sp"
+                android:textColor="@color/black"/>
 
         </LinearLayout>
     </LinearLayout>

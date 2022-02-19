@@ -22,6 +22,24 @@ public interface OrdersMaster_Dao {
 
     @Delete
     void deleteOrder(OrderMaster orderMaster);
-    @Query("UPDATE Orders_Master SET  IS_Posted='1' WHERE IS_Posted='0' ")
+    @Query("UPDATE Orders_Master SET  IS_Posted='1' WHERE IS_Posted='0'")
     int updateVoucher();
+
+    @Query("SELECT * FROM Orders_Master where Customer_ID= :cusid and VHFNO= :orderno and Date= :date")
+    List<OrderMaster> getOrdersByOrderNOandCusID(String orderno,int cusid,String date);
+
+    @Query("SELECT * FROM Orders_Master where VHFNO= :orderno and Date= :date")
+    List<OrderMaster> getOrdersByOrderNO(String orderno,String date);
+
+    @Query("SELECT * FROM Orders_Master where Customer_ID= :cusid and Date= :date")
+    List<OrderMaster> getOrdersByCusID(int cusid,String date);
+
+    @Query("SELECT * FROM Orders_Master where Date= :date")
+    List<OrderMaster> getOrdersByDate (String date);
+
+
+
+    @Query("SELECT VHFNO FROM Orders_Master where VHFNO= (SELECT MAX(VHFNO) FROM Orders_Master)")
+    int getLastVoherNo ( );
+
 }

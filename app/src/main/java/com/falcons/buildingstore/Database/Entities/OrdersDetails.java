@@ -51,7 +51,16 @@ public class OrdersDetails {
     private int Unit;
     @ColumnInfo(name = "IS_Posted", defaultValue = "0")
     private int isPosted;
+    @ColumnInfo(name = "ConfirmState")
+    private int ConfirmState;
 
+    public int getConfirmState() {
+        return ConfirmState;
+    }
+
+    public void setConfirmState(int confirmState) {
+        ConfirmState = confirmState;
+    }
     public OrdersDetails() {
     }
 

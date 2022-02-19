@@ -1,6 +1,7 @@
 package com.falcons.buildingstore.Adapters;
 
 
+import static com.falcons.buildingstore.Activities.HomeActivity.itemcount;
 import static com.falcons.buildingstore.Activities.HomeActivity.itemsRecycler;
 import static com.falcons.buildingstore.Activities.HomeActivity.vocher_Items;
 
@@ -8,6 +9,9 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +31,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.TransitionManager;
 
+import com.falcons.buildingstore.Activities.HomeActivity;
+import com.falcons.buildingstore.Database.AppDatabase;
 import com.falcons.buildingstore.Database.Entities.Item;
+import com.falcons.buildingstore.Database.Entities.UserLogs;
 import com.falcons.buildingstore.R;
 import com.squareup.picasso.Picasso;
 
@@ -42,10 +49,12 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     Context context;
     int mExpandedPosition = -1;
     int previousExpandedPosition = -1;
-
+    int  index=0;
+    AppDatabase appDatabase;
     public ItemsAdapter(List<Item> itemsList, Context context) {
         this.itemsList = itemsList;
         this.context = context;
+        appDatabase=AppDatabase.getInstanceDatabase(context);
     }
 
     @NonNull
@@ -87,6 +96,15 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
         Picasso.get().load(itemsList.get(currPosition).getImagePath()).fit().centerCrop().into(holder.itemImage);
 
+      UserLogs userLogs= appDatabase.userLogsDao().getLastuserLogin();
+
+
+    int userPer=    appDatabase.usersDao().getuserPer(userLogs.getUserID());
+    if(userPer==0)    holder.Dis_Layout.setVisibility(View.GONE);
+        holder.Dis_Layout.setVisibility(View.VISIBLE);
+
+
+
         holder.itemName.setText(itemsList.get(currPosition).getItemName());
 
         holder.expandBtn.setOnClickListener(new View.OnClickListener() {
@@ -111,9 +129,11 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         holder.itemCodeTV.setText(itemsList.get(currPosition).getItemNCode());
         holder.itemKindTV.setText(itemsList.get(currPosition).getItemKind());
         holder.itemTaxTV.setText(itemsList.get(currPosition).getTax());
+        holder.itemQtyEdt.setText(itemsList.get(currPosition).getQty()+"");
+        holder.itemDiscEdt.setText(itemsList.get(currPosition).getDiscount()+"");
         holder.itemPriceTV.setText(String.valueOf(itemsList.get(currPosition).getPrice()));
-
-
+        holder. itemaviqtyTV.setText(String.valueOf(itemsList.get(currPosition).getAviqty()));
+        holder.itemAreaEdt.setText(itemsList.get(currPosition).getArea());
         holder.unitRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -130,7 +150,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                         switch (which){
                             case DialogInterface.BUTTON_POSITIVE:
                                 //Yes button clicked
-                                openSalesDailog(currPosition);
+                              //  openSalesDailog(currPosition);
+                                addQTYandDis(currPosition, holder);
                                 dialog.dismiss();
                                 break;
 
@@ -147,6 +168,25 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                         .setNegativeButton("No", dialogClickListener).show();
             }
         });
+        holder.itemAreaEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                          if(!editable.toString().equals(""))
+                          {
+                              appDatabase.itemsDao().UpdateItemAria(holder.itemAreaEdt.getText().toString(),itemsList.get(currPosition).getArea());
+                          }
+            }
+        });
 
     }
 
@@ -161,16 +201,16 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
         CircleImageView itemImage, expandBtn;
         TextView itemName;
-
+    ConstraintLayout   Dis_Layout;
         ImageButton addToCartBtn;
         ImageView itemImg2;
-        TextView itemNameTV, itemCodeTV, itemKindTV, itemTaxTV, itemPriceTV;
+        TextView itemNameTV, itemCodeTV, itemKindTV, itemTaxTV, itemPriceTV,itemaviqtyTV;
         EditText itemDiscEdt, itemQtyEdt, itemAreaEdt;
         RadioGroup unitRG;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
+            Dis_Layout= itemView.findViewById(R.id.Dis_Layout);
             parentLayout = itemView.findViewById(R.id.parentLayout);
             expandedLayout = itemView.findViewById(R.id.expandedLayout);
             itemImage = itemView.findViewById(R.id.itemImage);
@@ -189,41 +229,147 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             itemQtyEdt = itemView.findViewById(R.id.itemQtyEdt);
             itemAreaEdt = itemView.findViewById(R.id.itemAreaEdt);
             unitRG = itemView.findViewById(R.id.unitRG);
+            itemaviqtyTV= itemView.findViewById(R.id.itemaviqtyTV);
+
+        }
+    }
+   public void openSalesDailog(int position) {
+       {
+
+           final Dialog dialog = new Dialog(context);
+           dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+           dialog.setCancelable(false);
+           dialog.setContentView(R.layout.salesdailog);
+           WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+           lp.copyFrom(dialog.getWindow().getAttributes());
+           lp.gravity = Gravity.CENTER;
+           dialog.getWindow().setAttributes(lp);
+           dialog.show();
+           TextView save = dialog.findViewById(R.id.save);
+           TextView cancelBtn = dialog.findViewById(R.id.cancelBtn);
+           TextView itemname = dialog.findViewById(R.id.itemname);
+           TextView itemno = dialog.findViewById(R.id.itemno);
+           TextView aviqty = dialog.findViewById(R.id.aviqty);
+           aviqty.setText(itemsList.get(position).getAviqty() + "");
+           itemname.setText(itemsList.get(position).getItemName());
+           itemno.setText(itemsList.get(position).getItemNCode());
+           EditText ITEMqty = dialog.findViewById(R.id.ITEMqty);
+           EditText ITEMdiscount = dialog.findViewById(R.id.ITEMdiscount);
+           if (IsExistsInList(itemsList.get(position).getItemNCode())) {
+
+               ITEMdiscount.setText(itemsList.get(index).getDiscount() + "");
+               ITEMqty.setText(itemsList.get(index).getQty() + "");
+           }
+
+           if (!ITEMqty.getText().toString().equals("")
+                   && !ITEMdiscount.getText().toString().equals(""))
+               save.setEnabled(false);
+           else save.setEnabled(true);
+
+           cancelBtn.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   dialog.dismiss();
+               }
+           });
+           save.setOnClickListener(new View.OnClickListener() {
+               @Override
+               public void onClick(View view) {
+                   if (!ITEMdiscount.getText().toString().equals("") &&
+                           !ITEMqty.getText().toString().equals("")) {
+                       itemsList.get(position).setDiscount(Double.parseDouble(ITEMdiscount.getText().toString()));
+                       itemsList.get(position).setQty(Double.parseDouble(ITEMqty.getText().toString()));
+
+                       Log.e("vocher_Items=", HomeActivity.vocher_Items.size() + "");
+                       if (HomeActivity.vocher_Items.size() == 0) {
+                           HomeActivity.vocher_Items.add(itemsList.get(position));
+                           HomeActivity.  item_count++;
+                           HomeActivity. itemcount.setText(HomeActivity.item_count);
+                           //  HomeActivity.  FillrecyclerView_Items(context,HomeActivity. vocher_Items);
+
+                       } else {
+                           if (!IsExistsInList(itemsList.get(position).getItemNCode())) // new item
+                           {
+                               Log.e("case2vocher_Items=", HomeActivity.vocher_Items.size() + "");
+                               HomeActivity.vocher_Items.add(itemsList.get(position));
+                               HomeActivity.vocher_Items.add(itemsList.get(position));
+                               HomeActivity.  item_count++;
+                               HomeActivity. itemcount.setText(HomeActivity.item_count);
+
+                               //      HomeActivity.voherItemAdapter.notifyItemInserted(HomeActivity.vocher_Items.size() - 1);
+                           } else // item already added
+                           {
+
+                               Log.e("case3vocher_Items=", HomeActivity.vocher_Items.size() + "");
+
+                               itemsList.get(index).setDiscount(Double.parseDouble(ITEMdiscount.getText().toString()));
+                               itemsList.get(index).setQty(Double.parseDouble(ITEMqty.getText().toString()));
+                               //   HomeActivity.voherItemAdapter.notifyItemChanged(index);
+
+
+                           }
+
+                       }
+                       dialog.dismiss();
+
+                   }
+               }
+           });
+
+       }
+   }
+    public void addQTYandDis(int position,ViewHolder holder) {
+        {
+
+
+                    if (! holder.itemQtyEdt.getText().toString().equals("")) {
+
+                        itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()));
+                        itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
+
+                        Log.e("vocher_Items=", HomeActivity.vocher_Items.size() + "");
+                        if (HomeActivity.vocher_Items.size() == 0) {
+                            HomeActivity.vocher_Items.add(itemsList.get(position));
+                            //  HomeActivity.  FillrecyclerView_Items(context,HomeActivity. vocher_Items);
+
+                        } else {
+                            if (!IsExistsInList(itemsList.get(position).getItemNCode())) // new item
+                            {
+                                Log.e("case2vocher_Items=", HomeActivity.vocher_Items.size() + "");
+                                HomeActivity.vocher_Items.add(itemsList.get(position));
+                                //      HomeActivity.voherItemAdapter.notifyItemInserted(HomeActivity.vocher_Items.size() - 1);
+                            } else // item already added
+                            {
+
+                                Log.e("case3vocher_Items=", HomeActivity.vocher_Items.size() + "");
+
+                                itemsList.get(index).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()));
+                                itemsList.get(index).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
+                                //   HomeActivity.voherItemAdapter.notifyItemChanged(index);
+
+
+                            }
+
+                        }
+
+                    }
+                    else
+                        holder.itemQtyEdt.setError(context.getResources().getString(R.string.Empty));
 
 
         }
     }
-   public void openSalesDailog(int currPosition){
-       final Dialog dialog = new Dialog(context);
-       dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-       dialog.setCancelable(false);
-       dialog.setContentView(R.layout.salesdailog);
-       WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-       lp.copyFrom(dialog.getWindow().getAttributes());
-       lp.gravity = Gravity.CENTER;
-       dialog.getWindow().setAttributes(lp);
-       dialog.show();
-       TextView save = dialog.findViewById(R.id.save);
-       TextView cancelBtn = dialog.findViewById(R.id.cancelBtn);
-       TextView ITEMqty = dialog.findViewById(R.id.ITEMqty);
-       TextView ITEMdiscount = dialog.findViewById(R.id.ITEMdiscount);
 
-       TextView aviqty = dialog.findViewById(R.id.aviqty);
-       aviqty.setText(itemsList.get(currPosition).getAviqty()+"");
-       save.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               if(!ITEMqty.getText().toString().equals("")
-               &&!ITEMdiscount.getText().toString().equals(""))
-               vocher_Items.add(itemsList.get(currPosition));
-               dialog.dismiss();
-           }
-       });
-       cancelBtn.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View view) {
-               dialog.dismiss();
-           }
-       });
-   }
+    boolean IsExistsInList(String ItemNCode ){
+        index=0;
+        for(int i=0;i< HomeActivity. vocher_Items.size();i++)
+            if(HomeActivity. vocher_Items.get(i).getItemNCode().equals(ItemNCode))
+            {
+                index=i;
+                return true;
+
+            }
+
+        return false;
+    }
 }

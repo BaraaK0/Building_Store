@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/main_bg"
+    tools:context=".Activities.OrderReport">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:layout_weight="8.3"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:text="@string/VoHNO"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="14sp" />
+
+        <EditText
+            android:id="@+id/ORDERNO"
+              android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="date"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/edtstyle"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:text="@string/customerName"
+            android:layout_weight="1"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/Cus_name"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="date"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:background="@drawable/edtstyle"
+android:layout_marginEnd="4dp"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            />
+
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_weight="8"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginEnd="10dp"
+            android:text="@string/date"
+
+            android:layout_weight="1.2"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:inputType="date"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="12sp"
+            app:drawableStartCompat="@drawable/ic_date_range_black_24dp" />
+
+
+
+        <Button
+            android:id="@+id/Rep_order"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="13sp"
+            android:layout_marginEnd="5dp"
+            android:background="@color/black"
+            android:text="@string/Order"
+            android:textColor="@color/white" />
+
+
+    </LinearLayout>
+<HorizontalScrollView
+        android:layout_width="match_parent"
+        android:scrollbars="horizontal"
+        android:layout_weight="1.4"
+        android:fillViewport="true"
+        android:layout_height="match_parent">
+
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_weight="1.4"
+    android:layout_height="match_parent">
+
+
+    <TableRow
+        android:layout_height="match_parent"
+android:layout_weight="9"
+
+        android:background="@color/primaryTextColor"
+        android:layout_width="match_parent">
+
+        <TextView
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+
+            android:gravity="center"
+            android:text="@string/itemNCode"
+            android:textColor="@color/white"/>
+
+        <TextView android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/item_Name_"
+            android:textColor="@color/white"/>
+        <TextView android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:text="@string/qty"
+            android:gravity="center"
+            android:layout_weight="2"
+            android:textColor="@color/white"/>
+        <TextView android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:text="@string/price_"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:textColor="@color/white"/>
+
+        <TextView android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:text="@string/discount_"
+            android:textColor="@color/white"/>
+        <TextView android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:text="@string/tax_"
+            android:layout_weight="2"
+            android:gravity="center"
+            android:textColor="@color/white"/>
+
+    </TableRow>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:id="@+id/ordersDetalisRec"
+            android:layout_height="match_parent"
+            android:layout_weight="1"/>
+
+
+    <TableRow
+        android:layout_height="match_parent"
+        android:layout_weight="9"
+
+        android:background="@color/primaryTextColor"
+        android:layout_width="match_parent">
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+          android:textColor="@color/white"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="@string/total"/>
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:text="0.0"
+            android:gravity="center"
+            android:id="@+id/total"/>
+    </TableRow>
+</LinearLayout>
+</HorizontalScrollView>
+</LinearLayout>

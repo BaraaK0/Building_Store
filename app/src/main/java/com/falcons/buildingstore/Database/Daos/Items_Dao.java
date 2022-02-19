@@ -21,4 +21,7 @@ public interface Items_Dao {
     @Delete
     void deleteItem(Item item);
 
+
+    @Query("UPDATE Items_Table SET  area= :aria WHERE Item_OCode= :itemcode")
+    void UpdateItemAria(String aria,String itemcode);
 }

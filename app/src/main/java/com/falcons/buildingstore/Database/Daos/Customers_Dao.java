@@ -17,9 +17,16 @@ public interface Customers_Dao {
 
     @Insert
     void insertAllCustms(CustomerInfo... customerInfos);
+    @Insert
+    void insertCustm(CustomerInfo customerInfos);
 
     @Delete
     void deleteCustomer(CustomerInfo customerInfo);
 
-
+    @Query("SELECT Customer_Name FROM Customers_Info where Customer_ID=:id")
+    String getCustmByNumber(int id);
+    @Query("SELECT Customer_Name FROM Customers_Info")
+    List< String> getCustmName();
+    @Query("SELECT Customer_ID FROM Customers_Info where Customer_Name=:name")
+    int   getCustmByName(String name);
 }

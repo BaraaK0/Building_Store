@@ -51,7 +51,7 @@ public class Item {
     private String tax;
     @ColumnInfo(name = "Qty")
     public double qty;
-    @ColumnInfo(name = "Item_Discount")
+    @ColumnInfo(name = "Item_Discount",defaultValue = "0")
     double Discount;
     @ColumnInfo(name = "CUS_ID")
     public int Cus_Id;
