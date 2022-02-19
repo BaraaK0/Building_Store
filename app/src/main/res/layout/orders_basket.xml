@@ -94,16 +94,6 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/alegreya"
-                            android:gravity="start"
-                            android:lineHeight="19sp"
-                            android:text="@string/item_Code"
-                            android:textColor="@color/primaryTextColor"
-                            android:textSize="14sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -127,17 +117,6 @@
                             android:textColor="@color/primaryTextColor"
                             android:textSize="14sp" />
 
-                        <TextView
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/alegreya"
-                            android:gravity="center"
-                            android:lineHeight="19sp"
-                            android:text="@string/item_Name_"
-
-                            android:textColor="@color/primaryTextColor"
-                            android:textSize="14sp" />
 
                         <TextView
                             android:layout_width="150dp"
@@ -180,17 +159,6 @@
                             android:gravity="end"
                             android:lineHeight="19sp"
                             android:text="@string/tax_"
-                            android:textColor="@color/primaryTextColor"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/alegreya"
-                            android:gravity="end"
-                            android:lineHeight="19sp"
-                            android:text="@string/qty"
                             android:textColor="@color/primaryTextColor"
                             android:textSize="14sp" />
 

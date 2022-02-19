@@ -70,6 +70,13 @@ public class BasketActivity extends BaseActivity {
 
             }
         });
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
     }
 
     @Override
@@ -84,6 +91,7 @@ public class BasketActivity extends BaseActivity {
         BasketItem = findViewById(R.id.basketListRV);
         orderBtn = findViewById(R.id.orderBtn);
         saveBtn = findViewById(R.id.saveBtn);
+        backBtn = findViewById(R.id.backBtn);
     }
 
     void fillListAdapter() {

@@ -56,10 +56,6 @@
         android:textSize="12sp"
         android:textStyle="bold" />
 
-    <!--    <RelativeLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content">-->
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/filtersLayout"
         android:layout_width="match_parent"
@@ -101,17 +97,6 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!--        <Spinner-->
-        <!--            android:id="@+id/customer_spinner"-->
-        <!--            android:layout_width="0dp"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--            app:layout_constraintEnd_toStartOf="@+id/search_items"-->
-        <!--            app:layout_constraintStart_toStartOf="parent"-->
-        <!--            app:layout_constraintTop_toTopOf="parent"-->
-        <!--            app:layout_constraintWidth_percent="0.5"-->
-        <!--            android:background="@drawable/spinner_style"/>-->
-
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/searchItems_textField"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -129,10 +114,10 @@
             app:endIconDrawable="@drawable/ic_camera_24"
             app:endIconMode="custom"
             app:endIconTint="@color/primaryTextColor"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/customer_textInput"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/customer_textInput"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/customer_textInput"
             app:layout_constraintWidth_percent="0.5">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -141,32 +126,6 @@
                 android:layout_height="wrap_content" />
 
         </com.google.android.material.textfield.TextInputLayout>
-
-        <!--        <EditText-->
-        <!--            android:id="@+id/searchItemsEdt"-->
-        <!--            android:layout_width="0dp"-->
-        <!--            android:layout_height="match_parent"-->
-        <!--            android:layout_marginStart="5dp"-->
-        <!--            android:background="@drawable/save_btn_bg"-->
-        <!--            android:hint="Search Items .."-->
-        <!--            android:paddingStart="10dp"-->
-        <!--            android:paddingVertical="10dp"-->
-        <!--            android:paddingEnd="25dp"-->
-        <!--            app:layout_constraintBottom_toBottomOf="@+id/customer_textInput"-->
-        <!--            app:layout_constraintEnd_toEndOf="parent"-->
-        <!--            app:layout_constraintStart_toEndOf="@+id/customer_textInput"-->
-        <!--            app:layout_constraintTop_toTopOf="@+id/customer_textInput"-->
-        <!--            app:layout_constraintWidth_percent="0.5" />-->
-
-        <!--        <ImageButton-->
-        <!--            android:id="@+id/scanCodeBtn"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_marginEnd="5dp"-->
-        <!--            android:background="@drawable/ic_camera_24"-->
-        <!--            app:layout_constraintBottom_toBottomOf="@+id/searchItemsEdt"-->
-        <!--            app:layout_constraintEnd_toEndOf="@+id/searchItemsEdt"-->
-        <!--            app:layout_constraintTop_toTopOf="@+id/searchItemsEdt" />-->
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -177,31 +136,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true" />
     <!--    </RelativeLayout>-->
 
 </RelativeLayout>
-
-    <!--<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-    <!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-    <!--    xmlns:tools="http://schemas.android.com/tools"-->
-    <!--    android:layout_width="match_parent"-->
-    <!--    android:layout_height="match_parent"-->
-    <!--    android:background="@color/white"-->
-    <!--    android:orientation="vertical"-->
-    <!--    tools:context=".Activities.HomeActivity">-->
-
-    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="match_parent"-->
-    <!--        android:layout_weight="11.4"-->
-    <!--        android:background="@color/white"-->
-    <!--        android:orientation="horizontal"-->
-    <!--        android:padding="3dp"-->
-    <!--        android:paddingTop="4dp">-->
-    <!--        android:layout_height="50dp"-->
-    <!--        android:layout_alignParentBottom="true"-->
-    <!--        android:layout_centerHorizontal="true" />-->
-
-
-    <!--</RelativeLayout>-->
