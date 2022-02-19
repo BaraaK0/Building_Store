@@ -1,4 +1,7 @@
-package com.falcons.buildingstore.Database.Entities;
+package com.falcons.buildingstore.Utilities;
+
+import static com.falcons.buildingstore.Activities.LoginActivity.IP_PREF;
+import static com.falcons.buildingstore.Activities.LoginActivity.PORT_PREF;
 
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -7,18 +10,16 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.falcons.buildingstore.Database.AppDatabase;
-import com.falcons.buildingstore.R;
+import com.falcons.buildingstore.Database.Entities.OrderMaster;
+import com.falcons.buildingstore.Database.Entities.OrdersDetails;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
@@ -26,24 +27,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
-import static com.falcons.buildingstore.Activities.LoginActivity.IP_PREF;
-import static com.falcons.buildingstore.Activities.LoginActivity.PORT_PREF;
-
 class ExportData {
+
     List<OrderMaster> vouchers;
     private Context context;
     List<OrdersDetails> items;
@@ -62,14 +57,17 @@ class ExportData {
         ipAddress = IP_PREF;
         ipWithPort = PORT_PREF;
     }
+
     private void exportVoucherDetail() {//2
         getVouchersDetail();
         new JSONTaskDelphiDetail().execute();
     }
+
     private void saveExpot() {
 //        new JSONTaskSaveVouchers().execute();
 
     }
+
     private void exportSalesVoucherM() {
         getVouchers();
 
@@ -83,11 +81,12 @@ class ExportData {
     }
 
     private void updateVoucherExported() {// 3
-        Log.e("updateVoucherExported","trueee");
+        Log.e("updateVoucherExported", "trueee");
         mHandler.ordersMasterDao().updateVoucher();
         mHandler.ordersDetails_dao().updateVoucherDetails();
-        Log.e("onPostExecute","updateVoucherExported---3---");
+        Log.e("onPostExecute", "updateVoucherExported---3---");
     }
+
     private void getVouchersDetail() {
         items = mHandler.ordersDetails_dao().getAllOrders();
         jsonArrayItems = new JSONArray();
@@ -129,8 +128,6 @@ class ExportData {
     }
 
 
-
-
     private class JSONTaskDelphiDetail extends AsyncTask<String, String, String> {
         private String JsonResponse = null;
         private HttpURLConnection urlConnection = null;
@@ -154,13 +151,12 @@ class ExportData {
             //  URL_TO_HIT = "http://"+ipAddress.trim()+":" + ipWithPort.trim() +"/ExportSALES_VOUCHER_D?CONO="+CONO.trim()+"&JSONSTR="+vouchersObject.toString().trim();
 
 //
-            String link = "http://"+ipAddress.trim()+":" + ipWithPort.trim() +headerDll.trim()+ "/ExportSALES_VOUCHER_D";
-            Log.e("link==", link+"");
+            String link = "http://" + ipAddress.trim() + ":" + ipWithPort.trim() + headerDll.trim() + "/ExportSALES_VOUCHER_D";
+            Log.e("link==", link + "");
 
 
             String ipAddress = "";
             Log.e("tagexPORT", "JsonResponse");
-
 
 
             try {
@@ -175,7 +171,7 @@ class ExportData {
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
                 nameValuePairs.add(new BasicNameValuePair("CONO", CONO.trim()));
                 nameValuePairs.add(new BasicNameValuePair("JSONSTR", vouchersObject.toString().trim()));
-                Log.e("nameValuePairs","Details=JSONSTR"+vouchersObject.toString().trim());
+                Log.e("nameValuePairs", "Details=JSONSTR" + vouchersObject.toString().trim());
 
 
                 request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
@@ -201,7 +197,6 @@ class ExportData {
                 Log.e("JsonResponse", "ExportSerial" + JsonResponse);
 
 
-
                 //*******************************************
 
 
@@ -219,12 +214,11 @@ class ExportData {
             // Log.e("onPostExecute","ExportSALES_VOUCHER_D"+result);
             pdVoucher.setTitle("Export SALES_VOUCHER_Detail");
             if (result != null && !result.equals("")) {
-                if(result.contains("Saved Successfully"))
-                {
+                if (result.contains("Saved Successfully")) {
 //                    Toast.makeText(context, "onPostExecute"+result, Toast.LENGTH_SHORT).show();
 
 
-                 updateVoucherExported();// 3
+                    updateVoucherExported();// 3
 
 
                 }
@@ -243,7 +237,8 @@ class ExportData {
         private HttpURLConnection urlConnection = null;
         private BufferedReader reader = null;
 
-        public  String salesNo="",finalJson;
+        public String salesNo = "", finalJson;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -260,14 +255,12 @@ class ExportData {
                 if (!ipAddress.equals("")) {
 
 
-
                     //  String data= "{\"JSN\":[{\"COMAPNYNO\":290,\"VOUCHERYEAR\":\"2021\",\"VOUCHERNO\":\"1212\",\"VOUCHERTYPE\":\"3\",\"VOUCHERDATE\":\"24/03/2020\",\"SALESMANNO\":\"5\",\"CUSTOMERNO\":\"123456\",\"VOUCHERDISCOUNT\":\"50\",\"VOUCHERDISCOUNTPERCENT\":\"10\",\"NOTES\":\"AAAAAA\",\"CACR\":\"1\",\"ISPOSTED\":\"0\",\"PAYMETHOD\":\"1\",\"NETSALES\":\"150.720\"}]}";
 
-                    URL_TO_HIT = "http://"+ipAddress.trim()+":" + ipWithPort.trim() +headerDll.trim()+"/ExportSALES_VOUCHER_M";
+                    URL_TO_HIT = "http://" + ipAddress.trim() + ":" + ipWithPort.trim() + headerDll.trim() + "/ExportSALES_VOUCHER_M";
 
 
-
-                    Log.e("URL_TO_HIT",""+URL_TO_HIT);
+                    Log.e("URL_TO_HIT", "" + URL_TO_HIT);
                 }
             } catch (Exception e) {
                 //progressDialog.dismiss();
@@ -277,7 +270,6 @@ class ExportData {
 //********************************************************
             String ipAddress = "";
             Log.e("tagexPORT", "JsonResponse");
-
 
 
             try {
@@ -303,7 +295,7 @@ class ExportData {
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
                 nameValuePairs.add(new BasicNameValuePair("CONO", CONO.trim()));
                 nameValuePairs.add(new BasicNameValuePair("JSONSTR", vouchersObject.toString().trim()));
-                Log.e("nameValuePairs","JSONSTR"+vouchersObject.toString().trim());
+                Log.e("nameValuePairs", "JSONSTR" + vouchersObject.toString().trim());
 
 
                 request.setEntity(new UrlEncodedFormEntity(nameValuePairs, "UTF-8"));
@@ -329,7 +321,6 @@ class ExportData {
                 Log.e("JsonResponse", "ExporVoucher" + JsonResponse);
 
 
-
                 //*******************************************
 
 
@@ -344,14 +335,13 @@ class ExportData {
         protected void onPostExecute(final String result) {
             super.onPostExecute(result);
 //            progressDialog.dismiss();
-            Log.e("onPostExecute","---1---"+result);
+            Log.e("onPostExecute", "---1---" + result);
 
             if (result != null && !result.equals("")) {
-                if(result.contains("Saved Successfully"))
-                {
+                if (result.contains("Saved Successfully")) {
 
                     exportVoucherDetail();// 2
-                }else {
+                } else {
                     pdVoucher.dismissWithAnimation();
                 }
 //                Toast.makeText(context, "onPostExecute"+result, Toast.LENGTH_SHORT).show();

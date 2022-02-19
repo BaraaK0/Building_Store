@@ -18,6 +18,9 @@ public interface Customers_Dao {
     @Insert
     void insertAllCustms(CustomerInfo... customerInfos);
 
+    @Insert
+    void addAll(List<CustomerInfo> customers);
+
     @Delete
     void deleteCustomer(CustomerInfo customerInfo);
 

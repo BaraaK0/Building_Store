@@ -16,7 +16,13 @@ public interface Items_Dao {
     List<Item> getAllItems();
 
     @Insert
-    void insertAllItems(Item... items);
+    void insertItem(Item... items);
+
+    @Insert
+    void addAll(List<Item> items);
+
+    @Query("DELETE FROM Items_Table")
+    void deleteAll();
 
     @Delete
     void deleteItem(Item item);

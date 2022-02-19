@@ -1,5 +1,6 @@
 package com.falcons.buildingstore.Database.Entities;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -7,9 +8,10 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "Customers_Info")
 public class CustomerInfo {
 
-    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    @PrimaryKey
     @ColumnInfo(name = "Customer_ID")
-    private int customerId;
+    private String customerId;
 
     @ColumnInfo(name = "Customer_Name")
     private String customerName;
@@ -17,7 +19,7 @@ public class CustomerInfo {
     @ColumnInfo(name = "Phone_No")
     private String phoneNo;
 
-    public CustomerInfo(int customerId, String customerName, String phoneNo) {
+    public CustomerInfo(String customerId, String customerName, String phoneNo) {
         this.customerId = customerId;
         this.customerName = customerName;
         this.phoneNo = phoneNo;
@@ -31,11 +33,11 @@ public class CustomerInfo {
     public CustomerInfo() {
     }
 
-    public int getCustomerId() {
+    public String getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(int customerId) {
+    public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
 

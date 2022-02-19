@@ -23,19 +23,35 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.falcons.buildingstore.Database.AppDatabase;
+import com.falcons.buildingstore.Database.Entities.CustomerInfo;
+import com.falcons.buildingstore.Database.Entities.Item;
 import com.falcons.buildingstore.R;
+import com.falcons.buildingstore.Utilities.GeneralMethod;
+import com.falcons.buildingstore.Utilities.ImportData;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
 
 public class LoginActivity extends AppCompatActivity {
 
+    public static TextInputEditText ipEdt, portEdt, coNoEdt;
+    public List<Item> allItemsList;
+    private List<CustomerInfo> allCustomers;
+
     TextInputEditText unameEdt, passEdt;
     TextInputLayout unameTextField, passTextField;
     CircularProgressButton loginBtn;
     TextView errorMsg;
-//    ImageView settingsIc;
+    //    ImageView settingsIc;
     AutoCompleteTextView uTypeEdt;
     LinearLayout request_ip_;
 
@@ -44,7 +60,11 @@ public class LoginActivity extends AppCompatActivity {
     public final static String PORT_PREF = "IP_Port";
     public final static String CONO_PREF = "Company_No";
 
+    AppDatabase appDatabase;
+
     String ipAddress, ipPort, coNo;
+
+    ImportData importData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,8 +87,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (!checkIpSettings()) {
                     showSettingsDialog();
                     loginBtn.revertAnimation();
-                }
-                else
+                } else
                     checkUnameAndPass();
 
             }
@@ -144,6 +163,11 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     void init() {
+
+        importData = new ImportData(this);
+        appDatabase = AppDatabase.getInstanceDatabase(this);
+        allItemsList = new ArrayList<>();
+        allCustomers = new ArrayList<>();
 
         loginBtn = findViewById(R.id.loginBtn);
         unameEdt = findViewById(R.id.unameEdt);
@@ -221,7 +245,7 @@ public class LoginActivity extends AppCompatActivity {
 
         ip_settings_dialog.show();
 
-        TextInputEditText ipEdt, portEdt, coNoEdt;
+
         ipEdt = ip_settings_dialog.findViewById(R.id.ipEdt);
         portEdt = ip_settings_dialog.findViewById(R.id.portEdt);
         coNoEdt = ip_settings_dialog.findViewById(R.id.coNoEdt);
@@ -307,7 +331,6 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -327,6 +350,78 @@ public class LoginActivity extends AppCompatActivity {
                             editor.putString(PORT_PREF, port);
                             editor.putString(CONO_PREF, coNo);
                             editor.apply();
+
+                            appDatabase.itemsDao().deleteAll();
+
+//                            importData.getAllItems();
+                            importData.getAllItems(new ImportData.GetItemsCallBack() {
+                                @Override
+                                public void onResponse(JSONObject response) {
+
+                                    try {
+
+                                        JSONArray itemsArray = response.getJSONArray("Items_Master");
+
+                                        for (int i = 0; i < itemsArray.length(); i++) {
+
+                                            Item item = new Item();
+                                            item.setItem_Name(itemsArray.getJSONObject(i).getString("NAME"));
+                                            item.setItemNCode(itemsArray.getJSONObject(i).getString("BARCODE"));
+                                            item.setItemOCode(itemsArray.getJSONObject(i).getString("ITEMNO"));
+                                            item.setImagePath(itemsArray.getJSONObject(i).getString("ITEMPICSPATH"));
+                                            item.setItemKind(itemsArray.getJSONObject(i).getString("ItemK"));
+                                            item.setPrice(Double.parseDouble(itemsArray.getJSONObject(i).getString("MINPRICE")));
+                                            item.setCategoryId(itemsArray.getJSONObject(i).getString("CATEOGRYID"));
+
+
+                                            allItemsList.add(item);
+
+                                        }
+
+                                        appDatabase.itemsDao().addAll(allItemsList);
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    importData.getAllCustomers(new ImportData.GetCustomersCallBack() {
+                                        @Override
+                                        public void onResponse(JSONArray response) {
+
+                                            for (int i = 0; i < response.length(); i++) {
+
+                                                try {
+
+                                                    allCustomers.add(new CustomerInfo(
+                                                            response.getJSONObject(i).getString("CUSTID"),
+                                                            response.getJSONObject(i).getString("CUSTNAME"),
+                                                            response.getJSONObject(i).getString("MOBILE")));
+
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+
+                                            }
+
+                                            appDatabase.customersDao().addAll(allCustomers);
+
+                                        }
+
+                                        @Override
+                                        public void onError(String error) {
+
+                                        }
+                                    }, ipAddress, port, coNo);
+
+                                }
+
+                                @Override
+                                public void onError(String error) {
+
+
+                                }
+                            }, ipAddress, port, coNo);
+
 
                             ip_settings_dialog.dismiss();
 
