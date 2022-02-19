@@ -60,6 +60,7 @@
     <string name="Empty">Empty</string>
     <string name="savedSuccsesfule">Saved Successfully</string>
     <string name="Order">Order</string>
+    <string name="incorrect_user_info">Incorrect User Information !</string>
 
     <string-array name="user_type">
         <item>Admin</item>

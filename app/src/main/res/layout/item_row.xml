@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/itemCard"
@@ -89,7 +89,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <ImageButton
             android:id="@+id/addToCartBtn"
@@ -178,7 +178,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginStart="100dp"
+                            android:layout_marginStart="102dp"
                             android:fontFamily="@font/alegreya_sans"
                             android:gravity="start"
                             android:inputType="number"
@@ -217,7 +217,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginStart="100dp"
+                            android:layout_marginStart="102dp"
                             android:fontFamily="@font/alegreya_sans"
                             android:gravity="start"
                             android:inputType="number"
@@ -258,7 +258,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginStart="100dp"
+                            android:layout_marginStart="102dp"
                             android:fontFamily="@font/alegreya_sans"
                             android:gravity="start"
                             android:inputType="number"
@@ -299,7 +299,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginStart="100dp"
+                            android:layout_marginStart="102dp"
                             android:fontFamily="@font/alegreya_sans"
                             android:gravity="start"
                             android:inputType="number"
@@ -339,7 +339,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginStart="100dp"
+                            android:layout_marginStart="102dp"
                             android:fontFamily="@font/alegreya_sans"
                             android:gravity="start"
                             android:inputType="number"
@@ -379,7 +379,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginStart="100dp"
+                            android:layout_marginStart="102dp"
                             android:fontFamily="@font/alegreya_sans"
                             android:gravity="start"
                             android:inputType="number"
@@ -420,7 +420,7 @@
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginStart="100dp"
+                            android:layout_marginStart="102dp"
                             android:fontFamily="@font/alegreya_sans"
                             android:gravity="start"
                             android:inputType="number"
@@ -473,7 +473,7 @@
                             android:layout_width="70dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginStart="100dp"
+                            android:layout_marginStart="102dp"
                             android:fontFamily="@font/alegreya_sans"
                             android:gravity="start"
                             android:inputType="number"
@@ -511,7 +511,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginStart="100dp"
+                            android:layout_marginStart="102dp"
                             android:fontFamily="@font/alegreya_sans"
                             android:gravity="start"
                             android:inputType="text"

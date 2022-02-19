@@ -15,22 +15,28 @@ public interface Users_Dao {
     @Query("SELECT * FROM Users_Table")
     List<User> getAllUsers();
 
+    @Insert
+    void insertAllUsers(User... users);
+
+    @Insert
+    void addAll(List<User> users);
+
+    @Query("DELETE FROM Users_Table")
+    void deleteAll();
+
+    @Insert
+    void insertUser(User user);
+
+    @Delete
+    void deleteUser(User user);
+
+    @Query("SELECT Disc_Permission FROM Users_Table where User_ID= :id")
+    int getuserPer(String id);
+
 //    @Query("SELECT * FROM Users_Table WHERE User_ID IN (:userIds)")
 //    List<User> loadAllByIds(int[] userIds);
 //
 //    @Query("SELECT * FROM Users_Table WHERE User_Name LIKE :name")
 //    User findByName(String name);
-
-    @Insert
-    void insertAllUsers(User... users);
-    @Insert
-    void insertUser(User user);
-    @Delete
-    void deleteUser(User user);
-
-    @Query("SELECT Disc_Permission FROM Users_Table where User_ID= :id")
-    int getuserPer ( int id);
-
-
 
 }

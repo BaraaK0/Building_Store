@@ -51,7 +51,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends AppCompatActivity {
 
     public static List<Item> allItemList_rv;
     private List<Item> search_itemList;
@@ -215,23 +215,36 @@ public class HomeActivity extends BaseActivity {
         BottomNavigationView bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
 
+        bottomNavigationView.setSelectedItemId(R.id.action_home);
+
         bottomNavigationView.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
-                            case R.id.action_cart:
-                                Intent intent = new Intent(HomeActivity.this, BasketActivity.class);
-                                startActivity(intent);
 
-                                break;
+                            case R.id.action_home:
+                                return true;
+
+                            case R.id.action_cart:
+
+                                Intent intent = new Intent(getApplicationContext(), BasketActivity.class);
+                                startActivity(intent);
+                                overridePendingTransition(0, 0);
+
+                                return true;
                             case R.id.exportdata:
+
                                 exportData.exportSalesVoucherM();
-                                break;
+                                return true;
+
                             case R.id.action_report:
-                                Intent intent1 = new Intent(HomeActivity.this, ShowPreviousOrder.class);
+
+                                Intent intent1 = new Intent(getApplicationContext(), ShowPreviousOrder.class);
                                 startActivity(intent1);
-                                break;
+                                overridePendingTransition(0, 0);
+                                return true;
+
                             case R.id.action_add:
 
                                 final Dialog dialog = new Dialog(HomeActivity.this);
@@ -248,35 +261,27 @@ public class HomeActivity extends BaseActivity {
                                 dialog.findViewById(R.id.addCustomer).setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        Intent intent2 = new Intent(HomeActivity.this, AddNewCustomer.class);
+                                        Intent intent2 = new Intent(getApplicationContext(), AddNewCustomer.class);
                                         startActivity(intent2);
+                                        overridePendingTransition(0, 0);
                                         dialog.dismiss();
                                     }
                                 });
                                 dialog.findViewById(R.id.adduser).setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        Intent intent2 = new Intent(HomeActivity.this, AddNewUser.class);
+                                        Intent intent2 = new Intent(getApplicationContext(), AddNewUser.class);
                                         startActivity(intent2);
+                                        overridePendingTransition(0, 0);
                                         dialog.dismiss();
                                     }
                                 });
 
-                                break;
+                                return true;
                         }
                         return false;
                     }
                 });
-    }
-
-    @Override
-    int getLayoutId() {
-        return R.layout.activity_home;
-    }
-
-    @Override
-    int getBottomNavigationMenuItemId() {
-        return R.id.action_home;
     }
 
 

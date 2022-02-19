@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.falcons.buildingstore.Database.AppDatabase;
+import com.falcons.buildingstore.Database.Entities.User;
 import com.falcons.buildingstore.Utilities.GeneralMethod;
 import com.falcons.buildingstore.Database.Entities.UserLogs;
 import com.falcons.buildingstore.Database.AppDatabase;
@@ -50,15 +51,16 @@ public class LoginActivity extends AppCompatActivity {
     public static TextInputEditText ipEdt, portEdt, coNoEdt;
     public List<Item> allItemsList;
     private List<CustomerInfo> allCustomers;
-
+    private List<User> allUsers;
     TextInputEditText unameEdt, passEdt;
     TextInputLayout unameTextField, passTextField;
     CircularProgressButton loginBtn;
     TextView errorMsg;
     //    ImageView settingsIc;
+    TextInputLayout uTypeTextField;
     AutoCompleteTextView uTypeEdt;
     LinearLayout request_ip_;
-GeneralMethod generalMethod;
+    GeneralMethod generalMethod;
     public final static String SETTINGS_PREFERENCES = "SETTINGS_PREFERENCES";
     public final static String IP_PREF = "IP_Address";
     public final static String PORT_PREF = "IP_Port";
@@ -168,13 +170,14 @@ GeneralMethod generalMethod;
     }
 
     void init() {
-        appDatabase=AppDatabase.getInstanceDatabase(LoginActivity.this);
-        generalMethod=new GeneralMethod(LoginActivity.this);
+        appDatabase = AppDatabase.getInstanceDatabase(LoginActivity.this);
+        generalMethod = new GeneralMethod(LoginActivity.this);
 
         importData = new ImportData(this);
         appDatabase = AppDatabase.getInstanceDatabase(this);
         allItemsList = new ArrayList<>();
         allCustomers = new ArrayList<>();
+        allUsers = new ArrayList<>();
 
         loginBtn = findViewById(R.id.loginBtn);
         unameEdt = findViewById(R.id.unameEdt);
@@ -184,12 +187,14 @@ GeneralMethod generalMethod;
         errorMsg = findViewById(R.id.errorMsg);
 //        settingsIc = findViewById(R.id.settingsIc);
         uTypeEdt = findViewById(R.id.uTypeEdt);
+        uTypeTextField = findViewById(R.id.uTypeTextField);
         request_ip_ = findViewById(R.id.request_ip_);
 
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_dropdown_item_1line, getResources().getStringArray(R.array.user_type));
 
         uTypeEdt.setAdapter(adapter);
+        uTypeEdt.setText(getResources().getStringArray(R.array.user_type)[1], false);
 
     }
 
@@ -197,41 +202,65 @@ GeneralMethod generalMethod;
 
         String uname = unameEdt.getText().toString().trim() + "";
         String pass = passEdt.getText().toString().trim() + "";
+        int uType = uTypeEdt.getText().toString().equals("Admin") ? 1 : 0;
 
-        if (!uname.equals("")) {
+        allUsers = appDatabase.usersDao().getAllUsers();
+        boolean valid = false;
+        int i;
 
-            if (!pass.equals("")) {
+        if (allUsers.size() != 0) {
 
-                if (uname.equals("1") && pass.equals("1234")) {
+            if (!uname.equals("")) {
 
+                if (!pass.equals("")) {
+
+                    for (i = 0; i < allUsers.size(); i++) {
+
+                        if (uname.equals(allUsers.get(i).getUserName()) &&
+                                pass.equals(allUsers.get(i).getUserPassword()) &&
+                                allUsers.get(i).getUserType() == uType) {
+
+                            valid = true;
+                            break;
+
+                        }
+                    }
+
+                    if (valid) {
+
+                        errorMsg.setVisibility(View.INVISIBLE);
+                        Toast.makeText(LoginActivity.this, "SUCCESS LOGIN!", Toast.LENGTH_SHORT).show();
+
+                        addUserLogs(i);
+                        Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                        startActivity(intent);
+
+                    } else {
+
+                        errorMsg.setVisibility(View.VISIBLE);
+
+                    }
                     loginBtn.revertAnimation();
-                    errorMsg.setVisibility(View.INVISIBLE);
-                    Toast.makeText(LoginActivity.this, "SUCCESS LOGIN!", Toast.LENGTH_SHORT).show();
 
-
-                    addUserLogs();
-                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-                    startActivity(intent);
 
                 } else {
 
                     loginBtn.revertAnimation();
-                    errorMsg.setVisibility(View.VISIBLE);
+                    passTextField.setError(getString(R.string.required));
+//                passEdt.setError("");
 
                 }
 
             } else {
 
                 loginBtn.revertAnimation();
-                passTextField.setError(getString(R.string.required));
-//                passEdt.setError("");
+                unameTextField.setError(getString(R.string.required));
 
             }
 
         } else {
 
             loginBtn.revertAnimation();
-            unameTextField.setError(getString(R.string.required));
 
         }
 
@@ -361,6 +390,9 @@ GeneralMethod generalMethod;
                             editor.apply();
 
                             appDatabase.itemsDao().deleteAll();
+                            appDatabase.customersDao().deleteAll();
+                            appDatabase.usersDao().deleteAll();
+
 
 //                            importData.getAllItems();
                             importData.getAllItems(new ImportData.GetItemsCallBack() {
@@ -414,6 +446,39 @@ GeneralMethod generalMethod;
 
                                             appDatabase.customersDao().addAll(allCustomers);
 
+                                            importData.getAllUsers(new ImportData.GetUsersCallBack() {
+                                                @Override
+                                                public void onResponse(JSONArray response) {
+
+                                                    GeneralMethod.showSweetDialog(LoginActivity.this, 1, "All Info Saved", null);
+
+                                                    for (int i = 0; i < response.length(); i++) {
+
+                                                        try {
+
+                                                            allUsers.add(new User(
+                                                                    response.getJSONObject(i).getString("SALESNO"),
+                                                                    response.getJSONObject(i).getString("ACCNAME"),
+                                                                    response.getJSONObject(i).getString("USER_PASSWORD"),
+                                                                    0,
+                                                                    0));
+
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+
+                                                    }
+
+                                                    appDatabase.usersDao().addAll(allUsers);
+
+                                                }
+
+                                                @Override
+                                                public void onError(String error) {
+
+                                                }
+                                            }, ipAddress, port, coNo);
+
                                         }
 
                                         @Override
@@ -459,12 +524,13 @@ GeneralMethod generalMethod;
         });
 
     }
-  void  addUserLogs(){
-      UserLogs userLogs=new UserLogs();
-      userLogs.setUserID(unameEdt.getText().toString().trim());
-      userLogs.setPassword(passEdt.getText().toString().trim());
-      userLogs.setDate(generalMethod.getCurentTimeDate(1));
-      userLogs.setTime(generalMethod.getCurentTimeDate(2));
-      appDatabase.userLogsDao().insertUser(userLogs);
-  }
+
+    void addUserLogs(int index) {
+        UserLogs userLogs = new UserLogs();
+        userLogs.setUserID(allUsers.get(index).getUserId()+"");
+        userLogs.setPassword(passEdt.getText().toString().trim());
+        userLogs.setDate(generalMethod.getCurentTimeDate(1));
+        userLogs.setTime(generalMethod.getCurentTimeDate(2));
+        appDatabase.userLogsDao().insertUser(userLogs);
+    }
 }

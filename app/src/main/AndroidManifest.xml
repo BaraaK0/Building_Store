@@ -18,9 +18,6 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:icon">
         <activity
-            android:name=".Activities.BaseActivity"
-            android:exported="false" />
-        <activity
             android:name=".Activities.ScanActivity"
             android:exported="false" />
         <activity

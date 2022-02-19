@@ -1,5 +1,6 @@
 package com.falcons.buildingstore.Database.Entities;
 
+import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
@@ -7,9 +8,10 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "Users_Table")
 public class User {
 
-    @PrimaryKey(autoGenerate = true)
+    @NonNull
+    @PrimaryKey
     @ColumnInfo(name = "User_ID")
-    private int userId;
+    private String userId;
 
     @ColumnInfo(name = "User_Name")
     private String userName;
@@ -17,30 +19,28 @@ public class User {
     @ColumnInfo(name = "User_Password")
     private String userPassword;
 
-    @ColumnInfo(name = "Disc_Permission")
-    private String discPermission;
+    @ColumnInfo(name = "User_Type")
+    private int userType;
 
-    public User(int userId, String userName, String userPassword, String discPermission) {
+    @ColumnInfo(name = "Disc_Permission")
+    private int discPermission;
+
+    public User(String userId, String userName, String userPassword, int userType, int discPermission) {
         this.userId = userId;
         this.userName = userName;
         this.userPassword = userPassword;
-        this.discPermission = discPermission;
-    }
-
-    public User(String userName, String userPassword, String discPermission) {
-        this.userName = userName;
-        this.userPassword = userPassword;
+        this.userType = userType;
         this.discPermission = discPermission;
     }
 
     public User() {
     }
 
-    public int getUserId() {
+    public String getUserId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
@@ -60,11 +60,19 @@ public class User {
         this.userPassword = userPassword;
     }
 
-    public String getDiscPermission() {
+    public int getDiscPermission() {
         return discPermission;
     }
 
-    public void setDiscPermission(String discPermission) {
+    public void setDiscPermission(int discPermission) {
         this.discPermission = discPermission;
+    }
+
+    public int getUserType() {
+        return userType;
+    }
+
+    public void setUserType(int userType) {
+        this.userType = userType;
     }
 }

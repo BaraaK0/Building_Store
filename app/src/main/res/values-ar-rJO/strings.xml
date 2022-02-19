@@ -53,9 +53,8 @@
     <string name="mobilnum">رقم الهاتف:</string>
     <string name="savedSuccsesfule">تم الحفظ بنجاح</string>
     <string name="Order">Order</string>
+    <string name="incorrect_user_info">معلومات المُستخدم غير صحيحة !</string>
     <string-array name="user_type">
-
-
         <item>آدمن</item>
         <item>مستخدم عادي</item>
     </string-array>
