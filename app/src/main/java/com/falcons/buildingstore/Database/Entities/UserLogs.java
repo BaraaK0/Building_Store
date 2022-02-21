@@ -10,6 +10,8 @@ public class UserLogs {
     int SERIAL;
     @ColumnInfo(name = "User_ID")
     String UserID;
+    @ColumnInfo(name = "User_Name")
+    String userName;
     @ColumnInfo(name = "User_Password")
     String Password;
     @ColumnInfo(name = "Date")
@@ -31,6 +33,14 @@ public class UserLogs {
 
     public void setUserID(String userID) {
         UserID = userID;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
     public String getPassword() {

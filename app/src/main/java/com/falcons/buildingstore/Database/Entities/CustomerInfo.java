@@ -1,15 +1,26 @@
 package com.falcons.buildingstore.Database.Entities;
 
+import android.view.View;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.falcons.buildingstore.Database.AppDatabase;
+import com.falcons.buildingstore.R;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 @Entity(tableName = "Customers_Info")
 public class CustomerInfo {
 
     @NonNull
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "Serial_No")
+    private int serial;
+
     @ColumnInfo(name = "Customer_ID")
     private String customerId;
 
@@ -19,18 +30,26 @@ public class CustomerInfo {
     @ColumnInfo(name = "Phone_No")
     private String phoneNo;
 
-    public CustomerInfo(String customerId, String customerName, String phoneNo) {
+    @ColumnInfo(name = "Is_Posted")
+    private int isPosted;
+
+    public CustomerInfo(@NonNull String customerId, String customerName, String phoneNo, int isPosted) {
+        this.isPosted = isPosted;
         this.customerId = customerId;
         this.customerName = customerName;
         this.phoneNo = phoneNo;
     }
 
-    public CustomerInfo(String customerName, String phoneNo) {
-        this.customerName = customerName;
-        this.phoneNo = phoneNo;
+    public CustomerInfo() {
+        this.isPosted = 0;
     }
 
-    public CustomerInfo() {
+    public int getSerial() {
+        return serial;
+    }
+
+    public void setSerial(int serial) {
+        this.serial = serial;
     }
 
     public String getCustomerId() {
@@ -55,5 +74,39 @@ public class CustomerInfo {
 
     public void setPhoneNo(String phoneNo) {
         this.phoneNo = phoneNo;
+    }
+
+    public int getIsPosted() {
+        return isPosted;
+    }
+
+    public void setIsPosted(int isPosted) {
+        this.isPosted = isPosted;
+    }
+
+    public JSONObject getJSONObject(String userName, String userNo) {
+
+        JSONObject jsonObject = new JSONObject();
+
+        try {
+
+            jsonObject.put("CUSTOMERNAME", customerName + "");
+
+            jsonObject.put("SALESMAN", userName);
+            jsonObject.put("SALESMANNO", userNo);
+
+            jsonObject.put("ISPOSTED", isPosted);
+
+            jsonObject.put("MOBILE", phoneNo);
+
+            jsonObject.put("REMARK", "");
+            jsonObject.put("LATITUDE", "");
+            jsonObject.put("LONGITUDE", "");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return jsonObject;
     }
 }

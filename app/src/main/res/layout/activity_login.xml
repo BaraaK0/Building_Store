@@ -62,7 +62,7 @@
                 android:layout_gravity="start|center_vertical"
                 android:layout_marginHorizontal="35dp"
                 android:layout_marginTop="40dp"
-                android:text="@string/wrong_username_or_password"
+                android:text="@string/incorrect_user_info"
                 android:textAllCaps="false"
                 android:textColor="?attr/colorError"
                 android:visibility="invisible"
@@ -116,7 +116,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
-                    android:text="1"
                     android:textAlignment="viewStart" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -140,7 +139,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
-                    android:text="1234"
                     android:textAlignment="viewStart" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -165,7 +163,8 @@
                 app:initialCornerAngle="27dp"
                 app:spinning_bar_color="@color/white"
                 app:spinning_bar_padding="6dp"
-                app:spinning_bar_width="4dp" />
+                app:spinning_bar_width="4dp"
+                android:gravity="center"/>
 
             <LinearLayout
                 android:id="@+id/request_ip_"

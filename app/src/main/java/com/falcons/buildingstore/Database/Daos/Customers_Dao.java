@@ -23,6 +23,12 @@ public interface Customers_Dao {
     @Insert
     void addAll(List<CustomerInfo> customers);
 
+    @Query("DELETE FROM Customers_Info")
+    void deleteAll();
+
+    @Query("UPDATE Customers_Info SET Is_Posted = '1' WHERE Is_Posted = '0'")
+    void setPosted();
+
     @Delete
     void deleteCustomer(CustomerInfo customerInfo);
 

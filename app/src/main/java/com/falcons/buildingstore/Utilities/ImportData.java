@@ -54,7 +54,7 @@ public class ImportData {
     public AppDatabase appDatabase;
     SharedPreferences sharedPref;
     public String headerDll = "", link = "";
-    SweetAlertDialog pDialog, pDialog2;
+    private SweetAlertDialog pDialog, pDialog2, pDialog3;
 
     public ImportData(Context context) {
 
@@ -63,6 +63,66 @@ public class ImportData {
         sharedPref = context.getSharedPreferences(SETTINGS_PREFERENCES, MODE_PRIVATE);
 
 //        headerDll = "/Falcons/VAN.Dll/";
+
+    }
+
+    public interface GetUsersCallBack {
+
+        void onResponse(JSONArray response);
+
+        void onError(String error);
+
+    }
+
+    public void getAllUsers(GetUsersCallBack getUsersCallBack, String ipAddress, String ipPort, String coNo) {
+
+        pDialog3 = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
+
+        pDialog3.getProgressHelper().setBarColor(Color.parseColor("#115571"));
+        pDialog3.setTitleText("Loading ...");
+        pDialog3.setCancelable(false);
+        pDialog3.show();
+        if (!ipAddress.equals("") || !ipPort.equals("") || !coNo.equals(""))
+            link = "http://" + ipAddress + ":" + ipPort + headerDll.trim() + "/ADMSALESMAN?CONO=" + coNo;
+
+        Log.e("getUsers_Link", link);
+
+        JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(link, new Response.Listener<JSONArray>() {
+            @Override
+            public void onResponse(JSONArray response) {
+
+                getUsersCallBack.onResponse(response);
+                pDialog3.dismissWithAnimation();
+//                GeneralMethod.showSweetDialog(context, 1, "Users Saved", null);
+                Log.e("getUsers_Response", response + "");
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+                getUsersCallBack.onError(error.getMessage() + "");
+                pDialog3.dismissWithAnimation();
+                if ((error.getMessage() + "").contains("SSLHandshakeException") || (error.getMessage() + "").equals("null")) {
+
+                    GeneralMethod.showSweetDialog(context, 0, null, "Connection to server failed");
+
+                } else if ((error.getMessage() + "").contains("ConnectException")) {
+
+                    GeneralMethod.showSweetDialog(context, 0, "Connection Failed", null);
+
+                } else if ((error.getMessage() + "").contains("NoRouteToHostException")) {
+
+                    GeneralMethod.showSweetDialog(context, 3, "", "Please check the entered IP info");
+
+                }
+                Log.e("getUsers_Error", error.getMessage() + "");
+
+            }
+        });
+
+        jsonArrayRequest.setRetryPolicy(new DefaultRetryPolicy(20 * 1000, 2, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+        RequestQueueSingleton.getInstance(context.getApplicationContext()).addToRequestQueue(jsonArrayRequest);
 
     }
 
@@ -97,7 +157,7 @@ public class ImportData {
 
                 getCustomersCallBack.onResponse(response);
                 pDialog2.dismissWithAnimation();
-                GeneralMethod.showSweetDialog(context, 1, "Customers Saved", null);
+//                GeneralMethod.showSweetDialog(context, 1, "Customers Saved", null);
                 Log.e("getCustms_Response", response + "");
 
             }
@@ -161,7 +221,7 @@ public class ImportData {
 
                 getItemsCallBack.onResponse(response);
                 pDialog.dismissWithAnimation();
-                GeneralMethod.showSweetDialog(context, 1, "Items Saved", null);
+//                GeneralMethod.showSweetDialog(context, 1, "Items Saved", null);
                 Log.e("getItems_Response", response + "");
 
             }
@@ -193,126 +253,6 @@ public class ImportData {
         RequestQueueSingleton.getInstance(context.getApplicationContext()).addToRequestQueue(jsonObjectRequest);
 
     }
-
-//
-//    public void getAllItems() {
-//
-//        new JSONTask_getAllItems().execute();
-//
-//    }
-//
-//    private class JSONTask_getAllItems extends AsyncTask<String, String, String> {
-//
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//
-//            pDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
-//            pDialog.getProgressHelper().setBarColor(Color.parseColor("#115571"));
-//            pDialog.setTitleText("Loading ...");
-//            pDialog.setCancelable(false);
-//            pDialog.show();
-//
-//        }
-//
-//        @Override
-//        protected String doInBackground(String... params) {
-//
-//
-//            link = "https://" + ipAddress + ":" + ipPort + headerDll + "/GetVanAllData?STRNO=1&CONO=" + coNo;
-//            Log.e("getItems_link", "" + link);
-//
-//            try {
-//
-//                String JsonResponse;
-//                HttpClient client = new DefaultHttpClient();
-//                HttpGet getRequest = new HttpGet();
-//                getRequest.setURI(new URI(link));
-//
-//                HttpResponse response = client.execute(getRequest);
-//
-//                BufferedReader in = new BufferedReader(new
-//                        InputStreamReader(response.getEntity().getContent()));
-//
-//                StringBuilder sb = new StringBuilder("");
-//                String line = "";
-//
-//                while ((line = in.readLine()) != null) {
-//                    sb.append(line);
-//                }
-//
-//                in.close();
-//
-//                JsonResponse = sb.toString();
-//                Log.e("getItems_Response", JsonResponse);
-//
-//                return JsonResponse;
-//
-//
-//            } catch (HttpHostConnectException ex) {
-//                ex.printStackTrace();
-//
-//                Handler h = new Handler(Looper.getMainLooper());
-//
-//                h.post(() -> {
-//                    pDialog.dismissWithAnimation();
-//                    Toast.makeText(context, "Ip Connection Failed", Toast.LENGTH_LONG).show();
-//                });
-//
-//                return null;
-//            } catch (Exception e) {
-//                pDialog.dismissWithAnimation();
-//                e.printStackTrace();
-//                return null;
-//            }
-//        }
-//
-//        @Override
-//        protected void onPostExecute(String s) {
-//            super.onPostExecute(s);
-//
-//            Log.e("getItems_result", "" + s);
-//
-//            pDialog.dismissWithAnimation();
-//            if (s != null) {
-//
-//                try {
-//                    JSONObject jsonObject;
-//                    jsonObject = new JSONObject(s);
-//                    Log.e("jsonObject_result", jsonObject.toString());
-//
-//                    JSONArray itemsArray = jsonObject.getJSONArray("Items_Master");
-//
-//                    for (int i = 0; i < itemsArray.length(); i++) {
-//
-//                        Item item = new Item();
-//                        item.setItem_Name(itemsArray.getJSONObject(i).getString("NAME"));
-//                        item.setItemNCode(itemsArray.getJSONObject(i).getString("BARCODE"));
-//                        item.setItemOCode(itemsArray.getJSONObject(i).getString("ITEMNO"));
-//                        item.setImagePath(itemsArray.getJSONObject(i).getString("ITEMPICSPATH"));
-//                        item.setItemKind(itemsArray.getJSONObject(i).getString("ItemK"));
-//                        item.setPrice(Double.parseDouble(itemsArray.getJSONObject(i).getString("MINPRICE")));
-//                        item.setCategoryId(itemsArray.getJSONObject(i).getString("CATEOGRYID"));
-//
-//
-//                        allItemsList.add(item);
-//
-//                    }
-//
-//                    appDatabase.itemsDao().addAll(allItemsList);
-//
-//                } catch (JSONException e) {
-//                    pDialog.dismissWithAnimation();
-//                    e.printStackTrace();
-//                }
-//            } else {
-//
-//                pDialog.dismissWithAnimation();
-//
-//            }
-//
-//        }
-//    }
 
 
 }

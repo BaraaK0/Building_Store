@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="start|center_vertical"
             android:layout_marginTop="25dp"
-            android:text="@string/wrong_username_or_password"
+            android:text="@string/incorrect_user_info"
             android:textAllCaps="false"
             android:textColor="?attr/colorError"
             android:visibility="invisible"
@@ -42,18 +42,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/username"
+            app:boxBackgroundColor="@color/white"
             app:endIconMode="clear_text"
-            app:startIconDrawable="@drawable/ic_baseline_person_24"
-            app:boxBackgroundColor="@color/white">
+            app:startIconDrawable="@drawable/ic_baseline_person_24">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/unameEdt"
-                android:text="1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:textAlignment="viewStart"
-                />
+                android:text="1"
+                android:textAlignment="viewStart" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -79,19 +78,17 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:hint="@string/password"
-            app:endIconMode="password_toggle"
-            app:startIconDrawable="@drawable/ic_baseline_vpn_key_24"
             app:boxBackgroundColor="@color/white"
-            >
+            app:endIconMode="password_toggle"
+            app:startIconDrawable="@drawable/ic_baseline_vpn_key_24">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/passEdt"
-                android:text="1234"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
-                android:textAlignment="viewStart"
-                />
+                android:text="1234"
+                android:textAlignment="viewStart" />
 
         </com.google.android.material.textfield.TextInputLayout>
         <!--        <com.google.android.material.textfield.TextInputLayout-->

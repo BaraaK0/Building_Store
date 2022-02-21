@@ -1,19 +1,14 @@
 package com.falcons.buildingstore.Adapters;
 
 
-import static com.falcons.buildingstore.Activities.HomeActivity.customerNames;
-import static com.falcons.buildingstore.Activities.HomeActivity.customerTv;
-import static com.falcons.buildingstore.Activities.HomeActivity.customer_textInput;
-import static com.falcons.buildingstore.Activities.HomeActivity.itemcount;
 import static com.falcons.buildingstore.Activities.HomeActivity.itemsRecycler;
-import static com.falcons.buildingstore.Activities.HomeActivity.vocher_Items;
 
 import android.app.AlertDialog;
-import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
@@ -22,12 +17,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
+
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
@@ -43,8 +36,8 @@ import com.falcons.buildingstore.Database.Entities.UserLogs;
 import com.falcons.buildingstore.R;
 import com.squareup.picasso.Picasso;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -99,12 +92,25 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                 itemsRecycler.smoothScrollToPosition(currPosition);
             }
         });
-        if (!itemsList.get(currPosition).getImagePath().equals(""))
-            Picasso.get().load(itemsList.get(currPosition).getImagePath()).fit().centerCrop().into(holder.itemImage);
+
 
         UserLogs userLogs = appDatabase.userLogsDao().getLastuserLogin();
 
+        int userPer = appDatabase.usersDao().getuserPer(userLogs.getUserName());
+        if (userPer == 0)
+            holder.Dis_Layout.setVisibility(View.GONE);
+        else
+            holder.Dis_Layout.setVisibility(View.VISIBLE);
+
+
+        if (!itemsList.get(currPosition).getImagePath().equals(""))
+            Picasso.get().load(itemsList.get(currPosition).getImagePath()).fit().centerCrop().into(holder.itemImage);
+
         holder.itemName.setText(itemsList.get(currPosition).getItemName());
+
+
+        if (TextUtils.getLayoutDirectionFromLocale(Locale.getDefault()) == View.LAYOUT_DIRECTION_RTL)
+            holder.expandBtn.setRotationY(180);
 
         holder.expandBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,70 +152,57 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             public void onClick(View v) {
 
 
-                String selectedCustomer = customerTv.getText().toString().trim();
+                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        switch (which) {
+                            case DialogInterface.BUTTON_POSITIVE:
+                                //Yes button clicked
+                                //  openSalesDialog(currPosition);
+                                addQTYandDis(currPosition, holder);
+                                dialog.dismiss();
+                                break;
 
-                if (customerNames.contains(selectedCustomer) && !selectedCustomer.equals("")) {
-
-                    customer_textInput.setError(null);
-
-
-                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switch (which) {
-                                case DialogInterface.BUTTON_POSITIVE:
-                                    //Yes button clicked
-                                    //  openSalesDailog(currPosition);
-                                    addQTYandDis(currPosition, holder);
-                                    dialog.dismiss();
-                                    break;
-
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                //No button clicked
+                                break;
                                 case DialogInterface.BUTTON_NEGATIVE:
                                     //No button clicked
                                     dialog.dismiss();
                                     break;
 
-                            }
                         }
-                    };
+                    }
+                };
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setMessage("Add item to cart?").
+                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                builder.setMessage(context.getString(R.string.add_item_to))
+                        .setTitle(itemsList.get(currPosition).getItemName())
+                        .setPositiveButton(context.getString(R.string.yes), dialogClickListener)
+                        .setNegativeButton(context.getString(R.string.no), dialogClickListener)
+                        .show();
 
-                            setPositiveButton("Yes", dialogClickListener)
-                            .
 
-                                    setNegativeButton("No", dialogClickListener).
+            }
+        });
+        holder.itemAreaEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                            show();
+            }
 
-                } else {
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-                    customer_textInput.setError("*");
+            }
 
+            @Override
+            public void afterTextChanged(Editable editable) {
+                if (!editable.toString().equals("")) {
+                    appDatabase.itemsDao().UpdateItemAria(holder.itemAreaEdt.getText().toString(), itemsList.get(currPosition).getArea());
                 }
             }
         });
-        holder.itemAreaEdt.addTextChangedListener(new
-
-                                                          TextWatcher() {
-                                                              @Override
-                                                              public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                                                              }
-
-                                                              @Override
-                                                              public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                                                              }
-
-                                                              @Override
-                                                              public void afterTextChanged(Editable editable) {
-                                                                  if (!editable.toString().equals("")) {
-                                                                      appDatabase.itemsDao().UpdateItemAria(holder.itemAreaEdt.getText().toString(), itemsList.get(currPosition).getArea());
-                                                                  }
-                                                              }
-                                                          });
 
     }
 

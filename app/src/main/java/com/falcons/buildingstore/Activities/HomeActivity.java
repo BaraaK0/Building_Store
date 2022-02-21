@@ -17,8 +17,11 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.Gravity;
@@ -39,6 +42,7 @@ import android.widget.TextView;
 
 import com.falcons.buildingstore.Database.Entities.Item;
 import com.falcons.buildingstore.Adapters.ItemsAdapter;
+import com.falcons.buildingstore.Database.Entities.UserLogs;
 import com.falcons.buildingstore.R;
 import com.falcons.buildingstore.Utilities.ExportData;
 import com.falcons.buildingstore.Utilities.ImportData;
@@ -51,13 +55,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class HomeActivity extends BaseActivity {
+public class HomeActivity extends AppCompatActivity {
 
     public static List<Item> allItemList_rv;
     private List<Item> search_itemList;
 
-    private List<CustomerInfo> allCustomers;
-    public static ArrayList<String> customerNames;
 
     private String ipAddress, ipPort, coNo;
 
@@ -71,11 +73,8 @@ public class HomeActivity extends BaseActivity {
 
     private AppDatabase appDatabase;
 
-    public static TextInputLayout customer_textInput;
-    public static AutoCompleteTextView customerTv;
     public static EditText searchItemsEdt;
     private TextInputLayout searchItems_textField;
-    private ImageView scanCodeBtn;
 
     public static final int REQUEST_Camera_Barcode = 1;
 
@@ -92,34 +91,6 @@ public class HomeActivity extends BaseActivity {
 
         init();
 
-        bottom_navigation.setSelectedItemId(R.id.action_home);
-
-        bottom_navigation.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-
-                    case R.id.action_home:
-                        return true;
-
-                    case R.id.action_cart:
-                        Intent intent = new Intent(HomeActivity.this, BasketActivity.class);
-                        intent.putExtra("previous", "Home");
-                        startActivity(intent);
-                        return true;
-
-                    case R.id.action_add:
-                        return true;
-
-                    case R.id.action_report:
-                        return true;
-
-
-                }
-                return false;
-            }
-        });
-
 
         /*  Initialize Items  */
         allItemList_rv = appDatabase.itemsDao().getAllItems();
@@ -128,66 +99,53 @@ public class HomeActivity extends BaseActivity {
         itemsRecycler.setAdapter(itemsAdapter);
         itemsRecycler.setSaveEnabled(true);
 
-        /*  Initialize Customers  */
-        allCustomers = appDatabase.customersDao().getAllCustms();
-        customerNames = new ArrayList<>();
 
-        for (int i = 0; i < allCustomers.size(); i++) {
-
-            customerNames.add(allCustomers.get(i).getCustomerName());
-
-        }
-
-        ArrayAdapter<String> customersAdapter = new ArrayAdapter<>(
-                this, android.R.layout.simple_dropdown_item_1line, customerNames);
-
-        customerTv.setAdapter(customersAdapter);
 
 
         /* Items Search Handling */
-//        searchItemsEdt.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//                String eTxt = s.toString().trim().toLowerCase();
-//
-//                if (!eTxt.equals("")) {
-//
-//                    search_itemList.clear();
-//                    for (int i = 0; i < allItemList_rv.size(); i++) {
-//
-//                        if (allItemList_rv.get(i).getItemName().toLowerCase().contains(eTxt) ||
-//                                allItemList_rv.get(i).getItemNCode().toLowerCase().contains(eTxt.replaceAll("\\s+", ""))) {
-//
-//                            search_itemList.add(allItemList_rv.get(i));
-//
-//                        }
-//
-//                    }
-//
-//                    ItemsAdapter itemsAdapter1 = new ItemsAdapter(search_itemList, HomeActivity.this);
-//                    itemsRecycler.setAdapter(itemsAdapter1);
-//
-//                }
-//                else {
-//
-//                    itemsAdapter = new ItemsAdapter(allItemList_rv, HomeActivity.this);
-//                    itemsRecycler.setAdapter(itemsAdapter);
-//
-//                }
-//
-//            }
-//        });
+        searchItemsEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                String eTxt = s.toString().trim().toLowerCase();
+
+                if (!eTxt.equals("")) {
+
+                    search_itemList.clear();
+                    for (int i = 0; i < allItemList_rv.size(); i++) {
+
+                        if (allItemList_rv.get(i).getItemName().toLowerCase().contains(eTxt) ||
+                                allItemList_rv.get(i).getItemNCode().toLowerCase().contains(eTxt.replaceAll("\\s+", ""))) {
+
+                            search_itemList.add(allItemList_rv.get(i));
+
+                        }
+
+                    }
+
+                    ItemsAdapter itemsAdapter1 = new ItemsAdapter(search_itemList, HomeActivity.this);
+                    itemsRecycler.setAdapter(itemsAdapter1);
+
+                }
+                else {
+
+                    itemsAdapter = new ItemsAdapter(allItemList_rv, HomeActivity.this);
+                    itemsRecycler.setAdapter(itemsAdapter);
+
+                }
+
+            }
+        });
 
         searchItems_textField.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
@@ -212,71 +170,83 @@ public class HomeActivity extends BaseActivity {
             }
         });
 
-        BottomNavigationView bottomNavigationView = (BottomNavigationView)
-                findViewById(R.id.bottom_navigation);
+        /* Bottom Navigation */
 
-        bottomNavigationView.setOnNavigationItemSelectedListener(
+
+        bottom_navigation.setSelectedItemId(R.id.action_home);
+
+        bottom_navigation.setOnNavigationItemSelectedListener(
                 new BottomNavigationView.OnNavigationItemSelectedListener() {
                     @Override
                     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                         switch (item.getItemId()) {
-                            case R.id.action_cart:
-                                Intent intent = new Intent(HomeActivity.this, BasketActivity.class);
-                                startActivity(intent);
 
-                                break;
+                            case R.id.action_home:
+
+                                return true;
+
+                            case R.id.action_cart:
+
+                                startActivity(new Intent(getApplicationContext(), BasketActivity.class));
+                                overridePendingTransition(0, 0);
+                                return true;
+
                             case R.id.exportdata:
+
                                 exportData.exportSalesVoucherM();
-                                break;
+                                return true;
+
                             case R.id.action_report:
-                                Intent intent1 = new Intent(HomeActivity.this, ShowPreviousOrder.class);
-                                startActivity(intent1);
-                                break;
+
+                                startActivity(new Intent(getApplicationContext(), ShowPreviousOrder.class));
+                                overridePendingTransition(0, 0);
+                                return true;
+
                             case R.id.action_add:
 
                                 final Dialog dialog = new Dialog(HomeActivity.this);
                                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                                 dialog.setCancelable(true);
                                 dialog.setContentView(R.layout.adddailog);
+                                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                                 WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                                 lp.copyFrom(dialog.getWindow().getAttributes());
+                                lp.width = (int) (getResources().getDisplayMetrics().widthPixels / 1.19);
                                 lp.gravity = Gravity.CENTER;
                                 dialog.getWindow().setAttributes(lp);
                                 dialog.show();
+
+                                UserLogs userLogs = appDatabase.userLogsDao().getLastuserLogin();
+
+                                int userType = appDatabase.usersDao().getUserType(userLogs.getUserName());
+                                if (userType == 0)
+                                    dialog.findViewById(R.id.adduser).setVisibility(View.GONE);
+                                else
+                                    dialog.findViewById(R.id.adduser).setVisibility(View.VISIBLE);
 
 
                                 dialog.findViewById(R.id.addCustomer).setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        Intent intent2 = new Intent(HomeActivity.this, AddNewCustomer.class);
-                                        startActivity(intent2);
+                                        startActivity(new Intent(getApplicationContext(), AddNewCustomer.class));
+                                        overridePendingTransition(0, 0);
                                         dialog.dismiss();
                                     }
                                 });
                                 dialog.findViewById(R.id.adduser).setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View view) {
-                                        Intent intent2 = new Intent(HomeActivity.this, AddNewUser.class);
-                                        startActivity(intent2);
+                                        startActivity(new Intent(getApplicationContext(), AddNewUser.class));
+                                        overridePendingTransition(0, 0);
                                         dialog.dismiss();
                                     }
                                 });
 
-                                break;
+                                return true;
                         }
                         return false;
                     }
                 });
-    }
-
-    @Override
-    int getLayoutId() {
-        return R.layout.activity_home;
-    }
-
-    @Override
-    int getBottomNavigationMenuItemId() {
-        return R.id.action_home;
     }
 
 
@@ -286,18 +256,15 @@ public class HomeActivity extends BaseActivity {
         importData = new ImportData(this);
         appDatabase = AppDatabase.getInstanceDatabase(this);
 
-        bottom_navigation = findViewById(R.id.bottom_navigation);
+        bottom_navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         itemsRecycler = findViewById(R.id.itemsRecycler);
 
         itemcount = findViewById(R.id.itemcount);
-        customer_textInput = findViewById(R.id.customer_textInput);
-        customerTv = findViewById(R.id.customerTv);
         searchItemsEdt = findViewById(R.id.searchItemsEdt);
         searchItems_textField = findViewById(R.id.searchItems_textField);
 
         allItemList_rv = new ArrayList<>();
         search_itemList = new ArrayList<>();
-        allCustomers = new ArrayList<>();
 
         SharedPreferences sharedPref = getSharedPreferences(SETTINGS_PREFERENCES, MODE_PRIVATE);
         ipAddress = sharedPref.getString(IP_PREF, "");

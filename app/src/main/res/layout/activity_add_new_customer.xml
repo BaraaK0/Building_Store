@@ -6,11 +6,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".Activities.AddNewCustomer">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="30dp"
+        android:layout_weight="1.9"
         android:gravity="center"
-        android:layout_weight="2"
         android:orientation="vertical">
 
         <ImageView
@@ -26,109 +28,118 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginStart="30dp"
+        android:layout_marginTop="39dp"
         android:layout_marginEnd="30dp"
         android:layout_weight="1"
         android:background="@drawable/containerlayout"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="25dp">
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="horizontal"
+            android:layout_height="match_parent"
             android:layout_weight="2"
-            android:layout_height="match_parent">
+            android:orientation="horizontal">
+
             <TextView
-                android:fontFamily="@font/alegreya"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:fontFamily="@font/alegreya"
+                android:gravity="center"
+                android:text="@string/addnewcustomer"
                 android:textColor="@color/primaryTextColor"
                 android:textSize="30sp"
-                android:gravity="center"
-                android:textStyle="bold"
-                android:text="@string/addnewcustomer"/>
-
+                android:textStyle="bold" />
 
 
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
+            android:layout_height="match_parent"
             android:layout_weight="1"
-            android:layout_height="match_parent">
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:padding="4dp"
+                    android:text="@string/customer_name"
+                    android:textColor="@color/gray_btn_bg_color"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/cus_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="9dp"
+                    android:layout_marginEnd="9dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/edittextstyle"
+                    android:padding="4dp"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="18sp" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="bottom"
+                    android:padding="4dp"
+                    android:text="@string/mobilnum"
+                    android:textColor="@color/gray_btn_bg_color"
+                    android:textSize="18sp" />
+
+                <EditText
+                    android:id="@+id/phoneNo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="9dp"
+                    android:layout_marginEnd="9dp"
+                    android:layout_weight="1"
+                    android:maxLines="1"
+                    android:background="@drawable/edittextstyle"
+                    android:drawableStart="@drawable/joimage"
+                    android:padding="4dp"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="18sp"
+                    android:inputType="phone"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:padding="8dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColor="@color/gray_btn_bg_color"
-                android:textSize="18sp"
-                android:padding="4dp"
-                android:gravity="bottom"
-                android:layout_weight="1"
-                android:text="@string/customerName"/>
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColor="@color/primaryTextColor"
-                android:textSize="18sp"
-                android:padding="4dp"
-                android:layout_marginEnd="9dp"
-                android:layout_marginStart="9dp"
-                android:background="@drawable/edittextstyle"
-                android:layout_weight="1"
-                android:id="@+id/cus_name"/>
-
-
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:padding="8dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent">
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColor="@color/gray_btn_bg_color"
-                android:textSize="18sp"
-                android:gravity="bottom"
-                android:layout_weight="1"
-                android:padding="4dp"
-                android:text="@string/mobilnum"/>
-
-            <EditText
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:textColor="@color/primaryTextColor"
-                android:textSize="18sp"
-                android:id="@+id/phoneNo"
-                android:padding="4dp"
-                android:text="+962"
-                android:layout_marginEnd="9dp"
-                android:layout_marginStart="9dp"
-                android:background="@drawable/edittextstyle"
-                android:drawableStart="@drawable/joimage"
-                android:layout_weight="1"
-               />
-
-        </LinearLayout>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:orientation="vertical"
-            android:layout_weight="2.2"
+            android:layout_height="match_parent"
             android:layout_marginStart="90dp"
+            android:layout_marginTop="20dp"
             android:layout_marginEnd="90dp"
-            android:layout_height="match_parent">
+            android:layout_weight="1.9"
+            android:orientation="vertical">
 
             <br.com.simplepass.loadingbutton.customViews.CircularProgressButton
                 android:id="@+id/addCustomer"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
-
                 android:background="@drawable/bg_btn"
                 android:fontFamily="@font/alegreya_sans_medium"
                 android:letterSpacing="0.08"
@@ -137,13 +148,14 @@
                 android:textColor="@color/white"
                 android:textSize="20sp"
                 app:initialCornerAngle="27dp"
-                app:spinning_bar_color="@color/white"
-                />
+                app:spinning_bar_color="@color/white" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
-            android:layout_height="9dp"/>
+            android:layout_height="9dp" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -153,5 +165,10 @@
 
     </LinearLayout>
 
+    <include
+        android:id="@+id/bottom_navigation"
+        layout="@layout/bottom_nav_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 
 </LinearLayout>

@@ -23,6 +23,38 @@
             android:layout_centerHorizontal="true"
             android:background="@drawable/logo" />
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/customer_textInput"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:hint="@string/customer"
+            app:boxBackgroundColor="@color/white"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            app:boxStrokeColor="@color/primaryTextColor"
+            app:boxStrokeWidth="1dp"
+            app:endIconTint="@color/primaryTextColor"
+            android:layout_below="@+id/logo_remove"
+            android:layout_marginTop="30dp"
+            android:layout_marginHorizontal="26dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentEnd="true"
+            >
+
+            <AutoCompleteTextView
+                android:id="@+id/customerTv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:inputType="textAutoComplete"
+                android:textAlignment="viewStart"
+                android:textColor="@color/black" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/orderBtn"
@@ -59,9 +91,10 @@
             android:shadowColor="@color/primaryTextColor"
             android:shadowDx="2"
             android:shadowDy="2"
-            android:shadowRadius="4"
-            android:text="@string/save"
-            android:textColor="#F5FCFF"
+            android:shadowRadius="2"
+            android:text="@string/save_for_later"
+            android:textAllCaps="false"
+            android:textColor="@color/primaryTextColor"
             android:textSize="25sp" />
 
 
@@ -69,10 +102,10 @@
             android:id="@+id/basketListCard"
             android:layout_width="match_parent"
             android:layout_height="340dp"
-            android:layout_below="@+id/logo_remove"
+            android:layout_below="@+id/customer_textInput"
             android:layout_centerHorizontal="true"
             android:layout_marginHorizontal="26dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="10dp"
             app:cardCornerRadius="15dp"
             app:cardElevation="4dp">
 
@@ -94,16 +127,6 @@
                         android:layout_height="wrap_content"
                         android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/alegreya"
-                            android:gravity="start"
-                            android:lineHeight="19sp"
-                            android:text="@string/item_Code"
-                            android:textColor="@color/primaryTextColor"
-                            android:textSize="14sp" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -113,6 +136,17 @@
                             android:gravity="start"
                             android:lineHeight="19sp"
                             android:text="@string/item_Name_"
+                            android:textColor="@color/primaryTextColor"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:fontFamily="@font/alegreya"
+                            android:gravity="center"
+                            android:lineHeight="19sp"
+                            android:text="@string/item_Code"
                             android:textColor="@color/primaryTextColor"
                             android:textSize="14sp" />
 
@@ -186,9 +220,10 @@
         <com.google.android.material.card.MaterialCardView
             android:layout_width="46dp"
             android:layout_height="46dp"
-            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginStart="26dp"
+            android:layout_marginLeft="26dp"
+            android:layout_marginTop="10dp"
             app:cardCornerRadius="10dp"
             app:cardElevation="5dp">
 
