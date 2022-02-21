@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/itemCard"
@@ -89,7 +89,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <ImageButton
             android:id="@+id/addToCartBtn"
@@ -542,7 +542,7 @@
                             android:checked="true"
                             android:fontFamily="@font/alegreya_sans"
                             android:lineHeight="21.6px"
-                            android:text="Box"
+                            android:text="@string/box"
                             android:textColor="@color/primaryTextColor"
                             android:textSize="17sp" />
 
@@ -553,7 +553,7 @@
                             android:layout_marginStart="100dp"
                             android:fontFamily="@font/alegreya_sans"
                             android:lineHeight="21.6px"
-                            android:text="Meter"
+                            android:text="@string/meter"
                             android:textColor="@color/primaryTextColor"
                             android:textSize="17sp" />
 

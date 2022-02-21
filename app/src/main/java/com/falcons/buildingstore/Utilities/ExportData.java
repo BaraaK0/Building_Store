@@ -1,19 +1,36 @@
 package com.falcons.buildingstore.Utilities;
 
+import static android.content.Context.MODE_PRIVATE;
+import static com.falcons.buildingstore.Activities.LoginActivity.CONO_PREF;
 import static com.falcons.buildingstore.Activities.LoginActivity.IP_PREF;
 import static com.falcons.buildingstore.Activities.LoginActivity.PORT_PREF;
+import static com.falcons.buildingstore.Activities.LoginActivity.SETTINGS_PREFERENCES;
+import static com.falcons.buildingstore.Utilities.GeneralMethod.showSweetDialog;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.View;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.RetryPolicy;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.StringRequest;
 import com.falcons.buildingstore.Database.AppDatabase;
+import com.falcons.buildingstore.Database.Entities.CustomerInfo;
 import com.falcons.buildingstore.Database.Entities.OrderMaster;
 import com.falcons.buildingstore.Database.Entities.OrdersDetails;
+import com.falcons.buildingstore.Database.Entities.User;
+import com.falcons.buildingstore.Database.Entities.UserLogs;
+import com.falcons.buildingstore.R;
+import com.google.gson.JsonArray;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -33,7 +50,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLConnection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
 
@@ -43,7 +62,7 @@ public class ExportData {
     private Context context;
     List<OrdersDetails> items;
     private AppDatabase appDatabase;
-    private String URL_TO_HIT, ipAddress, ipWithPort, headerDll, CONO = "";
+    private String URL_TO_HIT, ipAddress, ipPort, headerDll = "", coNo = "";
     private ProgressDialog progressDialog, pdValidation;
     SweetAlertDialog progressSave, pdVoucher;
     AppDatabase mHandler;
@@ -54,9 +73,218 @@ public class ExportData {
         this.context = context;
         this.mHandler = AppDatabase.getInstanceDatabase(context);
 
-        ipAddress = IP_PREF;
-        ipWithPort = PORT_PREF;
+        appDatabase = AppDatabase.getInstanceDatabase(context);
+
+        SharedPreferences sharedPref = context.getSharedPreferences(SETTINGS_PREFERENCES, MODE_PRIVATE);
+        ipAddress = sharedPref.getString(IP_PREF, "");
+        ipPort = sharedPref.getString(PORT_PREF, "");
+        coNo = sharedPref.getString(CONO_PREF, "");
     }
+
+    private JSONObject getAddUserObj(List<User> userList) {
+
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < userList.size(); i++) {
+
+            jsonArray.put(userList.get(i).getJSONObject(true));
+
+        }
+
+        JSONObject addUserObj = new JSONObject();
+        try {
+            addUserObj.put("JSN", jsonArray);
+            Log.e("AddUser_Obj", addUserObj.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return addUserObj;
+    }
+
+    public void addUser(List<User> userList) {
+
+        SweetAlertDialog pDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
+
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#115571"));
+        pDialog.setTitleText("Saving ...");
+        pDialog.setCancelable(false);
+        pDialog.show();
+
+        String url = "http://" + ipAddress + ":" + ipPort + headerDll + "/ADMAddSalesMan";
+        Log.e("AddUser_URL ", url);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                pDialog.dismissWithAnimation();
+                Log.e("AddUser_Response", response);
+                if (response.contains("Saved Successfully")) {
+
+                    appDatabase.usersDao().setPosted();
+
+                    showSweetDialog(context, 1, context.getString(R.string.savedSuccsesfule), "");
+
+                } else if (response.contains("server error")) {
+
+                    showSweetDialog(context, 0, "Internal server error", "");
+
+                } else if (response.contains("unique constraint")) {
+
+                    Log.e("unique response", response.toString() + "");
+                    try {
+                        showSweetDialog(context, 0, "Unique Constraint", "");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                pDialog.dismissWithAnimation();
+                showSweetDialog(context, 0, "Connection Failed", "");
+
+                VolleyLog.e("Error: ", error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                // below line we are creating a map for
+                // storing our values in key and value pair.
+                Map<String, String> params = new HashMap<>();
+
+                params.put("CONO", coNo);
+                params.put("JSONSTR", getAddUserObj(userList).toString());
+
+                return params;
+            }
+        };
+        stringRequest.setRetryPolicy(new RetryPolicy() {
+            @Override
+            public int getCurrentTimeout() {
+                return 50000;
+            }
+
+            @Override
+            public int getCurrentRetryCount() {
+                return 50000;
+            }
+
+            @Override
+            public void retry(VolleyError error) throws VolleyError {
+
+            }
+        });
+        RequestQueueSingleton.getInstance(context.getApplicationContext()).addToRequestQueue(stringRequest);
+
+    }
+
+    private JSONObject getAddCustObj(List<CustomerInfo> customerList) {
+
+        JSONArray jsonArray = new JSONArray();
+
+        UserLogs userLogs = appDatabase.userLogsDao().getLastuserLogin();
+        String username = appDatabase.usersDao().getUserName(userLogs.getUserID());
+
+        for (int i = 0; i < customerList.size(); i++) {
+
+            jsonArray.put(customerList.get(i).getJSONObject(username, userLogs.getUserID()));
+
+        }
+
+        JSONObject addUserObj = new JSONObject();
+        try {
+            addUserObj.put("JSN", jsonArray);
+            Log.e("AddCustomer_Obj", addUserObj.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return addUserObj;
+    }
+
+    public void addCustomer(List<CustomerInfo> customerList) {
+
+        SweetAlertDialog pDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
+
+        pDialog.getProgressHelper().setBarColor(Color.parseColor("#115571"));
+        pDialog.setTitleText("Saving ...");
+        pDialog.setCancelable(false);
+        pDialog.show();
+
+        String url = "http://" + ipAddress + ":" + ipPort + headerDll + "/ExportADDED_CUSTOMERS";
+        Log.e("AddUser_URL ", url);
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+
+                pDialog.dismissWithAnimation();
+                Log.e("AddCustomer_Response", response);
+                if (response.contains("Saved Successfully")) {
+
+                    appDatabase.customersDao().setPosted();
+
+                    showSweetDialog(context, 1, context.getString(R.string.savedSuccsesfule), null);
+
+                } else if (response.contains("server error")) {
+
+                    showSweetDialog(context, 0, "Internal server error", "");
+
+                } else if (response.contains("unique constraint")) {
+
+                    Log.e("unique response", response.toString() + "");
+                    try {
+                        showSweetDialog(context, 0, "Unique Constraint", "");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                pDialog.dismissWithAnimation();
+                showSweetDialog(context, 0, "Connection Failed", "");
+
+                VolleyLog.e("Error: ", error.getMessage());
+            }
+        }) {
+            @Override
+            protected Map<String, String> getParams() {
+                // below line we are creating a map for
+                // storing our values in key and value pair.
+                Map<String, String> params = new HashMap<>();
+
+                params.put("CONO", coNo);
+                params.put("JSONSTR", getAddCustObj(customerList).toString());
+
+                return params;
+            }
+        };
+        stringRequest.setRetryPolicy(new RetryPolicy() {
+            @Override
+            public int getCurrentTimeout() {
+                return 50000;
+            }
+
+            @Override
+            public int getCurrentRetryCount() {
+                return 50000;
+            }
+
+            @Override
+            public void retry(VolleyError error) throws VolleyError {
+
+            }
+        });
+        RequestQueueSingleton.getInstance(context.getApplicationContext()).addToRequestQueue(stringRequest);
+
+    }
+
 
     private void exportVoucherDetail() {//2
         getVouchersDetail();
@@ -151,7 +379,7 @@ public class ExportData {
             //  URL_TO_HIT = "http://"+ipAddress.trim()+":" + ipWithPort.trim() +"/ExportSALES_VOUCHER_D?CONO="+CONO.trim()+"&JSONSTR="+vouchersObject.toString().trim();
 
 //
-            String link = "http://" + ipAddress.trim() + ":" + ipWithPort.trim() + headerDll.trim() + "/ExportSALES_VOUCHER_D";
+            String link = "http://" + ipAddress.trim() + ":" + ipPort.trim() + headerDll.trim() + "/ExportSALES_VOUCHER_D";
             Log.e("link==", link + "");
 
 
@@ -169,7 +397,7 @@ public class ExportData {
                 }
 
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                nameValuePairs.add(new BasicNameValuePair("CONO", CONO.trim()));
+                nameValuePairs.add(new BasicNameValuePair("CONO", coNo.trim()));
                 nameValuePairs.add(new BasicNameValuePair("JSONSTR", vouchersObject.toString().trim()));
                 Log.e("nameValuePairs", "Details=JSONSTR" + vouchersObject.toString().trim());
 
@@ -257,7 +485,7 @@ public class ExportData {
 
                     //  String data= "{\"JSN\":[{\"COMAPNYNO\":290,\"VOUCHERYEAR\":\"2021\",\"VOUCHERNO\":\"1212\",\"VOUCHERTYPE\":\"3\",\"VOUCHERDATE\":\"24/03/2020\",\"SALESMANNO\":\"5\",\"CUSTOMERNO\":\"123456\",\"VOUCHERDISCOUNT\":\"50\",\"VOUCHERDISCOUNTPERCENT\":\"10\",\"NOTES\":\"AAAAAA\",\"CACR\":\"1\",\"ISPOSTED\":\"0\",\"PAYMETHOD\":\"1\",\"NETSALES\":\"150.720\"}]}";
 
-                    URL_TO_HIT = "http://" + ipAddress.trim() + ":" + ipWithPort.trim() + headerDll.trim() + "/ExportSALES_VOUCHER_M";
+                    URL_TO_HIT = "http://" + ipAddress.trim() + ":" + ipPort.trim() + headerDll.trim() + "/ExportSALES_VOUCHER_M";
 
 
                     Log.e("URL_TO_HIT", "" + URL_TO_HIT);
@@ -293,7 +521,7 @@ public class ExportData {
                 }
 
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(2);
-                nameValuePairs.add(new BasicNameValuePair("CONO", CONO.trim()));
+                nameValuePairs.add(new BasicNameValuePair("CONO", coNo.trim()));
                 nameValuePairs.add(new BasicNameValuePair("JSONSTR", vouchersObject.toString().trim()));
                 Log.e("nameValuePairs", "JSONSTR" + vouchersObject.toString().trim());
 
@@ -361,116 +589,5 @@ public class ExportData {
             }
         }
     }
-//    private class JSONTaskSaveVouchers extends AsyncTask<String, String, String> {
-//        private String JsonResponse = null;
-//        private HttpURLConnection urlConnection = null;
-//        private BufferedReader reader = null;
-//        //        SweetAlertDialog pdItem=null;
-//        public  String salesNo="",finalJson;
-//
-//
-//        @Override
-//        protected void onPreExecute() {
-//            super.onPreExecute();
-//            progressSave = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
-//            progressSave.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
-//            progressSave.setTitleText(" Save Vouchers");
-//            progressSave.setCancelable(false);
-//            progressSave.show();
-//
-//        }
-//
-//        @Override
-//        protected String doInBackground(String... params) {
-////            URLConnection connection = null;
-////            BufferedReader reader = null;
-////
-////            try {
-////
-////                try {
-////                    if (!ipAddress.equals("")) {
-//            // URL_TO_HIT = "http://"+ipAddress.trim()+":" + ipWithPort.trim() +"/Falcons/VAN.dll/GetVanAllData?STRNO="+salesNo+"&CONO="+CONO;
-//            // http://localhost:8082/SaveVouchers?CONO=290&STRNO=5
-//
-//            //URL_TO_HIT = "http://"+ipAddress.trim()+":" + ipWithPort.trim() +"/SaveVouchers?CONO="+CONO+"&STRNO="+SalesManLogin;
-//
-//            try {
-//                //  URL_TO_HIT = "http://"+ipAddress.trim()+":" + ipWithPort.trim() +"/ExportSALES_VOUCHER_D?CONO="+CONO.trim()+"&JSONSTR="+vouchersObject.toString().trim();
-//
-////LINK : http://localhost:8082/ExportITEMSERIALS?CONO=290&JSONSTR={"JSN":[{"VHFNO":"123","STORENO":"5","TRNSDATE":"01/01/2021","TRANSKIND":"1","ITEMNO":"321","SERIAL_CODE":"369258147852211","QTY":"1","VSERIAL":"1","ISPOSTED":"0"}]}
-//                String link = "http://"+ipAddress.trim()+":" + ipWithPort.trim() + headerDll.trim()+"/SaveVouchers";
-//                // Log.e("ipAdress", "ip -->" + ip);
-//            String data = "CONO="+CONO.trim()+"&STRNO=" +SalesManLogin+"&VHFTYPE="+taxType;
-//                Log.e("tag_link", "ExportData -->" + link);
-//                Log.e("tag_data", "ExportData -->" + data);
-//
-//////
-//                URL url = new URL(link);
-//
-//                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-//                httpURLConnection.setDoOutput(true);
-//                httpURLConnection.setDoInput(true);
-//                httpURLConnection.setRequestMethod("POST");
-//
-//
-//
-//                DataOutputStream wr = new DataOutputStream(httpURLConnection.getOutputStream());
-//                wr.writeBytes(data);
-//                wr.flush();
-//                wr.close();
-//
-//                InputStream inputStream = httpURLConnection.getInputStream();
-//                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-//
-//                StringBuffer stringBuffer = new StringBuffer();
-//
-//                while ((JsonResponse = bufferedReader.readLine()) != null) {
-//                    stringBuffer.append(JsonResponse + "\n");
-//                }
-//
-//                bufferedReader.close();
-//                inputStream.close();
-//                httpURLConnection.disconnect();
-//
-//                Log.e("tag", "ExportData -->" + stringBuffer.toString());
-//
-//                return stringBuffer.toString();
-//
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            } finally {
-//                if (urlConnection != null) {
-//                    urlConnection.disconnect();
-//                }
-//                if (reader != null) {
-//                    try {
-//                        reader.close();
-//                    } catch (final IOException e) {
-//                        Log.e("tag", "Error closing stream", e);
-//                    }
-//                }
-//            }
-//            return null;
-//
-//        }
-//
-//
-//        @Override
-//        protected void onPostExecute(final String result) {
-//            super.onPostExecute(result);
-//            progressSave.setTitle("Saved Vouchers");
-//            Log.e("onPostExecute","---15----"+result);
-//
-//            if (result != null && !result.equals("")) {
-//
-//
-//            } else {
-//                progressSave.dismissWithAnimation();
-//
-//            }
-//
-//        }
-//    }
-
 
 }

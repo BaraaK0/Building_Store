@@ -163,7 +163,8 @@
                 app:initialCornerAngle="27dp"
                 app:spinning_bar_color="@color/white"
                 app:spinning_bar_padding="6dp"
-                app:spinning_bar_width="4dp" />
+                app:spinning_bar_width="4dp"
+                android:gravity="center"/>
 
             <LinearLayout
                 android:id="@+id/request_ip_"

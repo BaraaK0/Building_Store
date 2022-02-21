@@ -33,6 +33,15 @@ public interface Users_Dao {
     @Query("SELECT Disc_Permission FROM Users_Table where User_ID= :id")
     int getuserPer(String id);
 
+    @Query("SELECT User_Type FROM Users_Table where User_ID = :id")
+    int getUserType(String id);
+
+    @Query("SELECT User_Name FROM Users_Table where User_ID = :id")
+    String getUserName(String id);
+
+    @Query("UPDATE Users_Table SET Is_Posted = '1' WHERE Is_Posted = '0'")
+    void setPosted();
+
 //    @Query("SELECT * FROM Users_Table WHERE User_ID IN (:userIds)")
 //    List<User> loadAllByIds(int[] userIds);
 //

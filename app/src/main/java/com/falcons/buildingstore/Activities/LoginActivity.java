@@ -202,7 +202,7 @@ public class LoginActivity extends AppCompatActivity {
 
         String uname = unameEdt.getText().toString().trim() + "";
         String pass = passEdt.getText().toString().trim() + "";
-        int uType = uTypeEdt.getText().toString().equals("Admin") ? 1 : 0;
+        int uType = uTypeEdt.getText().toString().equals(getResources().getStringArray(R.array.user_type)[0]) ? 1 : 0;
 
         allUsers = appDatabase.usersDao().getAllUsers();
         boolean valid = false;
@@ -436,7 +436,8 @@ public class LoginActivity extends AppCompatActivity {
                                                     allCustomers.add(new CustomerInfo(
                                                             response.getJSONObject(i).getString("CUSTID"),
                                                             response.getJSONObject(i).getString("CUSTNAME"),
-                                                            response.getJSONObject(i).getString("MOBILE")));
+                                                            response.getJSONObject(i).getString("MOBILE"),
+                                                            1));
 
                                                 } catch (JSONException e) {
                                                     e.printStackTrace();
@@ -460,8 +461,9 @@ public class LoginActivity extends AppCompatActivity {
                                                                     response.getJSONObject(i).getString("SALESNO"),
                                                                     response.getJSONObject(i).getString("ACCNAME"),
                                                                     response.getJSONObject(i).getString("USER_PASSWORD"),
+                                                                    1,
                                                                     0,
-                                                                    0));
+                                                                    1));
 
                                                         } catch (JSONException e) {
                                                             e.printStackTrace();

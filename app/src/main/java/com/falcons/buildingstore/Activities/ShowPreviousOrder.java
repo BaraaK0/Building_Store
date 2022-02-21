@@ -9,6 +9,8 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -25,6 +27,7 @@ import android.widget.TextView;
 import com.falcons.buildingstore.Adapters.OrderShowAdapter;
 import com.falcons.buildingstore.Database.AppDatabase;
 import com.falcons.buildingstore.Database.Entities.OrderMaster;
+import com.falcons.buildingstore.Database.Entities.UserLogs;
 import com.falcons.buildingstore.R;
 import com.falcons.buildingstore.Utilities.ExportData;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -159,12 +162,21 @@ public class ShowPreviousOrder extends AppCompatActivity {
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                         dialog.setCancelable(true);
                         dialog.setContentView(R.layout.adddailog);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                         lp.copyFrom(dialog.getWindow().getAttributes());
+                        lp.width = (int) (getResources().getDisplayMetrics().widthPixels / 1.19);
                         lp.gravity = Gravity.CENTER;
                         dialog.getWindow().setAttributes(lp);
                         dialog.show();
 
+                        UserLogs userLogs = appDatabase.userLogsDao().getLastuserLogin();
+
+                        int userType = appDatabase.usersDao().getUserType(userLogs.getUserID());
+                        if (userType == 0)
+                            dialog.findViewById(R.id.adduser).setVisibility(View.GONE);
+                        else
+                            dialog.findViewById(R.id.adduser).setVisibility(View.VISIBLE);
 
                         dialog.findViewById(R.id.addCustomer).setOnClickListener(new View.OnClickListener() {
                             @Override

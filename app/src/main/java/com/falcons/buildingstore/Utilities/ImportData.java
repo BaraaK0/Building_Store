@@ -54,7 +54,7 @@ public class ImportData {
     public AppDatabase appDatabase;
     SharedPreferences sharedPref;
     public String headerDll = "", link = "";
-    SweetAlertDialog pDialog, pDialog2, pDialog3;
+    private SweetAlertDialog pDialog, pDialog2, pDialog3;
 
     public ImportData(Context context) {
 

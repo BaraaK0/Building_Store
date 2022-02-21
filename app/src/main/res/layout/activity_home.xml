@@ -62,47 +62,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/logo_remove"
         android:layout_centerHorizontal="true"
-        android:layout_marginHorizontal="10dp"
         android:layout_marginTop="25dp">
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/customer_textInput"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="5dp"
-            android:gravity="center"
-            android:hint="Customer"
-            app:boxBackgroundColor="@color/white"
-            app:boxCornerRadiusBottomEnd="10dp"
-            app:boxCornerRadiusBottomStart="10dp"
-            app:boxCornerRadiusTopEnd="10dp"
-            app:boxCornerRadiusTopStart="10dp"
-            app:boxStrokeColor="@color/primaryTextColor"
-            app:boxStrokeWidth="1dp"
-            app:endIconTint="@color/primaryTextColor"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/searchItems_textField"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent="0.47">
-
-            <AutoCompleteTextView
-                android:id="@+id/customerTv"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="textAutoComplete"
-                android:textAlignment="center"
-                android:textColor="@color/black" />
-
-        </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/searchItems_textField"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Search Items .."
+            android:hint="@string/search_items"
             app:boxBackgroundColor="@color/white"
             app:boxCornerRadiusBottomEnd="10dp"
             app:boxCornerRadiusBottomStart="10dp"
@@ -114,11 +81,12 @@
             app:endIconDrawable="@drawable/ic_camera_24"
             app:endIconMode="custom"
             app:endIconTint="@color/primaryTextColor"
-            app:layout_constraintBottom_toBottomOf="@+id/customer_textInput"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/customer_textInput"
-            app:layout_constraintTop_toTopOf="@+id/customer_textInput"
-            app:layout_constraintWidth_percent="0.5">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginHorizontal="23dp"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/searchItemsEdt"

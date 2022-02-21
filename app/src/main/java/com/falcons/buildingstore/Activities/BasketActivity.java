@@ -8,12 +8,16 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.view.View;
@@ -22,6 +26,8 @@ import android.widget.Button;
 import com.falcons.buildingstore.Adapters.BasketItemAdapter;
 
 import com.falcons.buildingstore.Database.AppDatabase;
+import com.falcons.buildingstore.Database.Entities.CustomerInfo;
+import com.falcons.buildingstore.Database.Entities.UserLogs;
 import com.falcons.buildingstore.Utilities.ExportData;
 import com.falcons.buildingstore.Utilities.GeneralMethod;
 import com.falcons.buildingstore.Database.Entities.Item;
@@ -31,15 +37,16 @@ import com.falcons.buildingstore.Database.Entities.OrdersDetails;
 import com.falcons.buildingstore.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.textfield.TextInputLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class BasketActivity extends AppCompatActivity {
 
     ImageButton backBtn;
-    RecyclerView basketListRV;
     Button orderBtn, saveBtn;
     BottomNavigationView bottom_navigation;
-    private String prevPage;
-
 
     RecyclerView BasketItem;
     RecyclerView.LayoutManager layoutManager;
@@ -48,6 +55,11 @@ public class BasketActivity extends AppCompatActivity {
     AppDatabase appDatabase;
     ExportData exportData;
 
+    private TextInputLayout customer_textInput;
+    private AutoCompleteTextView customerTv;
+    private List<CustomerInfo> allCustomers;
+    private ArrayList<String> customerNames;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,12 +67,37 @@ public class BasketActivity extends AppCompatActivity {
         init();
         fillListAdapter();
 
+        /*  Initialize Customers  */
+        allCustomers = appDatabase.customersDao().getAllCustms();
+        customerNames = new ArrayList<>();
+
+        for (int i = 0; i < allCustomers.size(); i++) {
+
+            customerNames.add(allCustomers.get(i).getCustomerName());
+
+        }
+
+        ArrayAdapter<String> customersAdapter = new ArrayAdapter<>(
+                this, android.R.layout.simple_dropdown_item_1line, customerNames);
+
+        customerTv.setAdapter(customersAdapter);
+
         orderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SaveMasterVocher(1);
-                SaveDetialsVocher(1);
-                generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
+                String selectedCustomer = customerTv.getText().toString().trim();
+                if (customerNames.contains(selectedCustomer) && !selectedCustomer.equals("")) {
+
+                    customer_textInput.setError(null);
+                    SaveMasterVocher(1);
+                    SaveDetialsVocher(1);
+                    generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
+
+                } else {
+
+                    customer_textInput.setError("*");
+
+                }
 
             }
         });
@@ -68,9 +105,18 @@ public class BasketActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SaveMasterVocher(2);
-                SaveDetialsVocher(2);
-                generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
+                String selectedCustomer = customerTv.getText().toString().trim();
+                if (customerNames.contains(selectedCustomer) && !selectedCustomer.equals("")) {
+
+                    SaveMasterVocher(2);
+                    SaveDetialsVocher(2);
+                    generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
+
+                } else {
+
+                    customer_textInput.setError("*");
+
+                }
 
             }
         });
@@ -93,7 +139,10 @@ public class BasketActivity extends AppCompatActivity {
         orderBtn = findViewById(R.id.orderBtn);
         saveBtn = findViewById(R.id.saveBtn);
         backBtn = findViewById(R.id.backBtn);
+        customer_textInput = findViewById(R.id.customer_textInput);
+        customerTv = findViewById(R.id.customerTv);
         bottom_navigation = findViewById(R.id.bottom_navigation);
+        allCustomers = new ArrayList<>();
 
         bottom_navigation.setSelectedItemId(R.id.action_cart);
 
@@ -103,13 +152,13 @@ public class BasketActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
 
                     case R.id.action_home:
-                        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-                        startActivity(intent);
-                        overridePendingTransition(0, 0);
 
+                        startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                        overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.action_cart:
+
                         return true;
 
                     case R.id.exportdata:
@@ -119,8 +168,7 @@ public class BasketActivity extends AppCompatActivity {
 
                     case R.id.action_report:
 
-                        Intent intent1 = new Intent(getApplicationContext(), ShowPreviousOrder.class);
-                        startActivity(intent1);
+                        startActivity(new Intent(getApplicationContext(), ShowPreviousOrder.class));
                         overridePendingTransition(0, 0);
                         return true;
 
@@ -130,18 +178,26 @@ public class BasketActivity extends AppCompatActivity {
                         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
                         dialog.setCancelable(true);
                         dialog.setContentView(R.layout.adddailog);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
                         lp.copyFrom(dialog.getWindow().getAttributes());
+                        lp.width = (int) (getResources().getDisplayMetrics().widthPixels / 1.19);
                         lp.gravity = Gravity.CENTER;
                         dialog.getWindow().setAttributes(lp);
                         dialog.show();
 
+                        UserLogs userLogs = appDatabase.userLogsDao().getLastuserLogin();
+
+                        int userType = appDatabase.usersDao().getUserType(userLogs.getUserID());
+                        if (userType == 0)
+                            dialog.findViewById(R.id.adduser).setVisibility(View.GONE);
+                        else
+                            dialog.findViewById(R.id.adduser).setVisibility(View.VISIBLE);
 
                         dialog.findViewById(R.id.addCustomer).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent intent2 = new Intent(getApplicationContext(), AddNewCustomer.class);
-                                startActivity(intent2);
+                                startActivity(new Intent(getApplicationContext(), AddNewCustomer.class));
                                 overridePendingTransition(0, 0);
                                 dialog.dismiss();
                             }
@@ -149,8 +205,7 @@ public class BasketActivity extends AppCompatActivity {
                         dialog.findViewById(R.id.adduser).setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
-                                Intent intent2 = new Intent(getApplicationContext(), AddNewUser.class);
-                                startActivity(intent2);
+                                startActivity(new Intent(getApplicationContext(), AddNewUser.class));
                                 overridePendingTransition(0, 0);
                                 dialog.dismiss();
                             }
@@ -182,8 +237,8 @@ public class BasketActivity extends AppCompatActivity {
         orderMaster.setDiscount(HomeActivity.vocher_Items.get(0).getDiscount());
         orderMaster.setTotal(CalculateTotalPrice());
 
-        if (i == 1) orderMaster.setConfirmState(0);
-        else orderMaster.setConfirmState(1);
+        if (i == 1) orderMaster.setConfirmState(1);
+        else orderMaster.setConfirmState(0);
         appDatabase.ordersMasterDao().insertOrder(orderMaster);
 
 
@@ -205,8 +260,8 @@ public class BasketActivity extends AppCompatActivity {
 
             ordersDetails.setQty(HomeActivity.vocher_Items.get(0).getQty());
             ordersDetails.setIsPosted(0);
-            if (x == 1) ordersDetails.setConfirmState(0);
-            else ordersDetails.setConfirmState(1);
+            if (x == 1) ordersDetails.setConfirmState(1);
+            else ordersDetails.setConfirmState(0);
             appDatabase.ordersDetails_dao().insertOrder(ordersDetails);
         }
 

@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -17,11 +19,14 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.falcons.buildingstore.Database.AppDatabase;
+import com.falcons.buildingstore.Database.Entities.UserLogs;
 import com.falcons.buildingstore.Utilities.ExportData;
 import com.falcons.buildingstore.Utilities.GeneralMethod;
 import com.falcons.buildingstore.Database.Entities.User;
 import com.falcons.buildingstore.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import java.util.ArrayList;
 
 import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
 
@@ -75,6 +80,7 @@ public class AddNewUser extends AppCompatActivity {
                 switch (item.getItemId()) {
 
                     case R.id.action_home:
+
                         startActivity(new Intent(getApplicationContext(), HomeActivity.class));
                         overridePendingTransition(0, 0);
                         return true;
@@ -83,7 +89,6 @@ public class AddNewUser extends AppCompatActivity {
 
                         startActivity(new Intent(getApplicationContext(), BasketActivity.class));
                         overridePendingTransition(0, 0);
-
                         return true;
 
                     case R.id.exportdata:
@@ -93,12 +98,34 @@ public class AddNewUser extends AppCompatActivity {
 
                     case R.id.action_report:
 
-                        Intent intent1 = new Intent(getApplicationContext(), ShowPreviousOrder.class);
-                        startActivity(intent1);
+                        startActivity(new Intent(getApplicationContext(), ShowPreviousOrder.class));
                         overridePendingTransition(0, 0);
                         return true;
 
                     case R.id.action_add:
+
+                        final Dialog dialog = new Dialog(AddNewUser.this);
+                        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                        dialog.setCancelable(true);
+                        dialog.setContentView(R.layout.adddailog);
+                        dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                        lp.copyFrom(dialog.getWindow().getAttributes());
+                        lp.width = (int) (getResources().getDisplayMetrics().widthPixels / 1.19);
+                        lp.gravity = Gravity.CENTER;
+                        dialog.getWindow().setAttributes(lp);
+                        dialog.show();
+
+                        dialog.findViewById(R.id.adduser).setVisibility(View.GONE);
+
+                        dialog.findViewById(R.id.addCustomer).setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                startActivity(new Intent(getApplicationContext(), AddNewCustomer.class));
+                                overridePendingTransition(0, 0);
+                                dialog.dismiss();
+                            }
+                        });
 
                         return true;
                 }
@@ -115,12 +142,15 @@ public class AddNewUser extends AppCompatActivity {
             User user = new User();
             user.setUserName(username.getText().toString());
             user.setUserPassword(passEdt.getText().toString());
-            if (RB_yes.isChecked() == true)
+            user.setUserType(usertype.getSelectedItem().toString().equals(getResources().getStringArray(R.array.user_type)[1]) ? 0 : 1);
+            if (RB_yes.isChecked())
                 user.setDiscPermission(1);
             else
                 user.setDiscPermission(0);
             appDatabase.usersDao().insertUser(user);
-            generalMethod.showSweetDialog(this, 1, this.getResources().getString(R.string.savedSuccsesfule), "");
+            ArrayList<User> users = new ArrayList<>();
+            users.add(user);
+            exportData.addUser(users);
             username.setText("");
             passEdt.setText("");
         } else if (username.getText().toString().trim().equals(""))

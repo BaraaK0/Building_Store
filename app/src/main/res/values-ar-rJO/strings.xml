@@ -3,8 +3,8 @@
 
     <string name="app_name">Building Store</string>
     <string name="loginTitle">تسجيل الدخول</string>
-    <string name="username">اسم المستخدم:</string>
-    <string name="password">كلمة المرور:</string>
+    <string name="username">اسم المستخدم</string>
+    <string name="password">كلمة المرور</string>
     <string name="wrong_username_or_password">خطأ في اسم المستخدم أو كلمة المرور !</string>
     <string name="ip_address">عنوان الIP</string>
     <string name="ip_port">منفذ الIP</string>
@@ -17,8 +17,7 @@
     <string name="reqired_filled">مطلوب*</string>
     <string name="invaledZero">Invaled Zero</string>
     <string name="emptyList">قائمة فارغة</string>
-    <string name="itemName">اسم المادة</string>
-    <string name="avlqty">الكمية المتوفرة</string>
+    <string name="avlqty">الكمية المتوفرة:</string>
     <string name="sign_in">تسجيل الدخول</string>
     <string name="sign_in_with">سجل الدخول باستخدام اسم المستخدم وكلمة المرور الخاصة بك !</string>
     <string name="login_as">التسجيل كَـ:</string>
@@ -48,12 +47,28 @@
     <string name="addnewuser">إضافة مستخدم</string>
     <string name="addnewcustomer">إضافة عميل</string>
     <string name="type">النوع:</string>
-    <string name="dis_per">Can add discount?</string>
+    <string name="dis_per">لديه صلاحية لإصافة خصم ؟</string>
     <string name="Empty">حقل فارغ</string>
     <string name="mobilnum">رقم الهاتف:</string>
     <string name="savedSuccsesfule">تم الحفظ بنجاح</string>
-    <string name="Order">Order</string>
+    <string name="Order">تأكيد الطلب</string>
     <string name="incorrect_user_info">معلومات المُستخدم غير صحيحة !</string>
+
+    <string name="yes">نعم</string>
+    <string name="no">لا</string>
+
+    <string name="add_item_to">إضافة المادة الى السلة ؟</string>
+    <string name="customer">العميل</string>
+    <string name="search_items">البحث عن مادة ..</string>
+    <string name="cart">السلة</string>
+    <string name="add">إضافة</string>
+    <string name="reports">التقارير</string>
+    <string name="export">تصدير</string>
+    <string name="home">الصفحة الرئيسية</string>
+
+    <string name="customer_name">اسم العميل:</string>
+    <string name="save_for_later">حفظ لوقت لاحق</string>
+
     <string-array name="user_type">
         <item>آدمن</item>
         <item>مستخدم عادي</item>
