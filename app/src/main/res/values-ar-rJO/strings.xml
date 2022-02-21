@@ -72,7 +72,6 @@
 
     <string name="fillbasket">fill The basket with Items!!</string>
     <string name="vocher">فاتورة</string>
-    <string name="Order">Order</string>
     <string-array name="user_type">
         <item>آدمن</item>
         <item>مستخدم عادي</item>

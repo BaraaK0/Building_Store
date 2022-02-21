@@ -163,9 +163,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                                 dialog.dismiss();
                                 break;
 
-                            case DialogInterface.BUTTON_NEGATIVE:
-                                //No button clicked
-                                break;
+
                                 case DialogInterface.BUTTON_NEGATIVE:
                                     //No button clicked
                                     dialog.dismiss();

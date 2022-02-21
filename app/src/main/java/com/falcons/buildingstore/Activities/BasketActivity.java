@@ -44,9 +44,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BasketActivity extends AppCompatActivity {
-import java.util.List;
 
-public class BasketActivity extends BaseActivity {
+
 
     ImageButton backBtn;
     Button orderBtn, saveBtn;
@@ -120,34 +119,30 @@ public class BasketActivity extends BaseActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(HomeActivity.vocher_Items.size()!=0) {
-                    CalculateTax(1,HomeActivity.vocher_Items);
+                if (HomeActivity.vocher_Items.size() != 0) {
+                    CalculateTax(1, HomeActivity.vocher_Items);
                     SaveMasterVocher(2);
                     SaveDetialsVocher(2);
                     generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
-                }
-                else
-                {
-                    generalMethod.showSweetDialog(BasketActivity.this, 3, getResources().getString(R.string.fillbasket), "");
-                String selectedCustomer = customerTv.getText().toString().trim();
-                if (customerNames.contains(selectedCustomer) && !selectedCustomer.equals("")) {
-
-                    SaveMasterVocher(2);
-                    SaveDetialsVocher(2);
-                    generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
-
                 } else {
+                    generalMethod.showSweetDialog(BasketActivity.this, 3, getResources().getString(R.string.fillbasket), "");
+                    String selectedCustomer = customerTv.getText().toString().trim();
+                    if (customerNames.contains(selectedCustomer) && !selectedCustomer.equals("")) {
 
-                    customer_textInput.setError("*");
+                        SaveMasterVocher(2);
+                        SaveDetialsVocher(2);
+                        generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
+
+                    } else {
+
+                        customer_textInput.setError("*");
+
+                    }
 
                 }
+            }   });
 
-            }
-        });
-                }
-            }
-        });
-    }
+
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
