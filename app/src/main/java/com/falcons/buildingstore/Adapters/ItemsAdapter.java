@@ -104,12 +104,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
         UserLogs userLogs = appDatabase.userLogsDao().getLastuserLogin();
 
-
-        int userPer = appDatabase.usersDao().getuserPer(Integer.parseInt(userLogs.getUserID()));
-        if (userPer == 0) holder.Dis_Layout.setVisibility(View.GONE);
-        holder.Dis_Layout.setVisibility(View.VISIBLE);
-
-
         holder.itemName.setText(itemsList.get(currPosition).getItemName());
 
         holder.expandBtn.setOnClickListener(new View.OnClickListener() {
@@ -172,6 +166,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
                                 case DialogInterface.BUTTON_NEGATIVE:
                                     //No button clicked
+                                    dialog.dismiss();
                                     break;
 
                             }
@@ -305,15 +300,20 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                 @Override
                 public void onClick(View view) {
                     if (!ITEMdiscount.getText().toString().equals("") &&
-                            !ITEMqty.getText().toString().equals("")) {
+                            !ITEMqty.getText().toString().equals("") &&
+                    Integer.parseInt(ITEMqty.getText().toString())!=0
+                    ) {
                         itemsList.get(position).setDiscount(Double.parseDouble(ITEMdiscount.getText().toString()));
                         itemsList.get(position).setQty(Double.parseDouble(ITEMqty.getText().toString()));
+                        itemsList.get(position).setAmount(itemsList.get(position).getQty()*itemsList.get(position).getPrice());
+                        itemsList.get(position).setTotalDiscVal((itemsList.get(position).price/itemsList.get(position).getDiscount())*itemsList.get(position).getQty());
 
                         Log.e("vocher_Items=", HomeActivity.vocher_Items.size() + "");
                         if (HomeActivity.vocher_Items.size() == 0) {
                             HomeActivity.vocher_Items.add(itemsList.get(position));
                             HomeActivity.item_count++;
                             HomeActivity.itemcount.setText(HomeActivity.item_count);
+
                             //  HomeActivity.  FillrecyclerView_Items(context,HomeActivity. vocher_Items);
 
                         } else {
@@ -333,6 +333,9 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
                                 itemsList.get(index).setDiscount(Double.parseDouble(ITEMdiscount.getText().toString()));
                                 itemsList.get(index).setQty(Double.parseDouble(ITEMqty.getText().toString()));
+                                itemsList.get(index).setAmount(itemsList.get(index).getQty()*itemsList.get(index).getPrice());
+                                itemsList.get(index).setTotalDiscVal((itemsList.get(index).price/itemsList.get(index).getDiscount())*itemsList.get(position).getQty());
+
                                 //   HomeActivity.voherItemAdapter.notifyItemChanged(index);
 
 
@@ -342,6 +345,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                         dialog.dismiss();
 
                     }
+
                 }
             });
 
@@ -351,8 +355,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     public void addQTYandDis(int position, ViewHolder holder) {
         {
 
-
-            if (!holder.itemQtyEdt.getText().toString().equals("")) {
+            if (!holder.itemDiscEdt.getText().toString().equals("") &&
+                    !holder.itemQtyEdt.getText().toString().equals("") &&
+                    Double.parseDouble(holder.itemQtyEdt.getText().toString())!=0
+            ){
 
                 itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()));
                 itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));

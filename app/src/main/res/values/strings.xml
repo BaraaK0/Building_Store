@@ -60,7 +60,10 @@
     <string name="Empty">Empty</string>
     <string name="savedSuccsesfule">Saved Successfully</string>
     <string name="Order">Order</string>
+    <string name="fillbasket">fill The basket with Items!!</string>
+    <string name="vocher">Vocher</string>
 
+    fillbasket
     <string-array name="user_type">
         <item>Admin</item>
         <item>User</item>

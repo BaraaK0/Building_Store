@@ -43,6 +43,51 @@ public class Item {
     @ColumnInfo(name = "Qty")
     public double qty;
 
+    @ColumnInfo(name = "taxPercent")
+    private double taxPercent;
+
+    @ColumnInfo(name = "amount")
+    private double amount;
+
+    @ColumnInfo(name = "taxValue")
+    private double taxValue;
+
+    @ColumnInfo(name = "totalDiscVal")
+    private double totalDiscVal;
+
+
+
+    public double getTotalDiscVal() {
+        return totalDiscVal;
+    }
+
+    public void setTotalDiscVal(double totalDiscVal) {
+        this.totalDiscVal = totalDiscVal;
+    }
+
+    public double getTaxPercent() {
+        return taxPercent;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public double getTaxValue() {
+        return taxValue;
+    }
+
+    public void setTaxValue(double taxValue) {
+        this.taxValue = taxValue;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public void setTaxPercent(double taxPercent) {
+        this.taxPercent = taxPercent;
+    }
 
     @ColumnInfo(name = "Item_Discount",defaultValue = "0")
     double Discount;

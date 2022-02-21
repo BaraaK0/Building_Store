@@ -18,6 +18,7 @@ import android.widget.Button;
 import com.falcons.buildingstore.Adapters.BasketItemAdapter;
 
 import com.falcons.buildingstore.Database.AppDatabase;
+import com.falcons.buildingstore.Database.Entities.UserLogs;
 import com.falcons.buildingstore.Utilities.ExportData;
 import com.falcons.buildingstore.Utilities.GeneralMethod;
 import com.falcons.buildingstore.Database.Entities.Item;
@@ -27,6 +28,8 @@ import com.falcons.buildingstore.Database.Entities.OrdersDetails;
 import com.falcons.buildingstore.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+
+import java.util.List;
 
 public class BasketActivity extends BaseActivity {
 
@@ -43,6 +46,8 @@ public class BasketActivity extends BaseActivity {
     GeneralMethod generalMethod;
     AppDatabase appDatabase;
     ExportData exportData;
+    double   itemTax=0,itemTotal=0,subTotal=0,itemTotalAfterTax=0,netTotal=0;
+    private double itemTotalPerc=0,itemDiscVal=0,totalDiscount=0,totalTaxValue=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,20 +59,33 @@ public class BasketActivity extends BaseActivity {
         orderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SaveMasterVocher(1);
-                SaveDetialsVocher(1);
-                generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
+                if(HomeActivity.vocher_Items.size()!=0) {
+                    SaveMasterVocher(1);
+                    SaveDetialsVocher(1);
+                    generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
+                }
+                else
+                {
+                    generalMethod.showSweetDialog(BasketActivity.this, 3, getResources().getString(R.string.fillbasket), "");
 
+                }
             }
         });
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                SaveMasterVocher(2);
-                SaveDetialsVocher(2);
-                generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
+                if(HomeActivity.vocher_Items.size()!=0) {
+                    CalculateTax(1,HomeActivity.vocher_Items);
+                    SaveMasterVocher(2);
+                    SaveDetialsVocher(2);
+                    generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
+                }
+                else
+                {
+                    generalMethod.showSweetDialog(BasketActivity.this, 3, getResources().getString(R.string.fillbasket), "");
 
+                }
             }
         });
     }
@@ -100,9 +118,13 @@ public class BasketActivity extends BaseActivity {
         orderMaster.setIsPosted(0);
         orderMaster.setDate(generalMethod.getCurentTimeDate(1));
         orderMaster.setTime(generalMethod.getCurentTimeDate(2));
-        orderMaster.setCustomerId(77);
+       // orderMaster.setCustomerId();
         orderMaster.setDiscount(HomeActivity.vocher_Items.get(0).getDiscount());
-        orderMaster.setTotal(CalculateTotalPrice());
+        UserLogs userLogs = appDatabase.userLogsDao().getLastuserLogin();
+        orderMaster.setUserNo(userLogs.getUserID());
+        orderMaster.setNetTotal(netTotal);
+
+        orderMaster.setTax(HomeActivity.vocher_Items.get(0).getTax());
 
         if (i == 1) orderMaster.setConfirmState(0);
         else orderMaster.setConfirmState(1);
@@ -117,15 +139,17 @@ public class BasketActivity extends BaseActivity {
         for (int i = 0; i < HomeActivity.vocher_Items.size(); i++) {
             OrdersDetails ordersDetails = new OrdersDetails();
             ordersDetails.setVhfNo(vohno);
-            ordersDetails.setDiscount(HomeActivity.vocher_Items.get(0).getDiscount());
-            ordersDetails.setItemNo(HomeActivity.vocher_Items.get(0).getItemNCode());
-            ordersDetails.setArea(HomeActivity.vocher_Items.get(0).getArea());
-            ordersDetails.setPrice(HomeActivity.vocher_Items.get(0).getPrice());
+            ordersDetails.setDiscount(HomeActivity.vocher_Items.get(i).getDiscount());
+            ordersDetails.setItemNo(HomeActivity.vocher_Items.get(i).getItemNCode());
+
+            ordersDetails.setPrice(HomeActivity.vocher_Items.get(i).getPrice());
             ordersDetails.setDate(generalMethod.getCurentTimeDate(1));
             ordersDetails.setTime(generalMethod.getCurentTimeDate(2));
-            ordersDetails.setTax(HomeActivity.vocher_Items.get(0).getTax());
 
-            ordersDetails.setQty(HomeActivity.vocher_Items.get(0).getQty());
+            ordersDetails.setTotalDiscVal(HomeActivity.vocher_Items.get(i).getTaxValue());
+
+
+
             ordersDetails.setIsPosted(0);
             if (x == 1) ordersDetails.setConfirmState(0);
             else ordersDetails.setConfirmState(1);
@@ -165,4 +189,86 @@ public class BasketActivity extends BaseActivity {
 //    }
 
 
+   void CalculateTax(int taxType , List<Item> items){
+
+     if(taxType==0)   // taxType=0 خاضع
+     {   for (int i = 0; i < items.size(); i++) {
+
+            itemTax = items.get(i).getAmount() * items.get(i).getTaxPercent() * 0.01;
+            itemTotal = items.get(i).getAmount();
+
+            itemTotalAfterTax =itemTotal + itemTax;
+            subTotal = subTotal + itemTotal;
+        }
+
+
+
+//*********************************************************************************************
+        for (int i = 0; i < items.size(); i++) {
+            itemTotal = items.get(i).getAmount();
+            itemTotalPerc = itemTotal / subTotal;
+            itemDiscVal = (itemTotalPerc * totalDiscount);
+            items.get(i).setTotalDiscVal(itemDiscVal);
+
+
+            itemTotal = itemTotal - itemDiscVal;
+            itemTax = itemTotal * items.get(i).getTaxPercent() * 0.01;
+
+
+
+
+            items.get(i).setTaxValue(itemTax);
+            totalTaxValue = totalTaxValue + itemTax;
+        }
+//****************************************************************************************
+        netTotal = netTotal + subTotal - totalDiscount + totalTaxValue;
+
+
+    }
+    else if(taxType==1)//taxType=1;شامل
+    {
+
+/*
+        for (int i = 0; i < items.size(); i++) {
+
+            itemTax = items.get(i).getAmount() -
+                    (items.get(i).getAmount() / (1 + items.get(i).getTaxPercent() * 0.01));
+
+            itemTotal = items.get(i).getAmount() - itemTax;
+            itemTotalAfterTax = items.get(i).getAmount();
+            subTotal = subTotal + itemTotal;
+        }
+
+        for (int i = 0; i < items.size(); i++) {
+
+
+
+            itemTax = items.get(i).getAmount() -
+                    (items.get(i).getAmount() / (1 + items.get(i).getTaxPercent() * 0.01));
+
+
+            itemTotal = items.get(i).getAmount() - itemTax;
+            itemTotalPerc = itemTotal / subTotal;
+            itemDiscVal = (itemTotalPerc * totalDiscount);
+            items.get(i).setVoucherDiscount((double) itemDiscVal);
+            items.get(i).setTotalDiscVal(itemDiscVal);
+            itemTotal = itemTotal - itemDiscVal;
+
+
+            itemTax = itemTotal * items.get(i).getTaxPercent() * 0.01;
+
+
+
+            items.get(i).setTaxValue(itemTax);
+            totalTaxValue = totalTaxValue + itemTax;
+        }
+
+//            totalDiscount+=getTotalDiscSetting(netTotal);
+        Log.e("TOTAL", "noTax3totalTaxValue==" +totalTaxValue);
+        netTotal = netTotal + subTotal - totalDiscount + totalTaxValue; // tahani -discount_oofers_total
+        totalDiscount+=getTotalDiscSetting(netTotal);
+
+        netTotal=netTotal-getTotalDiscSetting(netTotal);*/
+    }
+    }
 }

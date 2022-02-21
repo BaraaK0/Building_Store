@@ -36,8 +36,6 @@ public class OrdersDetails {
     @ColumnInfo(name = "Tax")
     private String tax;
 
-    @ColumnInfo(name = "Area")
-    private String area;
 
     @ColumnInfo(name = "Total")
     private double total;
@@ -54,6 +52,49 @@ public class OrdersDetails {
     @ColumnInfo(name = "ConfirmState")
     private int ConfirmState;
 
+    @ColumnInfo(name = "taxPercent")
+    private double taxPercent;
+
+    @ColumnInfo(name = "amount")
+    private double amount;
+
+    @ColumnInfo(name = "taxValue")
+    private double taxValue;
+
+    @ColumnInfo(name = "totalDiscVal")
+    private double totalDiscVal;
+
+    public double getTotalDiscVal() {
+        return totalDiscVal;
+    }
+
+    public void setTotalDiscVal(double totalDiscVal) {
+        this.totalDiscVal = totalDiscVal;
+    }
+    public double getTaxPercent() {
+        return taxPercent;
+    }
+
+    public void setTaxPercent(double taxPercent) {
+        this.taxPercent = taxPercent;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
+    }
+
+    public double getTaxValue() {
+        return taxValue;
+    }
+
+    public void setTaxValue(double taxValue) {
+        this.taxValue = taxValue;
+    }
+
     public int getConfirmState() {
         return ConfirmState;
     }
@@ -64,7 +105,7 @@ public class OrdersDetails {
     public OrdersDetails() {
     }
 
-    public OrdersDetails(int vhfNo, String date, String time, String itemNo, String itemName, double qty, double discount, String tax, String area, double total, double price, int customerId, int unit, int isPosted) {
+    public OrdersDetails(int vhfNo, String date, String time, String itemNo, String itemName, double qty, double discount, String tax, double total, double price, int customerId, int unit, int isPosted) {
         this.vhfNo = vhfNo;
         this.date = date;
         this.time = time;
@@ -73,7 +114,7 @@ public class OrdersDetails {
         this.qty = qty;
         this.discount = discount;
         this.tax = tax;
-        this.area = area;
+
         this.total = total;
         this.price = price;
         this.customerId = customerId;
@@ -154,13 +195,7 @@ public class OrdersDetails {
         this.tax = tax;
     }
 
-    public String getArea() {
-        return area;
-    }
 
-    public void setArea(String area) {
-        this.area = area;
-    }
 
     public double getTotal() {
         return total;
