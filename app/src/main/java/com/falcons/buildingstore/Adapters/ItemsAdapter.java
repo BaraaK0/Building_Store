@@ -96,7 +96,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
         UserLogs userLogs = appDatabase.userLogsDao().getLastuserLogin();
 
-        int userPer = appDatabase.usersDao().getuserPer(userLogs.getUserID());
+        int userPer = appDatabase.usersDao().getuserPer(userLogs.getUserName());
         if (userPer == 0)
             holder.Dis_Layout.setVisibility(View.GONE);
         else

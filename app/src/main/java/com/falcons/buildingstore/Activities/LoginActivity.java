@@ -413,7 +413,7 @@ public class LoginActivity extends AppCompatActivity {
                                             item.setItemKind(itemsArray.getJSONObject(i).getString("ItemK"));
                                             item.setPrice(Double.parseDouble(itemsArray.getJSONObject(i).getString("MINPRICE")));
                                             item.setCategoryId(itemsArray.getJSONObject(i).getString("CATEOGRYID"));
-
+                                            item.setTax(itemsArray.getJSONObject(i).getString("TAXPERC"));
 
                                             allItemsList.add(item);
 
@@ -461,8 +461,8 @@ public class LoginActivity extends AppCompatActivity {
                                                                     response.getJSONObject(i).getString("SALESNO"),
                                                                     response.getJSONObject(i).getString("ACCNAME"),
                                                                     response.getJSONObject(i).getString("USER_PASSWORD"),
-                                                                    1,
-                                                                    0,
+                                                                    Integer.parseInt(response.getJSONObject(i).getString("USERTYPE")),
+                                                                    Integer.parseInt(response.getJSONObject(i).getString("DISCOUNTPER")),
                                                                     1));
 
                                                         } catch (JSONException e) {

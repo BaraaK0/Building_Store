@@ -27,6 +27,7 @@ import com.falcons.buildingstore.R;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
 
@@ -137,22 +138,34 @@ public class AddNewUser extends AppCompatActivity {
 
     void Add_new_User() {
 
+
+
         if (!username.getText().toString().trim().equals("")
                 && !passEdt.getText().toString().trim().equals("")) {
-            User user = new User();
-            user.setUserName(username.getText().toString());
-            user.setUserPassword(passEdt.getText().toString());
-            user.setUserType(usertype.getSelectedItem().toString().equals(getResources().getStringArray(R.array.user_type)[1]) ? 0 : 1);
-            if (RB_yes.isChecked())
-                user.setDiscPermission(1);
-            else
-                user.setDiscPermission(0);
-            appDatabase.usersDao().insertUser(user);
-            ArrayList<User> users = new ArrayList<>();
-            users.add(user);
-            exportData.addUser(users);
-            username.setText("");
-            passEdt.setText("");
+
+            int sameUsers = appDatabase.usersDao().getSameUsers(username.getText().toString().trim());
+            if (sameUsers == 0) {
+
+                User user = new User();
+                user.setUserName(username.getText().toString());
+                user.setUserPassword(passEdt.getText().toString());
+                user.setUserType(usertype.getSelectedItem().toString().equals(getResources().getStringArray(R.array.user_type)[1]) ? 0 : 1);
+                if (RB_yes.isChecked())
+                    user.setDiscPermission(1);
+                else
+                    user.setDiscPermission(0);
+                appDatabase.usersDao().insertUser(user);
+                ArrayList<User> users = new ArrayList<>();
+                users.add(user);
+                exportData.addUser(users);
+                username.setText("");
+                passEdt.setText("");
+            } else {
+
+                username.setError("User Already Exist !");
+
+            }
+
         } else if (username.getText().toString().trim().equals(""))
             username.setError(getResources().getString(R.string.Empty));
         else if (passEdt.getText().toString().trim().equals(""))

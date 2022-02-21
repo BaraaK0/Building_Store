@@ -68,6 +68,7 @@
 
     <string name="customer_name">اسم العميل:</string>
     <string name="save_for_later">حفظ لوقت لاحق</string>
+    <string name="user_already_exist">اسم المستخدم موجود سابقاً !</string>
 
     <string-array name="user_type">
         <item>آدمن</item>

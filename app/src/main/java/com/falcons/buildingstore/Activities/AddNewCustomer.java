@@ -94,7 +94,7 @@ public class AddNewCustomer extends AppCompatActivity {
 
                         UserLogs userLogs = appDatabase.userLogsDao().getLastuserLogin();
 
-                        int userType = appDatabase.usersDao().getUserType(userLogs.getUserID());
+                        int userType = appDatabase.usersDao().getUserType(userLogs.getUserName());
 
                         if (userType == 1) {
 

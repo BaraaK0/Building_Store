@@ -188,7 +188,7 @@ public class BasketActivity extends AppCompatActivity {
 
                         UserLogs userLogs = appDatabase.userLogsDao().getLastuserLogin();
 
-                        int userType = appDatabase.usersDao().getUserType(userLogs.getUserID());
+                        int userType = appDatabase.usersDao().getUserType(userLogs.getUserName());
                         if (userType == 0)
                             dialog.findViewById(R.id.adduser).setVisibility(View.GONE);
                         else

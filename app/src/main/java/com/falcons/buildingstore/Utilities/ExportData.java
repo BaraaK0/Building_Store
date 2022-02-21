@@ -186,11 +186,10 @@ public class ExportData {
         JSONArray jsonArray = new JSONArray();
 
         UserLogs userLogs = appDatabase.userLogsDao().getLastuserLogin();
-        String username = appDatabase.usersDao().getUserName(userLogs.getUserID());
 
         for (int i = 0; i < customerList.size(); i++) {
 
-            jsonArray.put(customerList.get(i).getJSONObject(username, userLogs.getUserID()));
+            jsonArray.put(customerList.get(i).getJSONObject(userLogs.getUserName(), userLogs.getUserID()));
 
         }
 

@@ -72,6 +72,7 @@
     <string name="export">Export</string>
     <string name="home">Home</string>
     <string name="save_for_later">Save for later</string>
+    <string name="user_already_exist">Username Already Exists !</string>
 
     <string-array name="user_type">
         <item>Admin</item>
