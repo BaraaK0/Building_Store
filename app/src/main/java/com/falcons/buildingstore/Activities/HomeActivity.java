@@ -100,8 +100,6 @@ public class HomeActivity extends AppCompatActivity {
         itemsRecycler.setSaveEnabled(true);
 
 
-
-
         /* Items Search Handling */
         searchItemsEdt.addTextChangedListener(new TextWatcher() {
             @Override
@@ -219,6 +217,7 @@ public class HomeActivity extends AppCompatActivity {
                                 UserLogs userLogs = appDatabase.userLogsDao().getLastuserLogin();
 
                                 int userType = appDatabase.usersDao().getUserType(userLogs.getUserName());
+                                Log.e("UserType/Username", userType+"/"+userLogs.getUserName());
                                 if (userType == 0)
                                     dialog.findViewById(R.id.adduser).setVisibility(View.GONE);
                                 else

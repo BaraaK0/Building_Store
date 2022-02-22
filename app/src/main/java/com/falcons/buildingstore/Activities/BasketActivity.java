@@ -28,7 +28,6 @@ import com.falcons.buildingstore.Adapters.BasketItemAdapter;
 import com.falcons.buildingstore.Database.AppDatabase;
 import com.falcons.buildingstore.Database.Entities.CustomerInfo;
 import com.falcons.buildingstore.Database.Entities.UserLogs;
-import com.falcons.buildingstore.Database.Entities.UserLogs;
 import com.falcons.buildingstore.Utilities.ExportData;
 import com.falcons.buildingstore.Utilities.GeneralMethod;
 import com.falcons.buildingstore.Database.Entities.Item;
@@ -44,8 +43,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BasketActivity extends AppCompatActivity {
-
-
 
     ImageButton backBtn;
     Button orderBtn, saveBtn;
@@ -104,7 +101,7 @@ public class BasketActivity extends AppCompatActivity {
                     customer_textInput.setError(null);
                     SaveMasterVocher(1);
                     SaveDetialsVocher(1);
-                    generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
+                    GeneralMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), null);
 
                 } else {
 
@@ -129,6 +126,9 @@ public class BasketActivity extends AppCompatActivity {
                     String selectedCustomer = customerTv.getText().toString().trim();
                     if (customerNames.contains(selectedCustomer) && !selectedCustomer.equals("")) {
 
+                    SaveMasterVocher(2);
+                    SaveDetialsVocher(2);
+                    GeneralMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), null);
                         SaveMasterVocher(2);
                         SaveDetialsVocher(2);
                         generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");

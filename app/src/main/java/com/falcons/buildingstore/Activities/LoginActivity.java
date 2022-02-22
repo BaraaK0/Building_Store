@@ -376,157 +376,153 @@ public class LoginActivity extends AppCompatActivity {
                 String ipAddress = ipEdt.getText().toString().trim();
                 String port = portEdt.getText().toString().trim();
                 String coNo = coNoEdt.getText().toString().trim();
-                try {
 
+                if (!ipAddress.equals("")) {
 
-                    if (!ipAddress.equals("")) {
+                    if (!port.equals("")) {
 
-                        if (!port.equals("")) {
+                        if (!coNo.equals("")) {
 
-                            if (!coNo.equals("")) {
+                            SharedPreferences.Editor editor = getSharedPreferences(SETTINGS_PREFERENCES, MODE_PRIVATE).edit();
+                            editor.putString(IP_PREF, ipAddress);
+                            editor.putString(PORT_PREF, port);
+                            editor.putString(CONO_PREF, coNo);
+                            editor.apply();
 
-                                SharedPreferences.Editor editor = getSharedPreferences(SETTINGS_PREFERENCES, MODE_PRIVATE).edit();
-                                editor.putString(IP_PREF, ipAddress);
-                                editor.putString(PORT_PREF, port);
-                                editor.putString(CONO_PREF, coNo);
-                                editor.apply();
+                            appDatabase.itemsDao().deleteAll();
+                            appDatabase.customersDao().deleteAll();
+                            appDatabase.usersDao().deleteAll();
 
-                                appDatabase.itemsDao().deleteAll();
-                                appDatabase.customersDao().deleteAll();
-                                appDatabase.usersDao().deleteAll();
-
+                            allItemsList.clear();
+                            allCustomers.clear();
+                            allUsers.clear();
 
 //                            importData.getAllItems();
-                                importData.getAllItems(new ImportData.GetItemsCallBack() {
-                                    @Override
-                                    public void onResponse(JSONObject response) {
+                            importData.getAllItems(new ImportData.GetItemsCallBack() {
+                                @Override
+                                public void onResponse(JSONObject response) {
 
-                                        try {
+                                    try {
 
-                                            JSONArray itemsArray = response.getJSONArray("Items_Master");
+                                        JSONArray itemsArray = response.getJSONArray("Items_Master");
 
-                                            for (int i = 0; i < itemsArray.length(); i++) {
+                                        for (int i = 0; i < itemsArray.length(); i++) {
 
-                                                Item item = new Item();
-                                                item.setItem_Name(itemsArray.getJSONObject(i).getString("NAME"));
-                                                item.setItemNCode(itemsArray.getJSONObject(i).getString("BARCODE"));
-                                                item.setItemOCode(itemsArray.getJSONObject(i).getString("ITEMNO"));
-                                                item.setImagePath(itemsArray.getJSONObject(i).getString("ITEMPICSPATH"));
-                                                item.setItemKind(itemsArray.getJSONObject(i).getString("ItemK"));
-                                                item.setPrice(Double.parseDouble(itemsArray.getJSONObject(i).getString("MINPRICE")));
-                                                item.setCategoryId(itemsArray.getJSONObject(i).getString("CATEOGRYID"));
-                                                Log.e("TAXPERC==", itemsArray.getJSONObject(i).getString("TAXPERC") + "");
-                                                item.setTax(itemsArray.getJSONObject(i).getString("TAXPERC"));
+                                            Item item = new Item();
+                                            item.setItem_Name(itemsArray.getJSONObject(i).getString("NAME"));
+                                            item.setItemNCode(itemsArray.getJSONObject(i).getString("BARCODE"));
+                                            item.setItemOCode(itemsArray.getJSONObject(i).getString("ITEMNO"));
+                                            item.setImagePath(itemsArray.getJSONObject(i).getString("ITEMPICSPATH"));
+                                            item.setItemKind(itemsArray.getJSONObject(i).getString("ItemK"));
+                                            item.setPrice(Double.parseDouble(itemsArray.getJSONObject(i).getString("MINPRICE")));
+                                            item.setCategoryId(itemsArray.getJSONObject(i).getString("CATEOGRYID"));
+                                            item.setTax(itemsArray.getJSONObject(i).getString("TAXPERC"));
 
-                                                allItemsList.add(item);
+                                            allItemsList.add(item);
+
+                                        }
+
+                                        appDatabase.itemsDao().addAll(allItemsList);
+
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+
+                                    importData.getAllCustomers(new ImportData.GetCustomersCallBack() {
+                                        @Override
+                                        public void onResponse(JSONArray response) {
+
+                                            for (int i = 0; i < response.length(); i++) {
+
+                                                try {
+
+                                                    allCustomers.add(new CustomerInfo(
+                                                            response.getJSONObject(i).getString("CUSTID"),
+                                                            response.getJSONObject(i).getString("CUSTNAME"),
+                                                            response.getJSONObject(i).getString("MOBILE"),
+                                                            1));
+
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
 
                                             }
 
-                                            appDatabase.itemsDao().addAll(allItemsList);
+                                            appDatabase.customersDao().addAll(allCustomers);
 
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
+                                            importData.getAllUsers(new ImportData.GetUsersCallBack() {
+                                                @Override
+                                                public void onResponse(JSONArray response) {
 
-                                        importData.getAllCustomers(new ImportData.GetCustomersCallBack() {
-                                            @Override
-                                            public void onResponse(JSONArray response) {
+                                                    GeneralMethod.showSweetDialog(LoginActivity.this, 1, "All Info Saved", null);
 
-                                                for (int i = 0; i < response.length(); i++) {
+                                                    for (int i = 0; i < response.length(); i++) {
 
-//                                                    try {
-//
-//                                                        allCustomers.add(new CustomerInfo(
-//                                                                response.getJSONObject(i).getString("CUSTID"),
-//                                                                response.getJSONObject(i).getString("CUSTNAME"),
-//                                                                response.getJSONObject(i).getString("MOBILE"),
-//                                                                1));
-//
-//                                                    } catch (JSONException e) {
-//                                                        e.printStackTrace();
-//                                                    }
+                                                        try {
+
+                                                            allUsers.add(new User(
+                                                                    response.getJSONObject(i).getString("SALESNO"),
+                                                                    response.getJSONObject(i).getString("ACCNAME"),
+                                                                    response.getJSONObject(i).getString("USER_PASSWORD"),
+                                                                    Integer.parseInt(response.getJSONObject(i).getString("USERTYPE")),
+                                                                    Integer.parseInt(response.getJSONObject(i).getString("DISCOUNTPER")),
+                                                                    1));
+
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+
+                                                    }
+
+                                                    appDatabase.usersDao().addAll(allUsers);
 
                                                 }
 
-                                            //    appDatabase.customersDao().addAll(allCustomers);
+                                                @Override
+                                                public void onError(String error) {
 
-                                                importData.getAllUsers(new ImportData.GetUsersCallBack() {
-                                                    @Override
-                                                    public void onResponse(JSONArray response) {
+                                                }
+                                            }, ipAddress, port, coNo);
 
-                                                        GeneralMethod.showSweetDialog(LoginActivity.this, 1, "All Info Saved", null);
+                                        }
 
-                                                        for (int i = 0; i < response.length(); i++) {
+                                        @Override
+                                        public void onError(String error) {
 
-                                                            try {
+                                        }
+                                    }, ipAddress, port, coNo);
 
-                                                                allUsers.add(new User(
-                                                                        response.getJSONObject(i).getString("SALESNO"),
-                                                                        response.getJSONObject(i).getString("ACCNAME"),
-                                                                        response.getJSONObject(i).getString("USER_PASSWORD"),
-                                                                        Integer.parseInt(response.getJSONObject(i).getString("USERTYPE")),
-                                                                        Integer.parseInt(response.getJSONObject(i).getString("DISCOUNTPER")),
-                                                                        1));
+                                }
 
-                                                            } catch (JSONException e) {
-                                                                e.printStackTrace();
-                                                            }
-
-                                                        }
-
-                                                        appDatabase.usersDao().addAll(allUsers);
-
-                                                    }
-
-                                                    @Override
-                                                    public void onError(String error) {
-
-                                                    }
-                                                }, ipAddress, port, coNo);
-
-                                            }
-
-                                            @Override
-                                            public void onError(String error) {
-
-                                            }
-                                        }, ipAddress, port, coNo);
-
-                                    }
-
-                                    @Override
-                                    public void onError(String error) {
+                                @Override
+                                public void onError(String error) {
 
 
-                                    }
-                                }, ipAddress, port, coNo);
+                                }
+                            }, ipAddress, port, coNo);
 
 
-                                ip_settings_dialog.dismiss();
-
-                            } else {
-
-                                textInputCoNo.setError(getString(R.string.required));
-
-
-                            }
+                            ip_settings_dialog.dismiss();
 
                         } else {
 
-                            textInputPort.setError(getString(R.string.required));
+                            textInputCoNo.setError(getString(R.string.required));
 
 
                         }
 
                     } else {
 
-                        textInputIpAddress.setError(getString(R.string.required));
+                        textInputPort.setError(getString(R.string.required));
 
 
                     }
 
-                }catch (Exception e){
-                    Log.e("Exception=",e.getMessage());
+                } else {
+
+                    textInputIpAddress.setError(getString(R.string.required));
+
+
                 }
 
             }
@@ -536,7 +532,8 @@ public class LoginActivity extends AppCompatActivity {
 
     void addUserLogs(int index) {
         UserLogs userLogs = new UserLogs();
-        userLogs.setUserID(allUsers.get(index).getUserId()+"");
+        userLogs.setUserID(allUsers.get(index).getUserId() + "");
+        userLogs.setUserName(allUsers.get(index).getUserName() + "");
         userLogs.setPassword(passEdt.getText().toString().trim());
         userLogs.setDate(generalMethod.getCurentTimeDate(1));
         userLogs.setTime(generalMethod.getCurentTimeDate(2));
