@@ -12,6 +12,7 @@ android {
         versionCode 1
         versionName "1.0"
         multiDexEnabled true
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -42,10 +43,11 @@ android {
 }
 
 dependencies {
-
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'androidx.appcompat:appcompat:1.4.0'
     implementation 'com.google.android.material:material:1.4.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.2'
+
     implementation 'com.google.android.gms:play-services-maps:18.0.1'
     implementation 'com.android.volley:volley:1.2.1'
     implementation 'com.google.firebase:firebase-crashlytics-buildtools:2.5.2'
@@ -71,6 +73,13 @@ dependencies {
     implementation 'me.dm7.barcodescanner:zxing:1.9.13'
 
     implementation 'android.arch.lifecycle:extensions:1.1.1'
+
+    //    implementation files('libs/opencsv-5.3.jar')
+//    implementation files('libs/jxl-2.6.12.jar')
+
+    implementation 'com.itextpdf:itext7-core:7.1.11'
+    implementation files('libs/itextg-5.5.10.jar')
+
 
 
 

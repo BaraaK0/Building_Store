@@ -70,6 +70,8 @@
     <string name="save_for_later">حفظ لوقت لاحق</string>
     <string name="user_already_exists">اسم المستخدم موجود سابقاً !</string>
 
+    <string name="fillbasket">fill The basket with Items!!</string>
+    <string name="vocher">فاتورة</string>
     <string-array name="user_type">
         <item>آدمن</item>
         <item>مستخدم عادي</item>

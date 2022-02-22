@@ -61,6 +61,8 @@
     <string name="Empty">Empty</string>
     <string name="savedSuccsesfule">Saved Successfully</string>
     <string name="Order">Order</string>
+    <string name="fillbasket">fill The basket with Items!!</string>
+    <string name="vocher">Vocher</string>
     <string name="incorrect_user_info">Incorrect User Information !</string>
 
     <string name="add_item_to">Add item to cart ?</string>
@@ -74,6 +76,7 @@
     <string name="save_for_later">Save for later</string>
     <string name="user_already_exists">Username Already Exists !</string>
 
+    fillbasket
     <string-array name="user_type">
         <item>Admin</item>
         <item>User</item>

@@ -23,20 +23,16 @@ public class OrderMaster {
     private String time;
 
 
-    @ColumnInfo(name = "Qty")
-    private double qty;
-
     @ColumnInfo(name = "Discount")
     private double discount;
 
     @ColumnInfo(name = "Tax")
     private String tax;
 
-    @ColumnInfo(name = "Total")
-    private double total;
+    @ColumnInfo(name = "TotalQty")
+    private double TotalQty;
 
-    @ColumnInfo(name = "Price")
-    private double price;
+
 
     @ColumnInfo(name = "Customer_ID")
     private int customerId;
@@ -45,6 +41,70 @@ public class OrderMaster {
     private int isPosted;
     @ColumnInfo(name = "ConfirmState")
     private int ConfirmState;
+
+
+    @ColumnInfo(name = "subTotal")
+    private double subTotal;
+
+    @ColumnInfo(name = "UserNo")
+    private String UserNo;
+
+    @ColumnInfo(name = "NetTotal")
+    private double NetTotal;
+
+    @ColumnInfo(name = "voucherDiscount")
+    private double voucherDiscount;
+
+    @ColumnInfo(name = "totalVoucherDiscount")
+    private double totalVoucherDiscount;
+
+    public double getTotalQty() {
+        return TotalQty;
+    }
+
+    public String getUserNo() {
+        return UserNo;
+    }
+
+    public void setUserNo(String userNo) {
+        UserNo = userNo;
+    }
+
+    public void setTotalQty(double totalQty) {
+        TotalQty = totalQty;
+    }
+
+    public double getSubTotal() {
+        return subTotal;
+    }
+
+    public void setSubTotal(double subTotal) {
+        this.subTotal = subTotal;
+    }
+
+    public double getNetTotal() {
+        return NetTotal;
+    }
+
+    public void setNetTotal(double netTotal) {
+        NetTotal = netTotal;
+    }
+
+    public double getVoucherDiscount() {
+        return voucherDiscount;
+    }
+
+    public void setVoucherDiscount(double voucherDiscount) {
+        this.voucherDiscount = voucherDiscount;
+    }
+
+    public double getTotalVoucherDiscount() {
+        return totalVoucherDiscount;
+    }
+
+    public void setTotalVoucherDiscount(double totalVoucherDiscount) {
+        this.totalVoucherDiscount = totalVoucherDiscount;
+    }
 
     public int getConfirmState() {
         return ConfirmState;
@@ -78,13 +138,6 @@ public class OrderMaster {
         this.time = time;
     }
 
-    public double getQty() {
-        return qty;
-    }
-
-    public void setQty(double qty) {
-        this.qty = qty;
-    }
 
     public double getDiscount() {
         return discount;
@@ -102,21 +155,8 @@ public class OrderMaster {
         this.tax = tax;
     }
 
-    public double getTotal() {
-        return total;
-    }
 
-    public void setTotal(double total) {
-        this.total = total;
-    }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
 
     public int getCustomerId() {
         return customerId;
@@ -155,7 +195,7 @@ public class OrderMaster {
 
             obj.put("CACR", 1);
             obj.put("ISPOSTED", "0");
-            obj.put("NETSALES", total);
+            obj.put("NETSALES", NetTotal);
             obj.put("CUSTOMERNO", customerId);
             obj.put("VOUCHERYEAR", 2022);
 
