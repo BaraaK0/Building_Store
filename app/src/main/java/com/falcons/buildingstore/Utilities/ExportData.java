@@ -101,7 +101,15 @@ public class ExportData {
         return addUserObj;
     }
 
-    public void addUser(List<User> userList) {
+    public interface AddUserCallBack {
+
+        void onResponse(String response);
+
+        void onError(String error);
+
+    }
+
+    public void addUser(List<User> userList, AddUserCallBack addUserCallBack) {
 
         SweetAlertDialog pDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
 
@@ -119,21 +127,21 @@ public class ExportData {
 
                 pDialog.dismissWithAnimation();
                 Log.e("AddUser_Response", response);
+                addUserCallBack.onResponse(response+"");
                 if (response.contains("Saved Successfully")) {
 
                     appDatabase.usersDao().setPosted();
 
-                    showSweetDialog(context, 1, context.getString(R.string.savedSuccsesfule), "");
 
                 } else if (response.contains("server error")) {
 
-                    showSweetDialog(context, 0, "Internal server error", "");
+                    showSweetDialog(context, 0, "Internal server error", null);
 
                 } else if (response.contains("unique constraint")) {
 
                     Log.e("unique response", response.toString() + "");
                     try {
-                        showSweetDialog(context, 0, "Unique Constraint", "");
+                        showSweetDialog(context, 0, "Unique Constraint", null);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -144,9 +152,9 @@ public class ExportData {
             @Override
             public void onErrorResponse(VolleyError error) {
                 pDialog.dismissWithAnimation();
-                showSweetDialog(context, 0, "Connection Failed", "");
-
-                VolleyLog.e("Error: ", error.getMessage());
+                showSweetDialog(context, 0, "Connection Failed", null);
+                addUserCallBack.onError(error.getMessage()+"");
+                VolleyLog.e("Error: ", error.getMessage()+"");
             }
         }) {
             @Override
@@ -230,13 +238,13 @@ public class ExportData {
 
                 } else if (response.contains("server error")) {
 
-                    showSweetDialog(context, 0, "Internal server error", "");
+                    showSweetDialog(context, 0, "Internal server error", null);
 
                 } else if (response.contains("unique constraint")) {
 
                     Log.e("unique response", response.toString() + "");
                     try {
-                        showSweetDialog(context, 0, "Unique Constraint", "");
+                        showSweetDialog(context, 0, "Unique Constraint", null);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -249,7 +257,7 @@ public class ExportData {
                 pDialog.dismissWithAnimation();
                 showSweetDialog(context, 0, "Connection Failed", "");
 
-                VolleyLog.e("Error: ", error.getMessage());
+                VolleyLog.e("Error: ", error.getMessage()+"");
             }
         }) {
             @Override

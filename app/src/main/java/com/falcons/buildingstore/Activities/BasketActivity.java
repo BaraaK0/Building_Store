@@ -91,7 +91,7 @@ public class BasketActivity extends AppCompatActivity {
                     customer_textInput.setError(null);
                     SaveMasterVocher(1);
                     SaveDetialsVocher(1);
-                    generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
+                    GeneralMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), null);
 
                 } else {
 
@@ -110,7 +110,7 @@ public class BasketActivity extends AppCompatActivity {
 
                     SaveMasterVocher(2);
                     SaveDetialsVocher(2);
-                    generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
+                    GeneralMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), null);
 
                 } else {
 

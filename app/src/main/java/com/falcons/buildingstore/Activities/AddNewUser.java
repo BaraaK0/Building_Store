@@ -1,13 +1,21 @@
 package com.falcons.buildingstore.Activities;
 
+import static com.falcons.buildingstore.Activities.LoginActivity.CONO_PREF;
+import static com.falcons.buildingstore.Activities.LoginActivity.IP_PREF;
+import static com.falcons.buildingstore.Activities.LoginActivity.PORT_PREF;
+import static com.falcons.buildingstore.Activities.LoginActivity.SETTINGS_PREFERENCES;
+import static com.falcons.buildingstore.Utilities.GeneralMethod.showSweetDialog;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,7 +32,11 @@ import com.falcons.buildingstore.Utilities.ExportData;
 import com.falcons.buildingstore.Utilities.GeneralMethod;
 import com.falcons.buildingstore.Database.Entities.User;
 import com.falcons.buildingstore.R;
+import com.falcons.buildingstore.Utilities.ImportData;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,12 +53,20 @@ public class AddNewUser extends AppCompatActivity {
     GeneralMethod generalMethod;
     BottomNavigationView bottomNavigationView;
     ExportData exportData;
+    ImportData importData;
+    private String ipAddress, port, coNo;
+    private List<User> allUsers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_new_user);
         init();
+
+        SharedPreferences sharedPref = getSharedPreferences(SETTINGS_PREFERENCES, MODE_PRIVATE);
+        ipAddress = sharedPref.getString(IP_PREF, "");
+        port = sharedPref.getString(PORT_PREF, "");
+        coNo = sharedPref.getString(CONO_PREF, "");
 
         adduser.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,7 +88,8 @@ public class AddNewUser extends AppCompatActivity {
         adduser = findViewById(R.id.adduser);
         appDatabase = AppDatabase.getInstanceDatabase(AddNewUser.this);
         exportData = new ExportData(AddNewUser.this);
-
+        importData = new ImportData(AddNewUser.this);
+        allUsers = new ArrayList<>();
 
         bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
@@ -138,8 +159,6 @@ public class AddNewUser extends AppCompatActivity {
 
     void Add_new_User() {
 
-
-
         if (!username.getText().toString().trim().equals("")
                 && !passEdt.getText().toString().trim().equals("")) {
 
@@ -157,12 +176,68 @@ public class AddNewUser extends AppCompatActivity {
                 appDatabase.usersDao().insertUser(user);
                 ArrayList<User> users = new ArrayList<>();
                 users.add(user);
-                exportData.addUser(users);
-                username.setText("");
-                passEdt.setText("");
+                exportData.addUser(users, new ExportData.AddUserCallBack() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.contains("Saved Successfully")) {
+
+
+                            importData.getAllUsers(new ImportData.GetUsersCallBack() {
+                                @Override
+                                public void onResponse(JSONArray response) {
+
+                                    appDatabase.usersDao().deleteAll();
+                                    allUsers.clear();
+                                    showSweetDialog(AddNewUser.this, 1, getString(R.string.savedSuccsesfule), null);
+
+
+                                    for (int i = 0; i < response.length(); i++) {
+
+                                        try {
+
+                                            allUsers.add(new User(
+                                                    response.getJSONObject(i).getString("SALESNO"),
+                                                    response.getJSONObject(i).getString("ACCNAME"),
+                                                    response.getJSONObject(i).getString("USER_PASSWORD"),
+                                                    Integer.parseInt(response.getJSONObject(i).getString("USERTYPE")),
+                                                    Integer.parseInt(response.getJSONObject(i).getString("DISCOUNTPER")),
+                                                    1));
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                    }
+
+                                    appDatabase.usersDao().addAll(allUsers);
+
+                                }
+
+                                @Override
+                                public void onError(String error) {
+
+                                }
+                            }, ipAddress, port, coNo);
+
+                            username.setText("");
+                            passEdt.setText("");
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+
+                    }
+                });
+
+                /*** TODO Refresh Users List ***/
+
+
+
             } else {
 
-                username.setError("User Already Exist !");
+                username.setError(getString(R.string.user_already_exists));
 
             }
 

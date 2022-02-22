@@ -393,6 +393,9 @@ public class LoginActivity extends AppCompatActivity {
                             appDatabase.customersDao().deleteAll();
                             appDatabase.usersDao().deleteAll();
 
+                            allItemsList.clear();
+                            allCustomers.clear();
+                            allUsers.clear();
 
 //                            importData.getAllItems();
                             importData.getAllItems(new ImportData.GetItemsCallBack() {
@@ -529,7 +532,8 @@ public class LoginActivity extends AppCompatActivity {
 
     void addUserLogs(int index) {
         UserLogs userLogs = new UserLogs();
-        userLogs.setUserID(allUsers.get(index).getUserId()+"");
+        userLogs.setUserID(allUsers.get(index).getUserId() + "");
+        userLogs.setUserName(allUsers.get(index).getUserName() + "");
         userLogs.setPassword(passEdt.getText().toString().trim());
         userLogs.setDate(generalMethod.getCurentTimeDate(1));
         userLogs.setTime(generalMethod.getCurentTimeDate(2));
