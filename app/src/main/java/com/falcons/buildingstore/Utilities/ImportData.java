@@ -115,6 +115,10 @@ public class ImportData {
 
                     GeneralMethod.showSweetDialog(context, 3, "", "Please check the entered IP info");
 
+                }else if ((error.getMessage() + "").contains("No Data Found")) {
+
+                    GeneralMethod.showSweetDialog(context, 3, "", "No Users Found");
+
                 }
                 Log.e("getUsers_Error", error.getMessage() + "");
 
@@ -179,6 +183,10 @@ public class ImportData {
 
                     GeneralMethod.showSweetDialog(context, 3, "", "Please check the entered IP info");
 
+                } else if ((error.getMessage() + "").contains("No Data Found")) {
+
+                    GeneralMethod.showSweetDialog(context, 3, "", "No Customers Found");
+
                 }
                 Log.e("getCustms_Error", error.getMessage() + "");
 
@@ -242,6 +250,10 @@ public class ImportData {
                 } else if ((error.getMessage() + "").contains("NoRouteToHostException")) {
 
                     GeneralMethod.showSweetDialog(context, 3, "", "Please check the entered IP info");
+
+                } else if ((error.getMessage() + "").contains("No Data Found")) {
+
+                    GeneralMethod.showSweetDialog(context, 3, "", "No Items Found");
 
                 }
                 Log.e("getItems_Error", error.getMessage() + "");

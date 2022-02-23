@@ -1,5 +1,7 @@
 package com.falcons.buildingstore.Activities;
 
+import static com.falcons.buildingstore.Activities.HomeActivity.vocher_Items;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -30,6 +32,7 @@ import com.falcons.buildingstore.Database.Entities.OrderMaster;
 import com.falcons.buildingstore.Database.Entities.UserLogs;
 import com.falcons.buildingstore.R;
 import com.falcons.buildingstore.Utilities.ExportData;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.lang.invoke.LambdaConversionException;
@@ -60,9 +63,9 @@ public class ShowPreviousOrder extends AppCompatActivity {
         setContentView(R.layout.activity_show_previous_order);
         init();
         Cus_name = appDatabase.customersDao().getCustmName();
-        Cus_name.add(0, "NoFilter");
+        Cus_name.add(0, "No Filter");
         Log.e("Cus_name==", Cus_name.size() + "");
-        ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,
+        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_spinner_item,
                 Cus_name);
         Customer_spinner.setAdapter(spinnerArrayAdapter);
@@ -75,7 +78,7 @@ public class ShowPreviousOrder extends AppCompatActivity {
         myCalendar = Calendar.getInstance();
 
         Date currentTimeAndDate = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
         String today = df.format(currentTimeAndDate);
         date.setText(today);
 
@@ -97,21 +100,21 @@ public class ShowPreviousOrder extends AppCompatActivity {
                 orderMasters.clear();
 
                 if (!OrderNO.getText().toString().equals("")
-                        && !Customer_spinner.getSelectedItem().equals("NoFilter")) {
+                        && !Customer_spinner.getSelectedItem().equals("No Filter")) {
                     int cus_id = appDatabase.customersDao().getCustmByName(Customer_spinner.getSelectedItem().toString());
                     orderMasters = appDatabase.ordersMasterDao().getOrdersByOrderNOandCusID(OrderNO.getText().toString(), cus_id, date.getText().toString());// from voucher master
 
                 } else if (!OrderNO.getText().toString().equals("")
-                        && Customer_spinner.getSelectedItem().equals("NoFilter")) {
+                        && Customer_spinner.getSelectedItem().equals("No Filter")) {
                     orderMasters = appDatabase.ordersMasterDao().getOrdersByOrderNO(OrderNO.getText().toString(), date.getText().toString());// from voucher master
 
                 } else if (OrderNO.getText().toString().equals("")
-                        && !Customer_spinner.getSelectedItem().equals("NoFilter")) {
+                        && !Customer_spinner.getSelectedItem().equals("No Filter")) {
                     int cus_id = appDatabase.customersDao().getCustmByName(Customer_spinner.getSelectedItem().toString());
                     orderMasters = appDatabase.ordersMasterDao().getOrdersByCusID(cus_id, date.getText().toString());// from voucher master
 
                 } else if (OrderNO.getText().toString().equals("")
-                        && Customer_spinner.getSelectedItem().equals("NoFilter")) {
+                        && Customer_spinner.getSelectedItem().equals("No Filter")) {
                     orderMasters = appDatabase.ordersMasterDao().getOrdersByDate(date.getText().toString());// from voucher master
 
                 }
@@ -129,6 +132,10 @@ public class ShowPreviousOrder extends AppCompatActivity {
         exportData = new ExportData(ShowPreviousOrder.this);
 
         bottomNavigationView = findViewById(R.id.bottom_navigation);
+
+        BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(R.id.action_cart);
+        badge.setVisible(true);
+        badge.setNumber(vocher_Items.size());
 
         bottomNavigationView.setSelectedItemId(R.id.action_report);
 

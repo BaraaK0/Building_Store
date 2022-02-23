@@ -19,9 +19,9 @@ import com.falcons.buildingstore.R;
 
 import java.util.List;
 
-public  class OrderShowAdapter extends RecyclerView.Adapter<OrderShowAdapter.ViewHolder> {
-Context context;
-List<OrderMaster>orderMasters;
+public class OrderShowAdapter extends RecyclerView.Adapter<OrderShowAdapter.ViewHolder> {
+    Context context;
+    List<OrderMaster> orderMasters;
 
     public OrderShowAdapter(Context context, List<OrderMaster> orderMasters) {
         this.context = context;
@@ -38,24 +38,21 @@ List<OrderMaster>orderMasters;
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.VHFNO.setText("Order# "+orderMasters.get(position).getVhfNo()+"");
-        holder.CONFIRMSTATE.setText(orderMasters.get(position).getConfirmState()+"");
-   //     holder.cusName.setText(orderMasters.get(position).getCustomerId()+"");
-        if(orderMasters.get(position).getConfirmState()==1)
-        {
+        holder.VHFNO.setText("Order# " + orderMasters.get(position).getVhfNo() + "");
+        holder.CONFIRMSTATE.setText(orderMasters.get(position).getConfirmState() + "");
+        //     holder.cusName.setText(orderMasters.get(position).getCustomerId()+"");
+        if (orderMasters.get(position).getConfirmState() == 1) {
             holder.CONFIRMSTATE.setTextColor(android.graphics.Color.GREEN);
-            holder.CONFIRMSTATE.setText("Orderd");
+            holder.CONFIRMSTATE.setText("Ordered");
 
-        }
-        else
-        {
+        } else {
             holder.CONFIRMSTATE.setTextColor(Color.RED);
             holder.CONFIRMSTATE.setText("Saved");
 
         }
 
 
-        holder. show.setOnClickListener(new View.OnClickListener() {
+        holder.show.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Create the bundle
@@ -63,7 +60,7 @@ List<OrderMaster>orderMasters;
 
                 bundle.putInt("VOHNO", orderMasters.get(position).getVhfNo());
 
-                Intent intent=new Intent(context, OrderReport.class);
+                Intent intent = new Intent(context, OrderReport.class);
                 intent.putExtras(bundle);
                 context.startActivity(intent);
             }
@@ -75,15 +72,16 @@ List<OrderMaster>orderMasters;
         return orderMasters.size();
     }
 
-    public static  class ViewHolder extends RecyclerView.ViewHolder
-    {   TextView VHFNO,CONFIRMSTATE,cusName,show;
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        TextView VHFNO, CONFIRMSTATE, cusName, show;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            VHFNO=itemView.findViewById(R.id.vocherno);
-                CONFIRMSTATE=itemView.findViewById(R.id.orderstate);
-            cusName=itemView.findViewById(R.id.cusNO);
-            show=itemView.findViewById(R.id.show);
+            VHFNO = itemView.findViewById(R.id.vocherno);
+            CONFIRMSTATE = itemView.findViewById(R.id.orderstate);
+            cusName = itemView.findViewById(R.id.cusNO);
+            show = itemView.findViewById(R.id.show);
         }
     }
 
-        }
+}

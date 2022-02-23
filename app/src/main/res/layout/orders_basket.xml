@@ -14,242 +14,257 @@
         android:background="@color/semi_white_bg"
         android:gravity="center">
 
-
-        <ImageView
-            android:id="@+id/logo_remove"
-            android:layout_width="74dp"
-            android:layout_height="62dp"
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:background="@drawable/logo" />
+            android:background="@color/semi_white_bg"
+            android:gravity="center">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/customer_textInput"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="start"
-            android:hint="@string/customer"
-            app:boxBackgroundColor="@color/white"
-            app:boxCornerRadiusBottomEnd="10dp"
-            app:boxCornerRadiusBottomStart="10dp"
-            app:boxCornerRadiusTopEnd="10dp"
-            app:boxCornerRadiusTopStart="10dp"
-            app:boxStrokeColor="@color/primaryTextColor"
-            app:boxStrokeWidth="1dp"
-            app:endIconTint="@color/primaryTextColor"
-            android:layout_below="@+id/logo_remove"
-            android:layout_marginTop="30dp"
-            android:layout_marginHorizontal="26dp"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            >
-
-            <AutoCompleteTextView
-                android:id="@+id/customerTv"
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:inputType="textAutoComplete"
-                android:textAlignment="viewStart"
-                android:textColor="@color/black" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_height="wrap_content"
+                android:background="@color/semi_white_bg"
+                android:gravity="center">
 
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/orderBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/basketListCard"
-            android:layout_centerHorizontal="true"
-            android:layout_marginHorizontal="95dp"
-            android:layout_marginTop="40dp"
-            android:background="@drawable/bg_btn"
-            android:fontFamily="@font/alegreya_sans_medium"
-            android:letterSpacing="0.08"
-            android:lineHeight="30sp"
-            android:padding="13dp"
-            android:text="@string/Order"
-            android:textColor="@color/white"
-            android:textSize="25sp" />
+                <ImageView
+                    android:id="@+id/logo_remove"
+                    android:layout_width="74dp"
+                    android:layout_height="62dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:background="@drawable/logo" />
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/saveBtn"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/orderBtn"
-            android:layout_centerHorizontal="true"
-            android:layout_marginHorizontal="95dp"
-            android:layout_marginTop="15dp"
-            android:background="@drawable/save_btn_bg"
-            android:fontFamily="@font/alegreya_sans_medium"
-            android:letterSpacing="0.08"
-            android:lineHeight="30sp"
-            android:outlineAmbientShadowColor="@color/primaryTextColor"
-            android:outlineSpotShadowColor="@color/primaryTextColor"
-            android:padding="13dp"
-            android:shadowColor="@color/primaryTextColor"
-            android:shadowDx="2"
-            android:shadowDy="2"
-            android:shadowRadius="2"
-            android:text="@string/save_for_later"
-            android:textAllCaps="false"
-            android:textColor="@color/primaryTextColor"
-            android:textSize="25sp" />
-
-
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/basketListCard"
-            android:layout_width="match_parent"
-            android:layout_height="340dp"
-            android:layout_below="@+id/customer_textInput"
-            android:layout_centerHorizontal="true"
-            android:layout_marginHorizontal="26dp"
-            android:layout_marginTop="10dp"
-            app:cardCornerRadius="15dp"
-            app:cardElevation="4dp">
-
-            <HorizontalScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fillViewport="true"
-
-                android:orientation="vertical">
-
-                <LinearLayout
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/customer_textInput"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:padding="23dp">
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/logo_remove"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginHorizontal="26dp"
+                    android:layout_marginTop="30dp"
+                    android:gravity="start"
+                    android:hint="@string/customer"
+                    app:boxBackgroundColor="@color/white"
+                    app:boxCornerRadiusBottomEnd="10dp"
+                    app:boxCornerRadiusBottomStart="10dp"
+                    app:boxCornerRadiusTopEnd="10dp"
+                    app:boxCornerRadiusTopStart="10dp"
+                    app:boxStrokeColor="@color/primaryTextColor"
+                    app:boxStrokeWidth="1dp"
+                    app:endIconTint="@color/primaryTextColor">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/alegreya"
-                            android:gravity="start"
-                            android:lineHeight="19sp"
-                            android:text="@string/item_Name_"
-                            android:textColor="@color/primaryTextColor"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/alegreya"
-                            android:gravity="center"
-                            android:lineHeight="19sp"
-                            android:text="@string/item_Code"
-                            android:textColor="@color/primaryTextColor"
-                            android:textSize="14sp" />
-
-
-                        <TextView
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/alegreya"
-                            android:gravity="end"
-                            android:lineHeight="19sp"
-                            android:text="@string/qty"
-                            android:textColor="@color/primaryTextColor"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/alegreya"
-                            android:gravity="end"
-                            android:lineHeight="19sp"
-                            android:text="@string/price_"
-                            android:textColor="@color/primaryTextColor"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/alegreya"
-                            android:gravity="end"
-                            android:lineHeight="19sp"
-                            android:text="@string/discount_"
-                            android:textColor="@color/primaryTextColor"
-                            android:textSize="14sp" />
-
-                        <TextView
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/alegreya"
-                            android:gravity="end"
-                            android:lineHeight="19sp"
-                            android:text="@string/tax_"
-                            android:textColor="@color/primaryTextColor"
-                            android:textSize="14sp" />
-
-
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="11dp"
-                        android:background="@color/primaryTextColor" />
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/basketListRV"
+                    <AutoCompleteTextView
+                        android:id="@+id/customerTv"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+                        android:inputType="textAutoComplete"
+                        android:textAlignment="viewStart"
+                        android:textColor="@color/black" />
 
-                </LinearLayout>
-            </HorizontalScrollView>
+                </com.google.android.material.textfield.TextInputLayout>
 
 
-        </com.google.android.material.card.MaterialCardView>
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/orderBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/basketListCard"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginHorizontal="95dp"
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/bg_btn"
+                    android:fontFamily="@font/alegreya_sans_medium"
+                    android:letterSpacing="0.08"
+                    android:lineHeight="30sp"
+                    android:padding="13dp"
+                    android:text="@string/Order"
+                    android:textColor="@color/white"
+                    android:textSize="25sp" />
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="46dp"
-            android:layout_height="46dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginLeft="26dp"
-            android:layout_marginTop="10dp"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="5dp">
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/saveBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/orderBtn"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginHorizontal="95dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/save_btn_bg"
+                    android:fontFamily="@font/alegreya_sans_medium"
+                    android:letterSpacing="0.08"
+                    android:lineHeight="30sp"
+                    android:outlineAmbientShadowColor="@color/primaryTextColor"
+                    android:outlineSpotShadowColor="@color/primaryTextColor"
+                    android:padding="13dp"
+                    android:shadowColor="@color/primaryTextColor"
+                    android:shadowDx="2"
+                    android:shadowDy="2"
+                    android:shadowRadius="2"
+                    android:text="@string/save_for_later"
+                    android:textAllCaps="false"
+                    android:textColor="@color/primaryTextColor"
+                    android:textSize="25sp" />
 
-            <ImageButton
-                android:id="@+id/backBtn"
-                android:layout_width="46dp"
-                android:layout_height="46dp"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:background="@drawable/back_arrow"
-                android:elevation="10dp" />
 
-        </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/basketListCard"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/customer_textInput"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginHorizontal="26dp"
+                    android:layout_marginTop="10dp"
+                    app:cardCornerRadius="15dp"
+                    app:cardElevation="4dp">
 
-        <!--        <com.google.android.material.card.MaterialCardView-->
-        <!--            android:id="@+id/basketListCard"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="350dp"-->
-        <!--            android:layout_below="@+id/logo_remove"-->
-        <!--            android:layout_centerHorizontal="true"-->
-        <!--            android:layout_marginHorizontal="26dp"-->
-        <!--            android:layout_marginTop="44dp"-->
-        <!--            app:cardCornerRadius="15dp"-->
-        <!--            app:cardElevation="4dp"></com.google.android.material.card.MaterialCardView>-->
+                    <HorizontalScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:fillViewport="true"
 
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="23dp">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+
+                                <TextView
+                                    android:layout_width="150dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/alegreya"
+                                    android:gravity="start"
+                                    android:lineHeight="19sp"
+                                    android:text="@string/item_Name_"
+                                    android:textColor="@color/primaryTextColor"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:layout_width="150dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/alegreya"
+                                    android:gravity="center"
+                                    android:lineHeight="19sp"
+                                    android:text="@string/item_Code"
+                                    android:textColor="@color/primaryTextColor"
+                                    android:textSize="14sp" />
+
+
+                                <TextView
+                                    android:layout_width="150dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/alegreya"
+                                    android:gravity="center"
+                                    android:lineHeight="19sp"
+                                    android:text="@string/qty"
+                                    android:textColor="@color/primaryTextColor"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:layout_width="150dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/alegreya"
+                                    android:gravity="center"
+                                    android:lineHeight="19sp"
+                                    android:text="@string/price_"
+                                    android:textColor="@color/primaryTextColor"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:layout_width="150dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/alegreya"
+                                    android:gravity="center"
+                                    android:lineHeight="19sp"
+                                    android:text="@string/discount_"
+                                    android:textColor="@color/primaryTextColor"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:layout_width="150dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/alegreya"
+                                    android:gravity="end"
+                                    android:lineHeight="19sp"
+                                    android:text="@string/tax_"
+                                    android:textColor="@color/primaryTextColor"
+                                    android:textSize="14sp" />
+
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:layout_marginTop="11dp"
+                                android:background="@color/primaryTextColor" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/basketListRV"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+                        </LinearLayout>
+                    </HorizontalScrollView>
+
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="46dp"
+                    android:layout_height="46dp"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginLeft="26dp"
+                    android:layout_marginTop="10dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="5dp">
+
+                    <ImageButton
+                        android:id="@+id/backBtn"
+                        android:layout_width="46dp"
+                        android:layout_height="46dp"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:background="@drawable/back_arrow"
+                        android:elevation="10dp" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <!--        <com.google.android.material.card.MaterialCardView-->
+                <!--            android:id="@+id/basketListCard"-->
+                <!--            android:layout_width="match_parent"-->
+                <!--            android:layout_height="350dp"-->
+                <!--            android:layout_below="@+id/logo_remove"-->
+                <!--            android:layout_centerHorizontal="true"-->
+                <!--            android:layout_marginHorizontal="26dp"-->
+                <!--            android:layout_marginTop="44dp"-->
+                <!--            app:cardCornerRadius="15dp"-->
+                <!--            app:cardElevation="4dp"></com.google.android.material.card.MaterialCardView>-->
+
+            </RelativeLayout>
+        </ScrollView>
     </RelativeLayout>
+
 
     <include
         android:id="@+id/bottom_navigation"

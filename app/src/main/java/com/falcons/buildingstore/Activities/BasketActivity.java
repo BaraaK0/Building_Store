@@ -1,5 +1,7 @@
 package com.falcons.buildingstore.Activities;
 
+import static com.falcons.buildingstore.Activities.HomeActivity.vocher_Items;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,7 +37,9 @@ import com.falcons.buildingstore.Database.Entities.OrderMaster;
 import com.falcons.buildingstore.Database.Entities.OrdersDetails;
 
 import com.falcons.buildingstore.R;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.textfield.TextInputLayout;
 
@@ -61,7 +65,8 @@ public class BasketActivity extends AppCompatActivity {
     private AutoCompleteTextView customerTv;
     private List<CustomerInfo> allCustomers;
     private ArrayList<String> customerNames;
-
+    private MaterialCardView basketListCard;
+    private BadgeDrawable badge;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +92,7 @@ public class BasketActivity extends AppCompatActivity {
         orderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(HomeActivity.vocher_Items.size()!=0) {
+                if(vocher_Items.size()!=0) {
                     SaveMasterVocher(1);
                     SaveDetialsVocher(1);
                     generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
@@ -116,8 +121,8 @@ public class BasketActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (HomeActivity.vocher_Items.size() != 0) {
-                    CalculateTax(1, HomeActivity.vocher_Items);
+                if (vocher_Items.size() != 0) {
+                    CalculateTax(1, vocher_Items);
                     SaveMasterVocher(2);
                     SaveDetialsVocher(2);
                     generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
@@ -165,7 +170,18 @@ public class BasketActivity extends AppCompatActivity {
         customer_textInput = findViewById(R.id.customer_textInput);
         customerTv = findViewById(R.id.customerTv);
         bottom_navigation = findViewById(R.id.bottom_navigation);
+        basketListCard = findViewById(R.id.basketListCard);
         allCustomers = new ArrayList<>();
+
+        basketListCard.requestLayout();
+        WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+        lp.height = (int) (getResources().getDisplayMetrics().heightPixels / 2.5);
+        basketListCard.getLayoutParams().height = lp.height;
+
+        badge = bottom_navigation.getOrCreateBadge(R.id.action_cart);
+        badge.setVisible(true);
+        badge.setNumber(vocher_Items.size());
+
 
         bottom_navigation.setSelectedItemId(R.id.action_cart);
 
@@ -245,7 +261,7 @@ public class BasketActivity extends AppCompatActivity {
     void fillListAdapter() {
         layoutManager = new LinearLayoutManager(BasketActivity.this);
         BasketItem.setLayoutManager(layoutManager);
-        BasketItemAdapter basketItemAdapter = new BasketItemAdapter(HomeActivity.vocher_Items, BasketActivity.this);
+        BasketItemAdapter basketItemAdapter = new BasketItemAdapter(vocher_Items, BasketActivity.this);
         BasketItem.setAdapter(basketItemAdapter);
 
     }
@@ -257,12 +273,12 @@ public class BasketActivity extends AppCompatActivity {
         orderMaster.setDate(generalMethod.getCurentTimeDate(1));
         orderMaster.setTime(generalMethod.getCurentTimeDate(2));
        // orderMaster.setCustomerId();
-        orderMaster.setDiscount(HomeActivity.vocher_Items.get(0).getDiscount());
+        orderMaster.setDiscount(vocher_Items.get(0).getDiscount());
         UserLogs userLogs = appDatabase.userLogsDao().getLastuserLogin();
         orderMaster.setUserNo(userLogs.getUserID());
         orderMaster.setNetTotal(netTotal);
 
-        orderMaster.setTax(HomeActivity.vocher_Items.get(0).getTax());
+        orderMaster.setTax(vocher_Items.get(0).getTax());
 
         if (i == 1) orderMaster.setConfirmState(1);
         else orderMaster.setConfirmState(0);
@@ -274,17 +290,17 @@ public class BasketActivity extends AppCompatActivity {
     void SaveDetialsVocher(int x) {
         int vohno = appDatabase.ordersMasterDao().getLastVoherNo();
 
-        for (int i = 0; i < HomeActivity.vocher_Items.size(); i++) {
+        for (int i = 0; i < vocher_Items.size(); i++) {
             OrdersDetails ordersDetails = new OrdersDetails();
             ordersDetails.setVhfNo(vohno);
-            ordersDetails.setDiscount(HomeActivity.vocher_Items.get(i).getDiscount());
-            ordersDetails.setItemNo(HomeActivity.vocher_Items.get(i).getItemNCode());
+            ordersDetails.setDiscount(vocher_Items.get(i).getDiscount());
+            ordersDetails.setItemNo(vocher_Items.get(i).getItemNCode());
 
-            ordersDetails.setPrice(HomeActivity.vocher_Items.get(i).getPrice());
+            ordersDetails.setPrice(vocher_Items.get(i).getPrice());
             ordersDetails.setDate(generalMethod.getCurentTimeDate(1));
             ordersDetails.setTime(generalMethod.getCurentTimeDate(2));
 
-            ordersDetails.setTotalDiscVal(HomeActivity.vocher_Items.get(i).getTaxValue());
+            ordersDetails.setTotalDiscVal(vocher_Items.get(i).getTaxValue());
 
 
 
@@ -294,15 +310,15 @@ public class BasketActivity extends AppCompatActivity {
             appDatabase.ordersDetails_dao().insertOrder(ordersDetails);
         }
 
-        HomeActivity.vocher_Items.clear();
+        vocher_Items.clear();
         fillListAdapter();
     }
 
     double CalculateTotalPrice() {
         double total = 0;
 
-        for (int i = 0; i < HomeActivity.vocher_Items.size(); i++) {
-            total += HomeActivity.vocher_Items.get(i).getPrice() * HomeActivity.vocher_Items.get(i).getQty();
+        for (int i = 0; i < vocher_Items.size(); i++) {
+            total += vocher_Items.get(i).getPrice() * vocher_Items.get(i).getQty();
         }
         return total;
     }
