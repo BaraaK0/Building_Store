@@ -26,6 +26,7 @@ import android.print.PrintManager;
 import android.util.Log;
 import android.widget.Toast;
 
+import androidx.appcompat.content.res.AppCompatResources;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
@@ -198,19 +199,33 @@ public class PdfConverter {
 
 
 /////////logo
-            Bitmap imageBytes =   drawableToBitmap (context.getResources().getDrawable(R.drawable.logo));
-            imageBytes = getResizedBitmap(imageBytes, 80, 80);
-            byte[] bytes = convertBitmapToByteArray(imageBytes);
+            Drawable drawable = AppCompatResources.getDrawable(context, R.drawable.logo);
+            assert drawable != null;
+            Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] bitmapData = stream.toByteArray();
 
 
-            BitmapFactory.decodeByteArray(bytes, 0, 10);
+
+//            Bitmap imageBytes =   drawableToBitmap (context.getResources().getDrawable(R.drawable.logo));
+//            imageBytes = getResizedBitmap(imageBytes, 95, 80);
+//            byte[] bytes = convertBitmapToByteArray(imageBytes);
+
+
+//            BitmapFactory.decodeByteArray(bytes, 0, 10);
             try {
 
-                Image imageView = Image.getInstance(bytes);
-                imageView.setAlignment(ALIGN_CENTER);
-                //   imageView.scaleToFit(10,10);
+                Image image = Image.getInstance(bitmapData);
+                image.setAlignment(Element.ALIGN_CENTER);
+                image.scaleAbsolute(95, 80);
+                doc.add(image);
 
-                doc.add(imageView);
+//                Image imageView = Image.getInstance(bytes);
+//                imageView.setAlignment(ALIGN_CENTER);
+//                //   imageView.scaleToFit(10,10);
+//
+//                doc.add(imageView);
 
             } catch (Exception e) {
             }
@@ -289,6 +304,9 @@ public class PdfConverter {
             PdfPCell cell11 = new PdfPCell(new Paragraph("المستلم : ", arabicFontHeaderprint));
             PdfPCell cell12 = new PdfPCell(new Paragraph("التوقيع :",arabicFontHeaderprint));
 
+            cell10.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
+            cell11.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
+            cell12.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
 //
 //            cell7.setBorder(Rectangle.NO_BORDER);
 //            cell8.setBorder(Rectangle.NO_BORDER);
@@ -297,6 +315,11 @@ public class PdfConverter {
             cell11.setBorder(Rectangle.NO_BORDER);
             cell12.setBorder(Rectangle.NO_BORDER);
 
+            table2.addCell(cell10);
+            table2.addCell(cell11);
+            table2.addCell(cell12);
+
+            doc.add(table2);
 
             Log.e("path44", "" + targetPdf);
             pdfFileName = path;

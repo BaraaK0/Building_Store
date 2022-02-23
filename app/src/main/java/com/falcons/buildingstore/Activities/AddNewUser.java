@@ -1,5 +1,6 @@
 package com.falcons.buildingstore.Activities;
 
+import static com.falcons.buildingstore.Activities.HomeActivity.vocher_Items;
 import static com.falcons.buildingstore.Activities.LoginActivity.CONO_PREF;
 import static com.falcons.buildingstore.Activities.LoginActivity.IP_PREF;
 import static com.falcons.buildingstore.Activities.LoginActivity.PORT_PREF;
@@ -33,6 +34,7 @@ import com.falcons.buildingstore.Utilities.GeneralMethod;
 import com.falcons.buildingstore.Database.Entities.User;
 import com.falcons.buildingstore.R;
 import com.falcons.buildingstore.Utilities.ImportData;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
@@ -56,6 +58,7 @@ public class AddNewUser extends AppCompatActivity {
     ImportData importData;
     private String ipAddress, port, coNo;
     private List<User> allUsers;
+    private BadgeDrawable badge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,6 +96,10 @@ public class AddNewUser extends AppCompatActivity {
 
         bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
+
+        badge = bottomNavigationView.getOrCreateBadge(R.id.action_cart);
+        badge.setVisible(true);
+        badge.setNumber(vocher_Items.size());
 
         bottomNavigationView.setSelectedItemId(R.id.action_add);
 
@@ -230,9 +237,6 @@ public class AddNewUser extends AppCompatActivity {
 
                     }
                 });
-
-                /*** TODO Refresh Users List ***/
-
 
 
             } else {

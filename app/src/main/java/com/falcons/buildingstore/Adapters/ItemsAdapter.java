@@ -1,7 +1,10 @@
 package com.falcons.buildingstore.Adapters;
 
 
+import static com.falcons.buildingstore.Activities.HomeActivity.badge;
+import static com.falcons.buildingstore.Activities.HomeActivity.item_count;
 import static com.falcons.buildingstore.Activities.HomeActivity.itemsRecycler;
+import static com.falcons.buildingstore.Activities.HomeActivity.vocher_Items;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -34,6 +37,7 @@ import com.falcons.buildingstore.Database.AppDatabase;
 import com.falcons.buildingstore.Database.Entities.Item;
 import com.falcons.buildingstore.Database.Entities.UserLogs;
 import com.falcons.buildingstore.R;
+import com.google.android.material.badge.BadgeDrawable;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -96,12 +100,15 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
         UserLogs userLogs = appDatabase.userLogsDao().getLastuserLogin();
 
-        int userPer = appDatabase.usersDao().getuserPer(userLogs.getUserName());
-        if (userPer == 0)
-            holder.Dis_Layout.setVisibility(View.GONE);
-        else
-            holder.Dis_Layout.setVisibility(View.VISIBLE);
+        try {
+            int userPer = appDatabase.usersDao().getuserPer(userLogs.getUserName());
+            if (userPer == 0)
+                holder.Dis_Layout.setVisibility(View.GONE);
+            else
+                holder.Dis_Layout.setVisibility(View.VISIBLE);
+        } catch (NullPointerException e) {
 
+        }
 
         if (!itemsList.get(currPosition).getImagePath().equals(""))
             Picasso.get().load(itemsList.get(currPosition).getImagePath()).fit().centerCrop().into(holder.itemImage);
@@ -164,10 +171,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                                 break;
 
 
-                                case DialogInterface.BUTTON_NEGATIVE:
-                                    //No button clicked
-                                    dialog.dismiss();
-                                    break;
+                            case DialogInterface.BUTTON_NEGATIVE:
+                                //No button clicked
+                                dialog.dismiss();
+                                break;
 
                         }
                     }
@@ -292,15 +299,22 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                 public void onClick(View view) {
                     if (!ITEMdiscount.getText().toString().equals("") &&
                             !ITEMqty.getText().toString().equals("") &&
-                    Integer.parseInt(ITEMqty.getText().toString())!=0
+                            Integer.parseInt(ITEMqty.getText().toString()) != 0
                     ) {
 
 
                         itemsList.get(position).setDiscount(Double.parseDouble(ITEMdiscount.getText().toString())/100);
                         itemsList.get(position).setQty(Double.parseDouble(ITEMqty.getText().toString()));
+                        itemsList.get(position).setAmount(itemsList.get(position).getQty() * itemsList.get(position).getPrice());
+                        itemsList.get(position).setTotalDiscVal((itemsList.get(position).price / itemsList.get(position).getDiscount()) * itemsList.get(position).getQty());
                         itemsList.get(position).setAmount(itemsList.get(position).getQty()*itemsList.get(position).getPrice());
 
 
+                        Log.e("vocher_Items=", vocher_Items.size() + "");
+                        if (vocher_Items.size() == 0) {
+                            vocher_Items.add(itemsList.get(position));
+                            item_count++;
+                            HomeActivity.itemcount.setText(item_count);
                         Log.e("vocher_Items=", HomeActivity.vocher_Items.size() + "");
                         if (HomeActivity.vocher_Items.size() == 0) {
                             HomeActivity.vocher_Items.add(itemsList.get(position));
@@ -312,6 +326,11 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                         } else {
                             if (!IsExistsInList(itemsList.get(position).getItemNCode())) // new item
                             {
+                                Log.e("case2vocher_Items=", vocher_Items.size() + "");
+                                vocher_Items.add(itemsList.get(position));
+                                vocher_Items.add(itemsList.get(position));
+                                item_count++;
+                                HomeActivity.itemcount.setText(item_count);
                                 Log.e("case2vocher_Items=", HomeActivity.vocher_Items.size() + "");
                                 HomeActivity.vocher_Items.add(itemsList.get(position));
 
@@ -323,10 +342,12 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                             } else // item already added
                             {
 
-                                Log.e("case3vocher_Items=", HomeActivity.vocher_Items.size() + "");
+                                Log.e("case3vocher_Items=", vocher_Items.size() + "");
 
                                 itemsList.get(index).setDiscount(Double.parseDouble(ITEMdiscount.getText().toString())/100);
                                 itemsList.get(index).setQty(Double.parseDouble(ITEMqty.getText().toString()));
+                                itemsList.get(index).setAmount(itemsList.get(index).getQty() * itemsList.get(index).getPrice());
+                                itemsList.get(index).setTotalDiscVal((itemsList.get(index).price / itemsList.get(index).getDiscount()) * itemsList.get(position).getQty());
                                 itemsList.get(index).setAmount(itemsList.get(index).getQty()*itemsList.get(index).getPrice());
                                 HomeActivity.item_count+=itemsList.get(position).getQty();
 
@@ -352,8 +373,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
             if (!holder.itemDiscEdt.getText().toString().equals("") &&
                     !holder.itemQtyEdt.getText().toString().equals("") &&
-                    Double.parseDouble(holder.itemQtyEdt.getText().toString())!=0
-            ){
+                    Double.parseDouble(holder.itemQtyEdt.getText().toString()) != 0
+            ) {
 
 
                 Log.e("vocher_Items=", HomeActivity.vocher_Items.size() + "");
@@ -362,6 +383,12 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                     itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()));
                     itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
 
+                Log.e("vocher_Items=", vocher_Items.size() + "");
+                if (vocher_Items.size() == 0) {
+                    vocher_Items.add(itemsList.get(position));
+                    item_count++;
+                    badge.setNumber(vocher_Items.size());
+                    HomeActivity.itemcount.setText(item_count + "");
                     HomeActivity.vocher_Items.add(itemsList.get(position));
                     //  HomeActivity.  FillrecyclerView_Items(context,HomeActivity. vocher_Items);
 
@@ -374,6 +401,11 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
                         Log.e("case2vocher_Items=", HomeActivity.vocher_Items.size() + "");
                         HomeActivity.vocher_Items.add(itemsList.get(position));
+                        Log.e("case2vocher_Items=", vocher_Items.size() + "");
+                        vocher_Items.add(itemsList.get(position));
+                        item_count++;
+                        badge.setNumber(vocher_Items.size());
+                        HomeActivity.itemcount.setText(item_count + "");
                         //      HomeActivity.voherItemAdapter.notifyItemInserted(HomeActivity.vocher_Items.size() - 1);
                     } else // item already added
                     {
@@ -383,6 +415,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                         itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()));
                         itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
                         HomeActivity.vocher_Items.add(itemsList.get(position));
+                        Log.e("case3vocher_Items=", vocher_Items.size() + "");
 
                         //   HomeActivity.voherItemAdapter.notifyItemChanged(index);
 
@@ -400,8 +433,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
     boolean IsExistsInList(String ItemNCode) {
         index = 0;
-        for (int i = 0; i < HomeActivity.vocher_Items.size(); i++)
-            if (HomeActivity.vocher_Items.get(i).getItemNCode().equals(ItemNCode)) {
+        for (int i = 0; i < vocher_Items.size(); i++)
+            if (vocher_Items.get(i).getItemNCode().equals(ItemNCode)) {
                 index = i;
                 HomeActivity.item_count-=itemsList.get(i).getQty();
                 return true;

@@ -212,7 +212,15 @@ public class ExportData {
         return addUserObj;
     }
 
-    public void addCustomer(List<CustomerInfo> customerList) {
+    public interface AddCustCallBack {
+
+        void onResponse(String response);
+
+        void onError(String error);
+
+    }
+
+    public void addCustomer(List<CustomerInfo> customerList, AddCustCallBack addCustCallBack) {
 
         SweetAlertDialog pDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
 
@@ -229,12 +237,13 @@ public class ExportData {
             public void onResponse(String response) {
 
                 pDialog.dismissWithAnimation();
+                addCustCallBack.onResponse(response);
                 Log.e("AddCustomer_Response", response);
                 if (response.contains("Saved Successfully")) {
 
                     appDatabase.customersDao().setPosted();
 
-                    showSweetDialog(context, 1, context.getString(R.string.savedSuccsesfule), null);
+//                    showSweetDialog(context, 1, context.getString(R.string.savedSuccsesfule), null);
 
                 } else if (response.contains("server error")) {
 
@@ -255,6 +264,7 @@ public class ExportData {
             @Override
             public void onErrorResponse(VolleyError error) {
                 pDialog.dismissWithAnimation();
+                addCustCallBack.onError(error.getMessage()+"");
                 showSweetDialog(context, 0, "Connection Failed", "");
 
                 VolleyLog.e("Error: ", error.getMessage()+"");

@@ -37,11 +37,10 @@ public class OrderReportAdapter extends RecyclerView.Adapter<OrderReportAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Log.e("Tax==",list.get(position).getTax()+"");
-   holder.tax.setText(list.get(position).getTax()+"");
-        holder.discount.setText(list.get(position).getDiscount()+"");
-        holder.price.setText(list.get(position).getPrice() +"");
-        holder.qty.setText(list.get(position).getQty()+"");
+        holder.tax.setText(list.get(position).getTax() + "");
+        holder.discount.setText(list.get(position).getDiscount() + "");
+        holder.price.setText(list.get(position).getPrice() + "");
+        holder.qty.setText(list.get(position).getQty() + "");
         holder.item_name.setText(list.get(position).getItemName());
         holder.itemNCode.setText(list.get(position).getItemNo());
 
@@ -52,17 +51,18 @@ public class OrderReportAdapter extends RecyclerView.Adapter<OrderReportAdapter.
         return list.size();
     }
 
-    public static class ViewHolder  extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
-   TextView tax,discount,price,qty,item_name,itemNCode;
+        TextView tax, discount, price, qty, item_name, itemNCode;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-              tax=itemView.findViewById(R.id.taxx);
-              discount=itemView.findViewById(R.id.discount);
-              price=itemView.findViewById(R.id.price);
-              qty=itemView.findViewById(R.id.qty);
-              item_name=itemView.findViewById(R.id.item_name);
-              itemNCode=itemView.findViewById(R.id.itemNCode);
+            tax = itemView.findViewById(R.id.taxx);
+            discount = itemView.findViewById(R.id.discount);
+            price = itemView.findViewById(R.id.price);
+            qty = itemView.findViewById(R.id.qty);
+            item_name = itemView.findViewById(R.id.item_name);
+            itemNCode = itemView.findViewById(R.id.itemNCode);
         }
     }
 }

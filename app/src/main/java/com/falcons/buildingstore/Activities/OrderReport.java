@@ -101,6 +101,16 @@ public class OrderReport extends AppCompatActivity {
 
                Log.e("Rep_order", "Rep_order");
 
+                if(checkPermission()) {
+                    exportToPdf();
+                } else {
+
+                    Log.v("", "Permission is revoked");
+                    ActivityCompat.requestPermissions(
+                            OrderReport.this,
+                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
+                            1);
+                }
 
                  /*  if (Build.VERSION.SDK_INT >= 23) {
                        if (OrderReport.this.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
@@ -188,6 +198,13 @@ public class OrderReport extends AppCompatActivity {
         print_order=findViewById(R.id.  print_order);
         Bundle bundle = getIntent().getExtras();
         VohNu = bundle.getInt("VOHNO");
+        Log.e("VOHNO==", VohNu + "");
+        appDatabase = AppDatabase.getInstanceDatabase(OrderReport.this);
+        ordersDetalisRec = findViewById(R.id.ordersDetalisRec);
+        total = findViewById(R.id.total);
+        ORDERNO = findViewById(R.id.ORDERNO);
+        Cus_name = findViewById(R.id.Cus_name);
+        date = findViewById(R.id.date);
         Log.e("VOHNO==",VohNu+"");
         appDatabase=AppDatabase.getInstanceDatabase(OrderReport.this);
         ordersDetalisRec=findViewById(R.id.   ordersDetalisRec);
@@ -198,23 +215,24 @@ public class OrderReport extends AppCompatActivity {
 
 
     }
-  double CalculateTotal(){
-        double total=0;
-        for (int i=0;i<ordersDetails.size();i++)
-            total+=   ordersDetails.get(i).getPrice();
+
+    double CalculateTotal() {
+        double total = 0;
+        for (int i = 0; i < ordersDetails.size(); i++)
+            total += ordersDetails.get(i).getPrice();
         return total;
-  }
+    }
 
-    public  void exportToPdf( ){
+    public void exportToPdf() {
 
 
-        PdfConverter pdf =new PdfConverter(OrderReport.this);
-        pdf.exportListToPdf(    ordersDetails,"Vocher","",1);
+        PdfConverter pdf = new PdfConverter(OrderReport.this);
+        pdf.exportListToPdf(ordersDetails, "Vocher", "", 1);
 
 
     }
-    public void createPDF()
-    {
+
+    public void createPDF() {
 //     //   Document
 //        com.itextpdf.layout.Document doc = new com.itextpdf.layout.Document();
 //
@@ -289,10 +307,10 @@ public class OrderReport extends AppCompatActivity {
     private void createPdf() throws FileNotFoundException {
         String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).toString();
         File file = new File(pdfPath, "Order_Report.pdf");
-        Log.e("createPdf",  "createPdf");
+        Log.e("createPdf", "createPdf");
         OutputStream outputStream = new FileOutputStream(file);
         PdfWriter pdfWriter = new PdfWriter(file);
-        Log.e("pdfWriter",  "pdfWriter"+pdfWriter.getOutputStream());
+        Log.e("pdfWriter", "pdfWriter" + pdfWriter.getOutputStream());
         PdfDocument pdfDocument = new PdfDocument(pdfWriter);
 
         Document document = new Document(pdfDocument);
@@ -312,11 +330,11 @@ public class OrderReport extends AppCompatActivity {
 
 //
         Paragraph paragraph1 = new Paragraph("Transfers Report").setBold();
-       Paragraph paragraph2 = new Paragraph("Date: " +generalMethod.getCurentTimeDate(1));
+        Paragraph paragraph2 = new Paragraph("Date: " + generalMethod.getCurentTimeDate(1));
 
-      document.add(image)
-               .add(paragraph1)
-               .add(paragraph2);
+        document.add(image)
+                .add(paragraph1)
+                .add(paragraph2);
 //                .add(paragraph3)
 //                .add(table);
 //
@@ -324,6 +342,7 @@ public class OrderReport extends AppCompatActivity {
 //
         Toast.makeText(this, "PDF Created", Toast.LENGTH_LONG).show();
     }
+
     private boolean checkPermission() {
         // checking of permissions.
         int permission1 = ContextCompat.checkSelfPermission(getApplicationContext(), WRITE_EXTERNAL_STORAGE);
@@ -338,6 +357,7 @@ public class OrderReport extends AppCompatActivity {
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0) {
 

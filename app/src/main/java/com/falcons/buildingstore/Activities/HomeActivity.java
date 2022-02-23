@@ -38,6 +38,7 @@ import com.falcons.buildingstore.Database.Entities.CustomerInfo;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.falcons.buildingstore.Database.Entities.Item;
@@ -46,6 +47,7 @@ import com.falcons.buildingstore.Database.Entities.UserLogs;
 import com.falcons.buildingstore.R;
 import com.falcons.buildingstore.Utilities.ExportData;
 import com.falcons.buildingstore.Utilities.ImportData;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.textfield.TextInputLayout;
@@ -83,6 +85,7 @@ public class HomeActivity extends AppCompatActivity {
     public static int item_count = 0;
     public static ArrayList<Item> itemList;
     public static ArrayList<Item> vocher_Items = new ArrayList<>();
+    public static BadgeDrawable badge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -265,6 +268,10 @@ public class HomeActivity extends AppCompatActivity {
         allItemList_rv = new ArrayList<>();
         search_itemList = new ArrayList<>();
 
+        badge = bottom_navigation.getOrCreateBadge(R.id.action_cart);
+        badge.setVisible(true);
+        badge.setNumber(vocher_Items.size());
+
         SharedPreferences sharedPref = getSharedPreferences(SETTINGS_PREFERENCES, MODE_PRIVATE);
         ipAddress = sharedPref.getString(IP_PREF, "");
         ipPort = sharedPref.getString(PORT_PREF, "");
@@ -275,5 +282,17 @@ public class HomeActivity extends AppCompatActivity {
 
     }
 
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_Camera_Barcode) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Intent i = new Intent(HomeActivity.this, ScanActivity.class);
+                i.putExtra("key", "1");
+                startActivity(i);
+            } else {
+                Toast.makeText(this, "Camera permission denied !", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
 }

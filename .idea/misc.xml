@@ -3,15 +3,29 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable/ic_baseline_arrow_drop_down_circle_24.xml" value="0.164" />
         <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable/ic_lock.xml" value="0.2203125" />
         <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable/ic_login_bk.xml" value="0.2203125" />
         <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable/ic_settings_35.xml" value="0.2203125" />
         <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable/login_button_bk.xml" value="0.2203125" />
         <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable/login_button_bk2.xml" value="0.2203125" />
         <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/drawable/login_shape_bk.xml" value="0.2203125" />
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/activity_home.xml" value="0.22" />
         <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/activity_login.xml" value="0.25" />
         <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/activity_order_report.xml" value="0.25" />
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/activity_show_previous_order.xml" value="0.25" />
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/bottom_nav_bar.xml" value="0.25" />
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/catgspinnerrow.xml" value="0.1814814814814815" />
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/customer_card.xml" value="0.1814814814814815" />
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/customers_dialog.xml" value="0.1814814814814815" />
         <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/layout_login.xml" value="0.25" />
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/order_report_row.xml" value="0.1814814814814815" />
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/orders_basket.xml" value="0.33" />
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/pre_order_row.xml" value="0.25" />
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/recyclerview_items_row.xml" value="0.33" />
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/salesdailog.xml" value="0.33" />
+        <entry key="..\:/Android_Studio_Projects/BuildingStore/app/src/main/res/layout/splashfile.xml" value="0.1814814814814815" />
         <entry key="..\:/Users/FALCONS_1/AppData/Local/Android/Sdk/platforms/android-31/data/res/layout/simple_spinner_item.xml" value="0.19701086956521738" />
         <entry key="..\:/Users/FALCONS_1/Desktop/ay/aya/New folder (6)/New folder (6)/New folder/New folder/AYA/Building_Store/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2935185185185185" />
         <entry key="..\:/Users/FALCONS_1/Desktop/ay/aya/New folder (6)/New folder (6)/New folder/New folder/AYA/Building_Store/app/src/main/res/drawable/back_border_edit.xml" value="0.11388888888888889" />

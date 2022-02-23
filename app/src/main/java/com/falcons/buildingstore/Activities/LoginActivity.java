@@ -260,7 +260,12 @@ public class LoginActivity extends AppCompatActivity {
 
         } else {
 
+            Toast.makeText(this, "No Saved Users Found !", Toast.LENGTH_SHORT).show();
             loginBtn.revertAnimation();
+
+            /** TODO Delete This **/
+            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            startActivity(intent);
 
         }
 
@@ -454,7 +459,7 @@ public class LoginActivity extends AppCompatActivity {
                                                 @Override
                                                 public void onResponse(JSONArray response) {
 
-                                                    GeneralMethod.showSweetDialog(LoginActivity.this, 1, "All Info Saved", null);
+                                                    GeneralMethod.showSweetDialog(LoginActivity.this, 1, "Saved", null);
 
                                                     for (int i = 0; i < response.length(); i++) {
 
@@ -476,18 +481,62 @@ public class LoginActivity extends AppCompatActivity {
 
                                                     appDatabase.usersDao().addAll(allUsers);
 
+
+
                                                 }
 
                                                 @Override
                                                 public void onError(String error) {
 
+
+
                                                 }
                                             }, ipAddress, port, coNo);
+
 
                                         }
 
                                         @Override
                                         public void onError(String error) {
+
+                                            importData.getAllUsers(new ImportData.GetUsersCallBack() {
+                                                @Override
+                                                public void onResponse(JSONArray response) {
+
+                                                    GeneralMethod.showSweetDialog(LoginActivity.this, 1, "Saved", null);
+
+                                                    for (int i = 0; i < response.length(); i++) {
+
+                                                        try {
+
+                                                            allUsers.add(new User(
+                                                                    response.getJSONObject(i).getString("SALESNO"),
+                                                                    response.getJSONObject(i).getString("ACCNAME"),
+                                                                    response.getJSONObject(i).getString("USER_PASSWORD"),
+                                                                    Integer.parseInt(response.getJSONObject(i).getString("USERTYPE")),
+                                                                    Integer.parseInt(response.getJSONObject(i).getString("DISCOUNTPER")),
+                                                                    1));
+
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+
+                                                    }
+
+                                                    appDatabase.usersDao().addAll(allUsers);
+
+
+
+                                                }
+
+                                                @Override
+                                                public void onError(String error) {
+
+
+
+                                                }
+                                            }, ipAddress, port, coNo);
+
 
                                         }
                                     }, ipAddress, port, coNo);
@@ -496,6 +545,114 @@ public class LoginActivity extends AppCompatActivity {
 
                                 @Override
                                 public void onError(String error) {
+
+                                    importData.getAllCustomers(new ImportData.GetCustomersCallBack() {
+                                        @Override
+                                        public void onResponse(JSONArray response) {
+
+                                            for (int i = 0; i < response.length(); i++) {
+
+                                                try {
+
+                                                    allCustomers.add(new CustomerInfo(
+                                                            response.getJSONObject(i).getString("CUSTID"),
+                                                            response.getJSONObject(i).getString("CUSTNAME"),
+                                                            response.getJSONObject(i).getString("MOBILE"),
+                                                            1));
+
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+
+                                            }
+
+                                            appDatabase.customersDao().addAll(allCustomers);
+
+                                            importData.getAllUsers(new ImportData.GetUsersCallBack() {
+                                                @Override
+                                                public void onResponse(JSONArray response) {
+
+                                                    GeneralMethod.showSweetDialog(LoginActivity.this, 1, "Saved", null);
+
+                                                    for (int i = 0; i < response.length(); i++) {
+
+                                                        try {
+
+                                                            allUsers.add(new User(
+                                                                    response.getJSONObject(i).getString("SALESNO"),
+                                                                    response.getJSONObject(i).getString("ACCNAME"),
+                                                                    response.getJSONObject(i).getString("USER_PASSWORD"),
+                                                                    Integer.parseInt(response.getJSONObject(i).getString("USERTYPE")),
+                                                                    Integer.parseInt(response.getJSONObject(i).getString("DISCOUNTPER")),
+                                                                    1));
+
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+
+                                                    }
+
+                                                    appDatabase.usersDao().addAll(allUsers);
+
+
+
+                                                }
+
+                                                @Override
+                                                public void onError(String error) {
+
+
+
+                                                }
+                                            }, ipAddress, port, coNo);
+
+
+                                        }
+
+                                        @Override
+                                        public void onError(String error) {
+
+                                            importData.getAllUsers(new ImportData.GetUsersCallBack() {
+                                                @Override
+                                                public void onResponse(JSONArray response) {
+
+                                                    GeneralMethod.showSweetDialog(LoginActivity.this, 1, "Saved", null);
+
+                                                    for (int i = 0; i < response.length(); i++) {
+
+                                                        try {
+
+                                                            allUsers.add(new User(
+                                                                    response.getJSONObject(i).getString("SALESNO"),
+                                                                    response.getJSONObject(i).getString("ACCNAME"),
+                                                                    response.getJSONObject(i).getString("USER_PASSWORD"),
+                                                                    Integer.parseInt(response.getJSONObject(i).getString("USERTYPE")),
+                                                                    Integer.parseInt(response.getJSONObject(i).getString("DISCOUNTPER")),
+                                                                    1));
+
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+
+                                                    }
+
+                                                    appDatabase.usersDao().addAll(allUsers);
+
+
+
+                                                }
+
+                                                @Override
+                                                public void onError(String error) {
+
+
+
+                                                }
+                                            }, ipAddress, port, coNo);
+
+
+                                        }
+                                    }, ipAddress, port, coNo);
 
 
                                 }

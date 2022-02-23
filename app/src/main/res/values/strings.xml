@@ -47,7 +47,7 @@
     <string name="box">Box</string>
     <string name="meter">Meter</string>
     <string name="show">Show</string>
-    <string name="VoHNO">OrderNO</string>
+    <string name="VoHNO">Order No.</string>
     <string name="addnewuser">Add New User</string>
     <string name="addnewcustomer">Add New Customer</string>
     <string name="invaledZero">Invaled Zero</string>
