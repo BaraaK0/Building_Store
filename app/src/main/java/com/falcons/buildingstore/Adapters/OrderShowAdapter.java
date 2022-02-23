@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -55,14 +55,18 @@ public class OrderShowAdapter extends RecyclerView.Adapter<OrderShowAdapter.View
         holder.show.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //Create the bundle
-                Bundle bundle = new Bundle();
+                try {
+                    //Create the bundle
+                    Bundle bundle = new Bundle();
 
-                bundle.putInt("VOHNO", orderMasters.get(position).getVhfNo());
+                    bundle.putInt("VOHNO", orderMasters.get(position).getVhfNo());
 
-                Intent intent = new Intent(context, OrderReport.class);
-                intent.putExtras(bundle);
-                context.startActivity(intent);
+                    Intent intent = new Intent(context, OrderReport.class);
+                    intent.putExtras(bundle);
+                    context.startActivity(intent);
+                }catch (Exception exception){
+                    Log.e("exception:=",exception.getMessage());
+                }
             }
         });
     }

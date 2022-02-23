@@ -21,6 +21,7 @@ public class CustomerInfo {
     @ColumnInfo(name = "Serial_No")
     private int serial;
 
+
     @ColumnInfo(name = "Customer_ID")
     private String customerId;
 
