@@ -78,8 +78,8 @@ dependencies {
 //    implementation files('libs/jxl-2.6.12.jar')
 
     implementation 'com.itextpdf:itext7-core:7.1.11'
-    implementation 'com.itextpdf:itextg:5.5.10'
 
+   // implementation 'com.itextpdf:itextg:5.5.10'
 
 
 }

@@ -255,126 +255,14 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         }
     }
 
-    public void openSalesDailog(int position) {
-        {
 
-            final Dialog dialog = new Dialog(context);
-            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-            dialog.setCancelable(false);
-            dialog.setContentView(R.layout.salesdailog);
-            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-            lp.copyFrom(dialog.getWindow().getAttributes());
-            lp.gravity = Gravity.CENTER;
-            dialog.getWindow().setAttributes(lp);
-            dialog.show();
-            TextView save = dialog.findViewById(R.id.save);
-            TextView cancelBtn = dialog.findViewById(R.id.cancelBtn);
-            TextView itemname = dialog.findViewById(R.id.itemname);
-            TextView itemno = dialog.findViewById(R.id.itemno);
-            TextView aviqty = dialog.findViewById(R.id.aviqty);
-            aviqty.setText(itemsList.get(position).getAviqty() + "");
-            itemname.setText(itemsList.get(position).getItemName());
-            itemno.setText(itemsList.get(position).getItemNCode());
-            EditText ITEMqty = dialog.findViewById(R.id.ITEMqty);
-            EditText ITEMdiscount = dialog.findViewById(R.id.ITEMdiscount);
-            if (IsExistsInList(itemsList.get(position).getItemNCode())) {
-
-                ITEMdiscount.setText(itemsList.get(index).getDiscount() + "");
-                ITEMqty.setText(itemsList.get(index).getQty() + "");
-            }
-
-            if (!ITEMqty.getText().toString().equals("")
-                    && !ITEMdiscount.getText().toString().equals(""))
-                save.setEnabled(false);
-            else save.setEnabled(true);
-
-            cancelBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    dialog.dismiss();
-                }
-            });
-            save.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (!ITEMdiscount.getText().toString().equals("") &&
-                            !ITEMqty.getText().toString().equals("") &&
-                            Integer.parseInt(ITEMqty.getText().toString()) != 0
-                    ) {
-
-
-                        itemsList.get(position).setDiscount(Double.parseDouble(ITEMdiscount.getText().toString())/100);
-                        itemsList.get(position).setQty(Double.parseDouble(ITEMqty.getText().toString()));
-                        itemsList.get(position).setAmount(itemsList.get(position).getQty() * itemsList.get(position).getPrice());
-                        itemsList.get(position).setTotalDiscVal((itemsList.get(position).price / itemsList.get(position).getDiscount()) * itemsList.get(position).getQty());
-                        itemsList.get(position).setAmount(itemsList.get(position).getQty()*itemsList.get(position).getPrice());
-
-
-                        Log.e("vocher_Items=", vocher_Items.size() + "");
-                        if (vocher_Items.size() == 0) {
-                            vocher_Items.add(itemsList.get(position));
-                            item_count++;
-                            HomeActivity.itemcount.setText(item_count);
-                        Log.e("vocher_Items=", HomeActivity.vocher_Items.size() + "");
-                        if (HomeActivity.vocher_Items.size() == 0) {
-                            HomeActivity.vocher_Items.add(itemsList.get(position));
-                            HomeActivity.item_count+=itemsList.get(position).getQty();
-                            HomeActivity.itemcount.setText(HomeActivity.item_count);
-
-                            //  HomeActivity.  FillrecyclerView_Items(context,HomeActivity. vocher_Items);
-
-                        } else {
-                            if (!IsExistsInList(itemsList.get(position).getItemNCode())) // new item
-                            {
-                                Log.e("case2vocher_Items=", vocher_Items.size() + "");
-                                vocher_Items.add(itemsList.get(position));
-                                vocher_Items.add(itemsList.get(position));
-                                item_count++;
-                                HomeActivity.itemcount.setText(item_count);
-                                Log.e("case2vocher_Items=", HomeActivity.vocher_Items.size() + "");
-                                HomeActivity.vocher_Items.add(itemsList.get(position));
-
-                                HomeActivity.item_count+=itemsList.get(position).getQty();
-
-                                HomeActivity.itemcount.setText(HomeActivity.item_count);
-
-                                //      HomeActivity.voherItemAdapter.notifyItemInserted(HomeActivity.vocher_Items.size() - 1);
-                            } else // item already added
-                            {
-
-                                Log.e("case3vocher_Items=", vocher_Items.size() + "");
-
-                                itemsList.get(index).setDiscount(Double.parseDouble(ITEMdiscount.getText().toString())/100);
-                                itemsList.get(index).setQty(Double.parseDouble(ITEMqty.getText().toString()));
-                                itemsList.get(index).setAmount(itemsList.get(index).getQty() * itemsList.get(index).getPrice());
-                                itemsList.get(index).setTotalDiscVal((itemsList.get(index).price / itemsList.get(index).getDiscount()) * itemsList.get(position).getQty());
-                                itemsList.get(index).setAmount(itemsList.get(index).getQty()*itemsList.get(index).getPrice());
-                                HomeActivity.item_count+=itemsList.get(position).getQty();
-
-
-                                //   HomeActivity.voherItemAdapter.notifyItemChanged(index);
-
-
-                            }
-
-                        }
-                        dialog.dismiss();
-
-                    }
-
-                }
-            });
-
-        }
-    }
 
     public void addQTYandDis(int position, ViewHolder holder) {
         {
 
             if (!holder.itemDiscEdt.getText().toString().equals("") &&
                     !holder.itemQtyEdt.getText().toString().equals("") &&
-                    Double.parseDouble(holder.itemQtyEdt.getText().toString()) != 0
-            ) {
+                    Double.parseDouble(holder.itemQtyEdt.getText().toString()) != 0) {
 
 
                 Log.e("vocher_Items=", HomeActivity.vocher_Items.size() + "");
@@ -383,51 +271,52 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                     itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()));
                     itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
 
-                Log.e("vocher_Items=", vocher_Items.size() + "");
-                if (vocher_Items.size() == 0) {
-                    vocher_Items.add(itemsList.get(position));
-                    item_count++;
-                    badge.setNumber(vocher_Items.size());
-                    HomeActivity.itemcount.setText(item_count + "");
-                    HomeActivity.vocher_Items.add(itemsList.get(position));
-                    //  HomeActivity.  FillrecyclerView_Items(context,HomeActivity. vocher_Items);
-
-                } else {
-                    if (!IsExistsInList(itemsList.get(position).getItemNCode())) // new item
-                    {
-
-                        itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()));
-                        itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
-
-                        Log.e("case2vocher_Items=", HomeActivity.vocher_Items.size() + "");
-                        HomeActivity.vocher_Items.add(itemsList.get(position));
-                        Log.e("case2vocher_Items=", vocher_Items.size() + "");
+                    Log.e("vocher_Items=", vocher_Items.size() + "");
+                    if (vocher_Items.size() == 0) {
                         vocher_Items.add(itemsList.get(position));
                         item_count++;
                         badge.setNumber(vocher_Items.size());
                         HomeActivity.itemcount.setText(item_count + "");
-                        //      HomeActivity.voherItemAdapter.notifyItemInserted(HomeActivity.vocher_Items.size() - 1);
-                    } else // item already added
-                    {
-
-                        Log.e("case3vocher_Items=", HomeActivity.vocher_Items.size() + "");
-                        HomeActivity.vocher_Items.remove(index);
-                        itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()));
-                        itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
                         HomeActivity.vocher_Items.add(itemsList.get(position));
-                        Log.e("case3vocher_Items=", vocher_Items.size() + "");
+                        //  HomeActivity.  FillrecyclerView_Items(context,HomeActivity. vocher_Items);
 
-                        //   HomeActivity.voherItemAdapter.notifyItemChanged(index);
+                    } else {
+                        if (!IsExistsInList(itemsList.get(position).getItemNCode())) // new item
+                        {
 
+                            itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()));
+                            itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
+
+                            Log.e("case2vocher_Items=", HomeActivity.vocher_Items.size() + "");
+                            HomeActivity.vocher_Items.add(itemsList.get(position));
+                            Log.e("case2vocher_Items=", vocher_Items.size() + "");
+                            vocher_Items.add(itemsList.get(position));
+                            item_count++;
+                            badge.setNumber(vocher_Items.size());
+                            HomeActivity.itemcount.setText(item_count + "");
+                            //      HomeActivity.voherItemAdapter.notifyItemInserted(HomeActivity.vocher_Items.size() - 1);
+                        } else // item already added
+                        {
+
+                            Log.e("case3vocher_Items=", HomeActivity.vocher_Items.size() + "");
+                            HomeActivity.vocher_Items.remove(index);
+                            itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()));
+                            itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
+                            HomeActivity.vocher_Items.add(itemsList.get(position));
+                            Log.e("case3vocher_Items=", vocher_Items.size() + "");
+
+                            //   HomeActivity.voherItemAdapter.notifyItemChanged(index);
+
+
+                        }
 
                     }
 
-                }
-
-            } else
-                holder.itemQtyEdt.setError(context.getResources().getString(R.string.Empty));
+                } else
+                    holder.itemQtyEdt.setError(context.getResources().getString(R.string.Empty));
 
 
+            }
         }
     }
 

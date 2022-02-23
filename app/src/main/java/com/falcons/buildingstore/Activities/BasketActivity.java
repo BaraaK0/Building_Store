@@ -77,7 +77,7 @@ public class BasketActivity extends AppCompatActivity {
 
         customerTv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long rowId) {
-                Cus_selection  = (String)parent.getItemAtPosition(position);
+                Cus_selection = (String) parent.getItemAtPosition(position);
                 //TODO Do something with the selected text
             }
         });
@@ -102,85 +102,82 @@ public class BasketActivity extends AppCompatActivity {
         orderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(vocher_Items.size()!=0) {
+                if (vocher_Items.size() != 0) {
                     SaveMasterVocher(1);
                     SaveDetialsVocher(1);
                     generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
-                }
-                else
-                {
+                } else {
                     generalMethod.showSweetDialog(BasketActivity.this, 3, getResources().getString(R.string.fillbasket), "");
-                String selectedCustomer = customerTv.getText().toString().trim();
+                    String selectedCustomer = customerTv.getText().toString().trim();
 
 
-                if (HomeActivity.vocher_Items.size() != 0) {
+                    if (HomeActivity.vocher_Items.size() != 0) {
 
-                    if (customerNames.contains(selectedCustomer) && !selectedCustomer.equals("")) {
-                      try {
-                          SaveDetialsVocher(1);
-                          SaveMasterVocher(1);
+                        if (customerNames.contains(selectedCustomer) && !selectedCustomer.equals("")) {
+                            try {
+                                SaveDetialsVocher(1);
+                                SaveMasterVocher(1);
 
-                      }catch (Exception exception)
-                      {
-                          Log.e("exception==",exception.getMessage());
+                            } catch (Exception exception) {
+                                Log.e("exception==", exception.getMessage());
 
-                      }
+                            }
 
-                        HomeActivity.item_count=0;
-                        generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
-                    }else {
+                            HomeActivity.item_count = 0;
+                            generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
+                        } else {
 
-                        customer_textInput.setError("*");
+                            customer_textInput.setError("*");
+
+                        }
+
+
+                    } else {
+                        generalMethod.showSweetDialog(BasketActivity.this, 3, getResources().getString(R.string.fillbasket), "");
 
                     }
 
-
-
-                } else {
-                    generalMethod.showSweetDialog(BasketActivity.this, 3, getResources().getString(R.string.fillbasket), "");
-
                 }
-
             }
-
         });
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (vocher_Items.size() != 0) {
-                    CalculateTax(1, vocher_Items);
+
                     SaveMasterVocher(2);
                     SaveDetialsVocher(2);
                     generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
                 } else {
                     generalMethod.showSweetDialog(BasketActivity.this, 3, getResources().getString(R.string.fillbasket), "");
                     String selectedCustomer = customerTv.getText().toString().trim();
-                String selectedCustomer = customerTv.getText().toString().trim();
 
 
-                if (HomeActivity.vocher_Items.size() != 0) {
 
-                    if (customerNames.contains(selectedCustomer) && !selectedCustomer.equals("")) {
+                    if (HomeActivity.vocher_Items.size() != 0) {
 
-                        SaveMasterVocher(2);
-                        SaveDetialsVocher(2);
-                        HomeActivity.item_count=0;
-                        generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
-                    }else {
+                        if (customerNames.contains(selectedCustomer) && !selectedCustomer.equals("")) {
 
-                        customer_textInput.setError("*");
+                            SaveMasterVocher(2);
+                            SaveDetialsVocher(2);
+                            HomeActivity.item_count = 0;
+                            generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
+                        } else {
+
+                            customer_textInput.setError("*");
+
+                        }
+
+
+                    } else {
+                        generalMethod.showSweetDialog(BasketActivity.this, 3, getResources().getString(R.string.fillbasket), "");
 
                     }
-
-
-
-                } else {
-                    generalMethod.showSweetDialog(BasketActivity.this, 3, getResources().getString(R.string.fillbasket), "");
-
                 }
+            }
 
-            }   });
+        });
 
 
 
