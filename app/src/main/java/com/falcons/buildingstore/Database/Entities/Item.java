@@ -38,7 +38,7 @@ public class Item {
     private String itemKind;
 
     @ColumnInfo(name = "Tax")
-    private String tax;
+    private double tax;
 
     @ColumnInfo(name = "Qty")
     public double qty;
@@ -52,18 +52,7 @@ public class Item {
     @ColumnInfo(name = "taxValue")
     private double taxValue;
 
-    @ColumnInfo(name = "totalDiscVal")
-    private double totalDiscVal;
 
-
-
-    public double getTotalDiscVal() {
-        return totalDiscVal;
-    }
-
-    public void setTotalDiscVal(double totalDiscVal) {
-        this.totalDiscVal = totalDiscVal;
-    }
 
     public double getTaxPercent() {
         return taxPercent;
@@ -94,7 +83,7 @@ public class Item {
 
     public String area;
 
-    public Item(int id, String itemName, String itemOCode, String itemNCode, double aviqty, double price, String unit, String imagePath, String itemKind, String tax, double qty, double discount, String area) {
+    public Item(int id, String itemName, String itemOCode, String itemNCode, double aviqty, double price, String unit, String imagePath, String itemKind,  double qty, double discount, String area) {
         this.id = id;
         this.itemName = itemName;
         this.itemOCode = itemOCode;
@@ -104,7 +93,7 @@ public class Item {
         this.unit = unit;
         this.imagePath = imagePath;
         this.itemKind = itemKind;
-        this.tax = tax;
+
         this.qty = qty;
         Discount = discount;
         this.area = area;
@@ -207,11 +196,11 @@ public class Item {
         this.itemKind = itemKind;
     }
 
-    public String getTax() {
+    public double getTax() {
         return tax;
     }
 
-    public void setTax(String tax) {
+    public void setTax(double tax) {
         this.tax = tax;
     }
 

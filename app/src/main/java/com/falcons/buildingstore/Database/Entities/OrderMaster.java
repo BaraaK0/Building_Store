@@ -27,7 +27,7 @@ public class OrderMaster {
     private double discount;
 
     @ColumnInfo(name = "Tax")
-    private String tax;
+    private double tax;
 
     @ColumnInfo(name = "TotalQty")
     private double TotalQty;
@@ -49,7 +49,7 @@ public class OrderMaster {
     @ColumnInfo(name = "UserNo")
     private String UserNo;
 
-    @ColumnInfo(name = "NetTotal")
+    @ColumnInfo(name = "NetTotal",defaultValue = "0")
     private double NetTotal;
 
     @ColumnInfo(name = "voucherDiscount")
@@ -147,11 +147,11 @@ public class OrderMaster {
         this.discount = discount;
     }
 
-    public String getTax() {
+    public double getTax() {
         return tax;
     }
 
-    public void setTax(String tax) {
+    public void setTax(double tax) {
         this.tax = tax;
     }
 
@@ -181,12 +181,12 @@ public class OrderMaster {
         //      "SALESMANNO":"5","CUSTOMERNO":"123456","VOUCHERDISCOUNT":"50",
         //    "VOUCHERDISCOUNTPERCENT":"10","NOTES":"AAAAAA","CACR":"1","ISPOSTED":"0","PAYMETHOD":"1","NETSALES":"150.720"}]}
         try {
-            obj.put("COMAPNYNO", "");
+            obj.put("COMAPNYNO", "295");
             obj.put("VOUCHERNO", vhfNo);
             obj.put("VOUCHERTYPE", 508);
 
             obj.put("VOUCHERDATE", date);
-            obj.put("SALESMANNO", 1);
+            obj.put("SALESMANNO", UserNo);
             obj.put("VOUCHERDISCOUNT", discount);
             obj.put("VOUCHERDISCOUNTPERCENT", discount);
 

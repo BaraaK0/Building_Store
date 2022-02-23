@@ -25,7 +25,6 @@
             android:layout_height="match_parent"
             android:textColor="@color/primaryTextColor"
             android:padding="3dp"
-            android:text="Ayah"
             android:textSize="18sp"
             android:id="@+id/cusNO"
             />

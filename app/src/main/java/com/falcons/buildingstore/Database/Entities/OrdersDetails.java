@@ -11,8 +11,11 @@ import org.json.JSONObject;
 
 @Entity(tableName = "Orders_Details")
 public class OrdersDetails {
-    @PrimaryKey
-    @ColumnInfo(name = "VHFNO")
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "Serial")
+    private int  Serial;
+
+    @ColumnInfo(name = "vhfNo")
     private int vhfNo;
 
     @ColumnInfo(name = "Date")
@@ -34,11 +37,14 @@ public class OrdersDetails {
     private double discount;
 
     @ColumnInfo(name = "Tax")
-    private String tax;
+    private double tax;
 
 
     @ColumnInfo(name = "Total")
     private double total;
+
+    @ColumnInfo(name = "Subtotal")
+    private double Subtotal;
 
     @ColumnInfo(name = "Price")
     private double price;
@@ -63,6 +69,39 @@ public class OrdersDetails {
 
     @ColumnInfo(name = "totalDiscVal")
     private double totalDiscVal;
+
+    @ColumnInfo(name = "Item_Discount",defaultValue = "0")
+    double Discount;
+    @ColumnInfo(name = "NetTotal",defaultValue = "0")
+    private double NetTotal;
+
+    public double getNetTotal() {
+        return NetTotal;
+    }
+
+    public void setNetTotal(double netTotal) {
+        NetTotal = netTotal;
+    }
+
+    public double getSubtotal() {
+        return Subtotal;
+    }
+
+    public void setSubtotal(double subtotal) {
+        Subtotal = subtotal;
+    }
+
+    public void setTotal(double total) {
+        this.total = total;
+    }
+
+    public int getSerial() {
+        return Serial;
+    }
+
+    public void setSerial(int serial) {
+        Serial = serial;
+    }
 
     public double getTotalDiscVal() {
         return totalDiscVal;
@@ -105,7 +144,7 @@ public class OrdersDetails {
     public OrdersDetails() {
     }
 
-    public OrdersDetails(int vhfNo, String date, String time, String itemNo, String itemName, double qty, double discount, String tax, double total, double price, int customerId, int unit, int isPosted) {
+    public OrdersDetails(int vhfNo, String date, String time, String itemNo, String itemName, double qty, double discount, double total, double price, int customerId, int unit, int isPosted) {
         this.vhfNo = vhfNo;
         this.date = date;
         this.time = time;
@@ -113,7 +152,7 @@ public class OrdersDetails {
         this.itemName = itemName;
         this.qty = qty;
         this.discount = discount;
-        this.tax = tax;
+
 
         this.total = total;
         this.price = price;
@@ -187,11 +226,11 @@ public class OrdersDetails {
         this.discount = discount;
     }
 
-    public String getTax() {
+    public double getTax() {
         return tax;
     }
 
-    public void setTax(String tax) {
+    public void setTax(double tax) {
         this.tax = tax;
     }
 
@@ -201,9 +240,7 @@ public class OrdersDetails {
         return total;
     }
 
-    public void setTotal(double total) {
-        this.total = total;
-    }
+
 
     public double getPrice() {
         return price;
@@ -232,18 +269,18 @@ public class OrdersDetails {
         JSONObject obj = new JSONObject();
         try {
             obj.put("VOUCHERNO", vhfNo+"");
-            obj.put("VOUCHERTYPE", "");
+            obj.put("VOUCHERTYPE", "1");
             obj.put("ITEMNO", itemNo);
             obj.put("UNIT", Unit);
             obj.put("QTY", qty);
             obj.put("UNITPRICE", price);
-            obj.put("BONUS", "");
+            obj.put("BONUS", "1");
             obj.put("ITEMDISCOUNTVALUE", discount);
             obj.put("ITEMDISCOUNTPRC", discount);
             obj.put("VOUCHERDISCOUNT", discount);
-            obj.put("TAXVALUE", tax);
-            obj.put("TAXPERCENT", tax);
-            obj.put("COMAPNYNO", "");
+            obj.put("TAXVALUE", taxValue);
+            obj.put("TAXPERCENT", taxPercent);
+            obj.put("COMAPNYNO", "295");
             obj.put("ISPOSTED", "0");
             obj.put("VOUCHERYEAR", "2022");
             obj.put("ITEM_DESCRITION", "");
@@ -255,8 +292,8 @@ public class OrdersDetails {
 
           obj.put("WHICHUQTY", "0");
 
-            obj.put("ENTERQTY", "");
-            obj.put("ENTERPRICE", "");
+            obj.put("ENTERQTY", qty);
+            obj.put("ENTERPRICE", price);
             obj.put("UNITBARCODE", "");
             obj.put("CALCQTY", "");
             obj.put("ORGVHFNO", "");

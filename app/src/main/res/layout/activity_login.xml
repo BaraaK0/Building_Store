@@ -113,6 +113,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/unameEdt"
+                    android:text="baraa"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="text"
@@ -136,6 +137,7 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/passEdt"
+                    android:text="1234"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
@@ -155,6 +157,7 @@
                 android:layout_marginTop="50dp"
                 android:background="@drawable/bg_btn"
                 android:fontFamily="@font/alegreya_sans_medium"
+                android:gravity="center"
                 android:letterSpacing="0.08"
                 android:padding="15dp"
                 android:text="@string/loginTitle"
@@ -163,8 +166,7 @@
                 app:initialCornerAngle="27dp"
                 app:spinning_bar_color="@color/white"
                 app:spinning_bar_padding="6dp"
-                app:spinning_bar_width="4dp"
-                android:gravity="center"/>
+                app:spinning_bar_width="4dp" />
 
             <LinearLayout
                 android:id="@+id/request_ip_"

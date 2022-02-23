@@ -58,7 +58,7 @@ public class OrderReport extends AppCompatActivity {
     List<OrdersDetails> ordersDetails=new ArrayList<>();
     AppDatabase appDatabase;
     TextView ORDERNO,Cus_name,date,total;
-   Button Rep_order;
+   Button Rep_order,print_order;
     public  static String Cusname;
  int VohNu;
     public ArrayList<Item> order_Items = new ArrayList<>();
@@ -69,25 +69,30 @@ public class OrderReport extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_report);
+        try {
         layoutManager = new LinearLayoutManager(OrderReport.this);
         init();
-        ordersDetails=appDatabase.ordersDetails_dao().getAllOrdersByNumber(VohNu);
+            Log.e("ordersDetails==",ordersDetails.size()+"");
+       ordersDetails=appDatabase.ordersDetails_dao().getAllOrdersByNumber(VohNu);
+        //    ordersDetails=appDatabase.ordersDetails_dao().getAllOrders();
+            Log.e("ordersDetails==",ordersDetails.size()+"");
         ordersDetalisRec.setLayoutManager(layoutManager);
         ORDERNO.setText(ordersDetails.get(0).getVhfNo()+"");
 
-     try {
+
        Cusname   =appDatabase.customersDao().getCustmByNumber(ordersDetails.get(0).getCustomerId());
          Cus_name.setText(Cusname);
-     }
-     catch (Exception  exception){
+         Log.e("Cus_id==", ordersDetails.get(0).getCustomerId()+"");
 
-     }
+
 
         date.setText(ordersDetails.get(0).getDate());
         total.setText(ordersDetails.get(0).getTotal()+"");
         fillAdapter();
-
-
+        if(ordersDetails.get(0).getConfirmState()!=0)
+        Rep_order.setVisibility(View.INVISIBLE);
+        else
+            Rep_order.setVisibility(View.VISIBLE);
         ///order btn
         Rep_order.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,9 +101,7 @@ public class OrderReport extends AppCompatActivity {
 
                Log.e("Rep_order", "Rep_order");
 
-                if(checkPermission()) {
-                    exportToPdf();
-                }
+
                  /*  if (Build.VERSION.SDK_INT >= 23) {
                        if (OrderReport.this.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
                                && (OrderReport.this.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
@@ -132,16 +135,17 @@ public class OrderReport extends AppCompatActivity {
 
                ////////
 
-/*
+
                //1. fill Items List with qty and discount based on ordersDetails List
                HomeActivity.vocher_Items.clear();
+
               for (int i=0;i<ordersDetails.size();i++)
               {
-                  for (int j=0;j<HomeActivity.itemList.size();j++)
-                  if(ordersDetails.get(i).getItemNo().equals( HomeActivity.itemList.get(j).getItemNCode()))
-                  HomeActivity.itemList.get(i).setDiscount(ordersDetails.get(i).getDiscount());
-                  HomeActivity.itemList.get(i).setQty(ordersDetails.get(i).getQty());
-                  HomeActivity.vocher_Items.add(  HomeActivity.itemList.get(i));
+                  for (int j=0;j<HomeActivity.allItemList_rv.size();j++)
+                  if(ordersDetails.get(i).getItemNo().equals( HomeActivity.allItemList_rv.get(j).getItemNCode()))
+                  HomeActivity.allItemList_rv.get(i).setDiscount(ordersDetails.get(i).getDiscount());
+                  HomeActivity.allItemList_rv.get(i).setQty(ordersDetails.get(i).getQty());
+                  HomeActivity.vocher_Items.add(  HomeActivity.allItemList_rv.get(i));
               }
 
              //spinner customer will be set based on ordersDetails List
@@ -153,14 +157,24 @@ public class OrderReport extends AppCompatActivity {
 
                Intent intent = new Intent(OrderReport.this, BasketActivity.class);
              //  intent.putExtras(bundle);
-               startActivity(intent);*/
+               startActivity(intent);
 
             }
         });
 
+        print_order.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(checkPermission()) {
+                    exportToPdf();
+                }
+            }
+        });
 
-
-
+        }
+        catch (Exception  exception){
+            Log.e("exception==",exception.getMessage());
+        }
     }
     void fillAdapter(){
         Log.e("ordersDetails==",ordersDetails.size()+"");
@@ -168,8 +182,10 @@ public class OrderReport extends AppCompatActivity {
         ordersDetalisRec.setAdapter(orderReportAdapter);
     }
     void    init() {
+        ordersDetails.clear();
         generalMethod=new GeneralMethod(OrderReport.this);
         Rep_order=findViewById(R.id.  Rep_order);
+        print_order=findViewById(R.id.  print_order);
         Bundle bundle = getIntent().getExtras();
         VohNu = bundle.getInt("VOHNO");
         Log.e("VOHNO==",VohNu+"");
@@ -179,6 +195,8 @@ public class OrderReport extends AppCompatActivity {
         ORDERNO =findViewById(R.id.   ORDERNO);
                 Cus_name=findViewById(R.id.   Cus_name);
                 date=findViewById(R.id.   date);
+
+
     }
   double CalculateTotal(){
         double total=0;

@@ -99,7 +99,7 @@ public class ShowPreviousOrder extends AppCompatActivity {
                 if (!OrderNO.getText().toString().equals("")
                         && !Customer_spinner.getSelectedItem().equals("NoFilter")) {
                     int cus_id = appDatabase.customersDao().getCustmByName(Customer_spinner.getSelectedItem().toString());
-                    orderMasters = appDatabase.ordersMasterDao().getOrdersByOrderNOandCusID(OrderNO.getText().toString(), cus_id, date.getText().toString());// from voucher master
+                    orderMasters = appDatabase.ordersMasterDao().getOrdersByOrderNOandCusID(OrderNO.getText().toString().trim(), cus_id, date.getText().toString());// from voucher master
 
                 } else if (!OrderNO.getText().toString().equals("")
                         && Customer_spinner.getSelectedItem().equals("NoFilter")) {
@@ -115,6 +115,10 @@ public class ShowPreviousOrder extends AppCompatActivity {
                     orderMasters = appDatabase.ordersMasterDao().getOrdersByDate(date.getText().toString());// from voucher master
 
                 }
+
+
+                orderShowAdapter = new OrderShowAdapter(ShowPreviousOrder.this, orderMasters);
+                orderRec.setAdapter(orderShowAdapter);
             }
         });
     }

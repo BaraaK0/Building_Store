@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.falcons.buildingstore.Activities.OrderReport;
 import com.falcons.buildingstore.Activities.ShowPreviousOrder;
+import com.falcons.buildingstore.Database.AppDatabase;
 import com.falcons.buildingstore.Database.Entities.OrderMaster;
 import com.falcons.buildingstore.R;
 
@@ -22,10 +23,11 @@ import java.util.List;
 public  class OrderShowAdapter extends RecyclerView.Adapter<OrderShowAdapter.ViewHolder> {
 Context context;
 List<OrderMaster>orderMasters;
-
+  AppDatabase appDatabase;
     public OrderShowAdapter(Context context, List<OrderMaster> orderMasters) {
         this.context = context;
         this.orderMasters = orderMasters;
+        appDatabase=AppDatabase.getInstanceDatabase(context);
     }
 
     @NonNull
@@ -40,6 +42,9 @@ List<OrderMaster>orderMasters;
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.VHFNO.setText("Order# "+orderMasters.get(position).getVhfNo()+"");
         holder.CONFIRMSTATE.setText(orderMasters.get(position).getConfirmState()+"");
+        String Cusname   =appDatabase.customersDao().getCustmByNumber(orderMasters.get(position).getCustomerId());
+        holder. cusName.setText(Cusname);
+
    //     holder.cusName.setText(orderMasters.get(position).getCustomerId()+"");
         if(orderMasters.get(position).getConfirmState()==1)
         {

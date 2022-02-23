@@ -454,7 +454,7 @@ public class ExportData {
 
 
                     updateVoucherExported();// 3
-
+                    pdVoucher.dismissWithAnimation();
 
                 }
 

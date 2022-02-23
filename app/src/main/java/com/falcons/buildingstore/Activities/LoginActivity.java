@@ -416,8 +416,8 @@ public class LoginActivity extends AppCompatActivity {
                                             item.setItemKind(itemsArray.getJSONObject(i).getString("ItemK"));
                                             item.setPrice(Double.parseDouble(itemsArray.getJSONObject(i).getString("MINPRICE")));
                                             item.setCategoryId(itemsArray.getJSONObject(i).getString("CATEOGRYID"));
-                                            item.setTax(itemsArray.getJSONObject(i).getString("TAXPERC"));
-
+                                              item.setTax(Double.parseDouble(itemsArray.getJSONObject(i).getString("TAXPERC")));
+                                            item.setTaxPercent(Double.parseDouble(itemsArray.getJSONObject(i).getString("TAXPERC"))/100);
                                             allItemsList.add(item);
 
                                         }

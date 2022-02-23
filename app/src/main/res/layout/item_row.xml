@@ -275,6 +275,7 @@
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         android:layout_marginHorizontal="34dp"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
@@ -477,6 +478,7 @@
                             android:fontFamily="@font/alegreya_sans"
                             android:gravity="start"
                             android:inputType="number"
+                            android:selectAllOnFocus="true"
                             android:lineHeight="21.6px"
                             android:textColor="@color/black"
                             android:textSize="16sp"

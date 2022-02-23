@@ -8,6 +8,7 @@ import androidx.room.Query;
 import com.falcons.buildingstore.Database.Entities.OrderMaster;
 import com.falcons.buildingstore.Database.Entities.OrdersDetails;
 
+import java.util.ArrayList;
 import java.util.List;
 @Dao
 public interface OrdersDetails_Dao {
@@ -19,7 +20,7 @@ public interface OrdersDetails_Dao {
     @Query("SELECT * FROM Orders_Details Where VHFNO= :VHFNO and IS_Posted='0'")
     List<OrdersDetails> getAllOrdersByNumber(int VHFNO );
     @Insert
-    void insertAllOrders(OrdersDetails... ordersDetails);
+    void insertAllOrders(OrdersDetails  ordersDetails);
     @Insert
     void insertOrder(OrdersDetails  ordersDetails);
 
