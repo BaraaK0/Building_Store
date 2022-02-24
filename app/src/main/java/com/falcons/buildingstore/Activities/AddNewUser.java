@@ -169,8 +169,8 @@ public class AddNewUser extends AppCompatActivity {
         if (!username.getText().toString().trim().equals("")
                 && !passEdt.getText().toString().trim().equals("")) {
 
-            int sameUsers = appDatabase.usersDao().getSameUsers(username.getText().toString().trim());
-            if (sameUsers == 0) {
+            List<User> sameUsers = appDatabase.usersDao().getSameUsers(username.getText().toString().trim());
+            if (sameUsers.size() == 0) {
 
                 User user = new User();
                 user.setUserName(username.getText().toString());
@@ -181,8 +181,7 @@ public class AddNewUser extends AppCompatActivity {
                 else
                     user.setDiscPermission(0);
                 appDatabase.usersDao().insertUser(user);
-                ArrayList<User> users = new ArrayList<>();
-                users.add(user);
+                List<User> users =  appDatabase.usersDao().getUnpostedUsers();
                 exportData.addUser(users, new ExportData.AddUserCallBack() {
                     @Override
                     public void onResponse(String response) {
@@ -239,7 +238,75 @@ public class AddNewUser extends AppCompatActivity {
                 });
 
 
-            } else {
+            } else if (sameUsers.size() == 1 && sameUsers.get(0).getIsPosted() == 0) {
+
+                String userName = username.getText().toString().trim();
+                String pass = passEdt.getText().toString().trim();
+                int uType = usertype.getSelectedItem().toString().equals(getResources().getStringArray(R.array.user_type)[1]) ? 0 : 1;
+                int discPer = 0;
+                if (RB_yes.isChecked())
+                    discPer = 1;
+
+                appDatabase.usersDao().updateUser(userName, pass, uType, discPer);
+                List<User> users =  appDatabase.usersDao().getUnpostedUsers();
+//                users.add(user);
+                exportData.addUser(users, new ExportData.AddUserCallBack() {
+                    @Override
+                    public void onResponse(String response) {
+                        if (response.contains("Saved Successfully")) {
+
+
+                            importData.getAllUsers(new ImportData.GetUsersCallBack() {
+                                @Override
+                                public void onResponse(JSONArray response) {
+
+                                    appDatabase.usersDao().deleteAll();
+                                    allUsers.clear();
+                                    showSweetDialog(AddNewUser.this, 1, getString(R.string.savedSuccsesfule), null);
+
+
+                                    for (int i = 0; i < response.length(); i++) {
+
+                                        try {
+
+                                            allUsers.add(new User(
+                                                    response.getJSONObject(i).getString("SALESNO"),
+                                                    response.getJSONObject(i).getString("ACCNAME"),
+                                                    response.getJSONObject(i).getString("USER_PASSWORD"),
+                                                    Integer.parseInt(response.getJSONObject(i).getString("USERTYPE")),
+                                                    Integer.parseInt(response.getJSONObject(i).getString("DISCOUNTPER")),
+                                                    1));
+
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                    }
+
+                                    appDatabase.usersDao().addAll(allUsers);
+
+                                }
+
+                                @Override
+                                public void onError(String error) {
+
+                                }
+                            }, ipAddress, port, coNo);
+
+                            username.setText("");
+                            passEdt.setText("");
+
+                        }
+                    }
+
+                    @Override
+                    public void onError(String error) {
+
+                    }
+                });
+
+
+            } else{
 
                 username.setError(getString(R.string.user_already_exists));
 

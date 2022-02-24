@@ -4,6 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.falcons.buildingstore.Database.Entities.User;
 
@@ -39,8 +40,15 @@ public interface Users_Dao {
     @Query("UPDATE Users_Table SET Is_Posted = '1' WHERE Is_Posted = '0'")
     void setPosted();
 
-    @Query("SELECT COUNT(User_Name) FROM Users_Table WHERE User_Name = :username")
-    int getSameUsers(String username);
+    @Query("SELECT * FROM Users_Table WHERE User_Name = :username")
+    List<User> getSameUsers(String username);
+
+    @Query("SELECT * FROM Users_Table WHERE Is_Posted = '0'")
+    List<User> getUnpostedUsers();
+
+    @Query("UPDATE Users_Table SET User_Password = :pass, User_Type = :uType, Disc_Permission = :discPer" +
+            " WHERE User_Name = :username")
+    void updateUser(String username, String pass, int uType, int discPer);
 
 //    @Query("SELECT * FROM Users_Table WHERE User_ID IN (:userIds)")
 //    List<User> loadAllByIds(int[] userIds);
