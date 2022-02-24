@@ -47,7 +47,7 @@ public class ShowPreviousOrder extends AppCompatActivity {
     RecyclerView orderRec;
     OrderShowAdapter orderShowAdapter;
     RecyclerView.LayoutManager layoutManager;
-    List<OrderMaster> orderMasters;
+  public static   List<OrderMaster> orderMasters;
     List<String> Cus_name = new ArrayList<>();
     Calendar myCalendar;
     TextView date, OrderNO;

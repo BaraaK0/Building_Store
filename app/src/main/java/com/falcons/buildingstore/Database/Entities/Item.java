@@ -52,8 +52,8 @@ public class Item {
     @ColumnInfo(name = "taxValue")
     private double taxValue;
 
-
-
+    @ColumnInfo(name = "area")
+    public String area;
     public double getTaxPercent() {
         return taxPercent;
     }
@@ -81,7 +81,7 @@ public class Item {
     @ColumnInfo(name = "Item_Discount",defaultValue = "0")
     double Discount;
 
-    public String area;
+
 
     public Item(int id, String itemName, String itemOCode, String itemNCode, double aviqty, double price, String unit, String imagePath, String itemKind,  double qty, double discount, String area) {
         this.id = id;

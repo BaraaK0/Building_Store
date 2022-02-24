@@ -333,7 +333,7 @@ public class ExportData {
     }
 
     private void getVouchersDetail() {
-        items = mHandler.ordersDetails_dao().getAllOrders();
+        items = mHandler.ordersDetails_dao().getAllOrdersConfirm();
         jsonArrayItems = new JSONArray();
         for (int i = 0; i < items.size(); i++) {
             if (items.get(i).getIsPosted() == 0) {
@@ -354,7 +354,7 @@ public class ExportData {
 
     private void getVouchers() {
 
-        vouchers = mHandler.ordersMasterDao().getAllOrders();// from voucher master
+        vouchers = mHandler.ordersMasterDao().getAllOrdersConfirm();// from voucher master
         jsonArrayVouchers = new JSONArray();
         for (int i = 0; i < vouchers.size(); i++) {
             if (vouchers.get(i).getIsPosted() == 0) {

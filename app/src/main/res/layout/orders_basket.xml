@@ -212,7 +212,16 @@
                             android:text="@string/tax_"
                             android:textColor="@color/primaryTextColor"
                             android:textSize="14sp" />
-
+                                <TextView
+                                    android:layout_width="150dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/alegreya"
+                                    android:gravity="center"
+                                    android:lineHeight="19sp"
+                                    android:text="@string/area_"
+                                    android:textColor="@color/primaryTextColor"
+                                    android:textSize="14sp" />
 
                             </LinearLayout>
 
