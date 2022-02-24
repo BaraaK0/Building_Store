@@ -41,25 +41,25 @@ List<OrderMaster>orderMasters;
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.VHFNO.setText("Order# " + orderMasters.get(position).getVhfNo() + "");
-        holder.CONFIRMSTATE.setText(orderMasters.get(position).getConfirmState() + "");
+
         String Cusname = appDatabase.customersDao().getCustmByNumber(orderMasters.get(position).getCustomerId());
         holder.cusName.setText(Cusname);
+        holder.VHFNO.setText("Order# " + orderMasters.get(position).getVhfNo() + "");
 
-        //     holder.cusName.setText(orderMasters.get(position).getCustomerId()+"");
-        if (orderMasters.get(position).getConfirmState() == 1) {
-            holder.VHFNO.setText("Order# " + orderMasters.get(position).getVhfNo() + "");
-            holder.CONFIRMSTATE.setText(orderMasters.get(position).getConfirmState() + "");
             //     holder.cusName.setText(orderMasters.get(position).getCustomerId()+"");
             if (orderMasters.get(position).getConfirmState() == 1) {
-                holder.CONFIRMSTATE.setTextColor(android.graphics.Color.GREEN);
-                holder.CONFIRMSTATE.setText("Ordered");
 
-            } else {
-                holder.CONFIRMSTATE.setTextColor(Color.RED);
-                holder.CONFIRMSTATE.setText("Saved");
+                holder.CONFIRMSTATE.setText("Ordered");
+                holder.CONFIRMSTATE.setTextColor(android.graphics.Color.GREEN);
 
             }
 
+        else {
+            holder.CONFIRMSTATE.setText("Saved");
+            holder.CONFIRMSTATE.setTextColor(Color.RED);
+
+
+        }
 
             holder.show.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -67,8 +67,9 @@ List<OrderMaster>orderMasters;
                     try {
                         //Create the bundle
                         Bundle bundle = new Bundle();
-
-                        bundle.putInt("VOHNO", orderMasters.get(position).getVhfNo());
+                        Log.e("position:=", position+"");
+                        Log.e("size:=", ShowPreviousOrder.orderMasters.size()+"");
+                        bundle.putInt("VOHNO", ShowPreviousOrder.orderMasters.get(position).getVhfNo());
 
                         Intent intent = new Intent(context, OrderReport.class);
                         intent.putExtras(bundle);
@@ -79,7 +80,7 @@ List<OrderMaster>orderMasters;
                 }
 
             });
-        }
+
     }
     @Override
     public int getItemCount() {

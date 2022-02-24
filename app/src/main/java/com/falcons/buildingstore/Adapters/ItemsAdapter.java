@@ -193,24 +193,24 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
             }
         });
-        holder.itemAreaEdt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                if (!editable.toString().equals("")) {
-                    appDatabase.itemsDao().UpdateItemAria(holder.itemAreaEdt.getText().toString(), itemsList.get(currPosition).getArea());
-                }
-            }
-        });
+//        holder.itemAreaEdt.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                if (!editable.toString().equals("")) {
+//                    appDatabase.itemsDao().UpdateItemAria(holder.itemAreaEdt.getText().toString(), itemsList.get(currPosition).getArea());
+//                }
+//            }
+//        });
 
         holder.itemAreaEdt.setImeOptions(EditorInfo.IME_ACTION_DONE);
 
@@ -294,8 +294,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
                     itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()));
                     itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
-
-
+                    itemsList.get(position).setArea(holder.itemAreaEdt.getText().toString());
                     vocher_Items.add(itemsList.get(position));
                     badge.setNumber(vocher_Items.size());
 
@@ -308,7 +307,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
                         itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()));
                         itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
-
+                        itemsList.get(position).setArea(holder.itemAreaEdt.getText().toString());
                         Log.e("case2vocher_Items=", vocher_Items.size() + "");
                         vocher_Items.add(itemsList.get(position));
                         badge.setNumber(vocher_Items.size());
@@ -320,6 +319,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                         HomeActivity.vocher_Items.remove(index);
                         itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()));
                         itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
+                        itemsList.get(position).setArea(holder.itemAreaEdt.getText().toString());
                         HomeActivity.vocher_Items.add(itemsList.get(position));
                         badge.setNumber(vocher_Items.size());
                         Log.e("case3vocher_Items=", vocher_Items.size() + "");

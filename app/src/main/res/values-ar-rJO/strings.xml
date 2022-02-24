@@ -36,6 +36,7 @@
     <string name="discount_">خصم</string>
     <string name="quantity">الكمية:</string>
     <string name="area">الموقع:</string>
+    <string name="area_">الموقع</string>
     <string name="box">صندوق</string>
     <string name="meter">متر</string>
     <string name="save">حفظ</string>

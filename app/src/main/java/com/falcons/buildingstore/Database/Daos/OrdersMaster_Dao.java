@@ -14,7 +14,8 @@ public interface OrdersMaster_Dao {
 
     @Query("SELECT * FROM Orders_Master Where IS_Posted='0'")
     List<OrderMaster> getAllOrders();
-
+    @Query("SELECT * FROM Orders_Master Where IS_Posted='0' and ConfirmState='1'")
+    List<OrderMaster> getAllOrdersConfirm();
     @Insert
     void insertAllOrders(OrderMaster... orderMasters);
     @Insert

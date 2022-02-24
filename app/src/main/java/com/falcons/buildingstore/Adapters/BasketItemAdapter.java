@@ -39,6 +39,7 @@ public class BasketItemAdapter extends RecyclerView.Adapter<BasketItemAdapter.Vo
         holder.qty.setText(items.get(position).getQty() + "");
         holder.item_name.setText(items.get(position).getItemName());
         holder.itemNCode.setText(items.get(position).getItemNCode());
+        holder.area.setText(items.get(position).getArea());
     }
 
     @Override
@@ -47,7 +48,7 @@ public class BasketItemAdapter extends RecyclerView.Adapter<BasketItemAdapter.Vo
     }
 
     class VoherItemAdapterViewHolder extends RecyclerView.ViewHolder {
-        TextView tax, discount, price, qty, item_name, itemNCode;
+        TextView tax, discount, price, qty, item_name, itemNCode,area;
 
         public VoherItemAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -57,6 +58,7 @@ public class BasketItemAdapter extends RecyclerView.Adapter<BasketItemAdapter.Vo
             qty = itemView.findViewById(R.id.qty);
             item_name = itemView.findViewById(R.id.item_name);
             itemNCode = itemView.findViewById(R.id.itemNCode);
+            area= itemView.findViewById(R.id.area);
         }
     }
 }

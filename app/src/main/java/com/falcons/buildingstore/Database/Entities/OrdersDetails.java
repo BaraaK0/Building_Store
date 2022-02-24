@@ -75,6 +75,17 @@ public class OrdersDetails {
     @ColumnInfo(name = "NetTotal",defaultValue = "0")
     private double NetTotal;
 
+    @ColumnInfo(name = "area")
+    public String area;
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
     public double getNetTotal() {
         return NetTotal;
     }

@@ -44,6 +44,7 @@
     <string name="discount_">Discount</string>
     <string name="quantity">Quantity:</string>
     <string name="area">Area:</string>
+    <string name="area_">Area</string>
     <string name="box">Box</string>
     <string name="meter">Meter</string>
     <string name="show">Show</string>

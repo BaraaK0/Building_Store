@@ -15,6 +15,8 @@ public interface OrdersDetails_Dao {
 
     @Query("SELECT * FROM Orders_Details Where IS_Posted='0'")
     List<OrdersDetails> getAllOrders();
+    @Query("SELECT * FROM Orders_Details Where IS_Posted='0' and ConfirmState='1'")
+    List<OrdersDetails> getAllOrdersConfirm();
     @Query("SELECT * FROM Orders_Details Where VHFNO= :VHFNO and IS_Posted='0'")
     List<OrdersDetails> getAllOrdersByNumber(int VHFNO );
     @Insert
