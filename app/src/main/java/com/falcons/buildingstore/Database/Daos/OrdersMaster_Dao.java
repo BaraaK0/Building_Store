@@ -12,7 +12,7 @@ import java.util.List;
 @Dao
 public interface OrdersMaster_Dao {
 
-    @Query("SELECT * FROM Orders_Master")
+    @Query("SELECT * FROM Orders_Master Where IS_Posted='0'")
     List<OrderMaster> getAllOrders();
 
     @Insert
@@ -25,21 +25,21 @@ public interface OrdersMaster_Dao {
     @Query("UPDATE Orders_Master SET  IS_Posted='1' WHERE IS_Posted='0'")
     int updateVoucher();
 
-    @Query("SELECT * FROM Orders_Master where Customer_ID= :cusid and VHFNO= :orderno and Date= :date")
+    @Query("SELECT * FROM Orders_Master where Customer_ID= :cusid and VHFNO= :orderno and Date= :date and IS_Posted='0'")
     List<OrderMaster> getOrdersByOrderNOandCusID(String orderno,int cusid,String date);
 
-    @Query("SELECT * FROM Orders_Master where VHFNO= :orderno and Date= :date")
+    @Query("SELECT * FROM Orders_Master where VHFNO= :orderno and Date= :date and IS_Posted='0'")
     List<OrderMaster> getOrdersByOrderNO(String orderno,String date);
 
-    @Query("SELECT * FROM Orders_Master where Customer_ID= :cusid and Date= :date")
+    @Query("SELECT * FROM Orders_Master where Customer_ID= :cusid and Date= :date and IS_Posted='0'")
     List<OrderMaster> getOrdersByCusID(int cusid,String date);
 
-    @Query("SELECT * FROM Orders_Master where Date= :date")
+    @Query("SELECT * FROM Orders_Master where Date= :date and IS_Posted='0'")
     List<OrderMaster> getOrdersByDate (String date);
 
 
 
-    @Query("SELECT VHFNO FROM Orders_Master where VHFNO= (SELECT MAX(VHFNO) FROM Orders_Master)")
+    @Query("SELECT VHFNO FROM Orders_Master where VHFNO= (SELECT MAX(VHFNO) FROM Orders_Master) and IS_Posted='0'")
     int getLastVoherNo ( );
 
 }
