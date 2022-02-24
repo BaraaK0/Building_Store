@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya"
-                android:gravity="center"
+                android:gravity="end"
                 android:lineHeight="19sp"
                 android:text="@string/tax_"
                 android:textColor="@color/black"

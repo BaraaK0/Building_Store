@@ -78,7 +78,7 @@ public class BasketActivity extends AppCompatActivity {
         customerTv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long rowId) {
                 Cus_selection = (String) parent.getItemAtPosition(position);
-                //TODO Do something with the selected text
+                customer_textInput.setError(null);
             }
         });
 
@@ -102,11 +102,13 @@ public class BasketActivity extends AppCompatActivity {
         orderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 String selectedCustomer = customerTv.getText().toString().trim();
 
                     if (HomeActivity.vocher_Items.size() != 0) {
 
                         if (customerNames.contains(selectedCustomer) && !selectedCustomer.equals("")) {
+                            customer_textInput.setError(null);
                             try {
                                 SaveDetialsVocher(1);
                                 SaveMasterVocher(1);
@@ -146,6 +148,8 @@ public class BasketActivity extends AppCompatActivity {
                     if (HomeActivity.vocher_Items.size() != 0) {
 
                         if (customerNames.contains(selectedCustomer) && !selectedCustomer.equals("")) {
+
+                            customer_textInput.setError(null);
 
                             SaveMasterVocher(2);
                             SaveDetialsVocher(2);
@@ -328,6 +332,7 @@ public class BasketActivity extends AppCompatActivity {
 
         ordersDetailslist.clear();
          HomeActivity.vocher_Items.clear();
+        badge.setNumber(0);
              fillListAdapter();
     }
 

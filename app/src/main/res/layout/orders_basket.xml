@@ -32,11 +32,11 @@
                 <ImageView
                     android:id="@+id/logo_remove"
                     android:layout_width="74dp"
-                    android:contentDescription=""
                     android:layout_height="62dp"
                     android:layout_alignParentTop="true"
                     android:layout_centerHorizontal="true"
-                    android:background="@drawable/logo" />
+                    android:background="@drawable/logo"
+                    android:contentDescription="" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/customer_textInput"
@@ -142,40 +142,40 @@
                                 android:orientation="horizontal">
 
 
-                        <TextView
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/alegreya"
-                            android:gravity="center"
-                            android:lineHeight="19sp"
-                            android:text="@string/item_Name_"
-                            android:textColor="@color/primaryTextColor"
-                            android:textSize="14sp" />
+                                <TextView
+                                    android:layout_width="150dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/alegreya"
+                                    android:gravity="start"
+                                    android:lineHeight="19sp"
+                                    android:text="@string/item_Name_"
+                                    android:textColor="@color/primaryTextColor"
+                                    android:textSize="14sp" />
 
 
-                        <TextView
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/alegreya"
-                            android:gravity="center"
-                            android:lineHeight="19sp"
-                            android:text="@string/item_Code"
-                            android:textColor="@color/primaryTextColor"
-                            android:textSize="14sp" />
+                                <TextView
+                                    android:layout_width="150dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/alegreya"
+                                    android:gravity="center"
+                                    android:lineHeight="19sp"
+                                    android:text="@string/item_Code"
+                                    android:textColor="@color/primaryTextColor"
+                                    android:textSize="14sp" />
 
 
-                        <TextView
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/alegreya"
-                            android:gravity="center"
-                            android:lineHeight="19sp"
-                            android:text="@string/qty"
-                            android:textColor="@color/primaryTextColor"
-                            android:textSize="14sp" />
+                                <TextView
+                                    android:layout_width="150dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/alegreya"
+                                    android:gravity="center"
+                                    android:lineHeight="19sp"
+                                    android:text="@string/qty"
+                                    android:textColor="@color/primaryTextColor"
+                                    android:textSize="14sp" />
 
 
                                 <TextView
@@ -190,28 +190,28 @@
                                     android:textSize="14sp" />
 
 
-                        <TextView
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/alegreya"
-                            android:gravity="center"
-                            android:lineHeight="19sp"
-                            android:text="@string/discount_"
-                            android:textColor="@color/primaryTextColor"
-                            android:textSize="14sp" />
+                                <TextView
+                                    android:layout_width="150dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/alegreya"
+                                    android:gravity="center"
+                                    android:lineHeight="19sp"
+                                    android:text="@string/discount_"
+                                    android:textColor="@color/primaryTextColor"
+                                    android:textSize="14sp" />
 
 
-                        <TextView
-                            android:layout_width="150dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:fontFamily="@font/alegreya"
-                            android:gravity="center"
-                            android:lineHeight="19sp"
-                            android:text="@string/tax_"
-                            android:textColor="@color/primaryTextColor"
-                            android:textSize="14sp" />
+                                <TextView
+                                    android:layout_width="150dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/alegreya"
+                                    android:gravity="end"
+                                    android:lineHeight="19sp"
+                                    android:text="@string/tax_"
+                                    android:textColor="@color/primaryTextColor"
+                                    android:textSize="14sp" />
 
 
                             </LinearLayout>

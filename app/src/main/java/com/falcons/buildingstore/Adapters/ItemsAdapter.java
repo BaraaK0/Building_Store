@@ -15,11 +15,13 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -207,6 +209,28 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                 if (!editable.toString().equals("")) {
                     appDatabase.itemsDao().UpdateItemAria(holder.itemAreaEdt.getText().toString(), itemsList.get(currPosition).getArea());
                 }
+            }
+        });
+
+        holder.itemAreaEdt.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+        holder.itemAreaEdt.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+
+                if (keyCode == EditorInfo.IME_ACTION_SEARCH ||
+                        keyCode == EditorInfo.IME_ACTION_DONE ||
+                        keyCode == EditorInfo.IME_ACTION_NEXT ||
+                        event.getAction() == KeyEvent.ACTION_DOWN &&
+                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+
+                    holder.addToCartBtn.requestFocus();
+
+                    return true;
+
+                }
+
+                return false;
             }
         });
 

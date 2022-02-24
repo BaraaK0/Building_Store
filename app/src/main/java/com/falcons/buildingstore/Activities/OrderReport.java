@@ -54,64 +54,56 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 public class OrderReport extends AppCompatActivity {
     OrderReportAdapter orderReportAdapter;
     RecyclerView.LayoutManager layoutManager;
-   RecyclerView ordersDetalisRec;
-    List<OrdersDetails> ordersDetails=new ArrayList<>();
+    RecyclerView ordersDetalisRec;
+    List<OrdersDetails> ordersDetails = new ArrayList<>();
     AppDatabase appDatabase;
-    TextView ORDERNO,Cus_name,date,total;
-   Button Rep_order,print_order;
-    public  static String Cusname;
- int VohNu;
+    TextView ORDERNO, Cus_name, date, total;
+    Button Rep_order, print_order;
+    public static String Cusname;
+    int VohNu;
     public ArrayList<Item> order_Items = new ArrayList<>();
     GeneralMethod generalMethod;
     // constant code for runtime permissions
     private static final int PERMISSION_REQUEST_CODE = 200;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order_report);
         try {
-        layoutManager = new LinearLayoutManager(OrderReport.this);
-        init();
-            Log.e("ordersDetails==",ordersDetails.size()+"");
-       ordersDetails=appDatabase.ordersDetails_dao().getAllOrdersByNumber(VohNu);
-        //    ordersDetails=appDatabase.ordersDetails_dao().getAllOrders();
-            Log.e("ordersDetails==",ordersDetails.size()+"");
-        ordersDetalisRec.setLayoutManager(layoutManager);
-        ORDERNO.setText(ordersDetails.get(0).getVhfNo()+"");
+            layoutManager = new LinearLayoutManager(OrderReport.this);
+            init();
+            Log.e("ordersDetails==", ordersDetails.size() + "");
+            ordersDetails = appDatabase.ordersDetails_dao().getAllOrdersByNumber(VohNu);
+            //    ordersDetails=appDatabase.ordersDetails_dao().getAllOrders();
+            Log.e("ordersDetails==", ordersDetails.size() + "");
+            ordersDetalisRec.setLayoutManager(layoutManager);
+            ORDERNO.setText(ordersDetails.get(0).getVhfNo() + "");
 
 
-       Cusname   =appDatabase.customersDao().getCustmByNumber(ordersDetails.get(0).getCustomerId());
-         Cus_name.setText(Cusname);
-         Log.e("Cus_id==", ordersDetails.get(0).getCustomerId()+"");
+            Cusname = appDatabase.customersDao().getCustmByNumber(ordersDetails.get(0).getCustomerId());
+            Cus_name.setText(Cusname);
+            Log.e("Cus_id==", ordersDetails.get(0).getCustomerId() + "");
 
 
+            date.setText(ordersDetails.get(0).getDate());
+            total.setText(ordersDetails.get(0).getTotal() + "");
+            fillAdapter();
+            if (ordersDetails.get(0).getConfirmState() != 0)
+                Rep_order.setVisibility(View.INVISIBLE);
+            else
+                Rep_order.setVisibility(View.VISIBLE);
+            ///order btn
+            Rep_order.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
 
-        date.setText(ordersDetails.get(0).getDate());
-        total.setText(ordersDetails.get(0).getTotal()+"");
-        fillAdapter();
-        if(ordersDetails.get(0).getConfirmState()!=0)
-        Rep_order.setVisibility(View.INVISIBLE);
-        else
-            Rep_order.setVisibility(View.VISIBLE);
-        ///order btn
-        Rep_order.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
+                    Log.e("Rep_order", "Rep_order");
 
-               Log.e("Rep_order", "Rep_order");
-
-                if(checkPermission()) {
-                    exportToPdf();
-                } else {
-
-                    Log.v("", "Permission is revoked");
-                    ActivityCompat.requestPermissions(
-                            OrderReport.this,
-                            new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
-                            1);
-                }
-
+                    if (checkPermission()) {
+                        exportToPdf();
+                    }
                  /*  if (Build.VERSION.SDK_INT >= 23) {
                        if (OrderReport.this.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
                                && (OrderReport.this.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
@@ -141,61 +133,62 @@ public class OrderReport extends AppCompatActivity {
                    }*/
 
 
+                    ////////
 
 
-               ////////
+                    //1. fill Items List with qty and discount based on ordersDetails List
+                    HomeActivity.vocher_Items.clear();
 
+                    for (int i = 0; i < ordersDetails.size(); i++) {
+                        for (int j = 0; j < HomeActivity.allItemList_rv.size(); j++)
+                            if (ordersDetails.get(i).getItemNo().equals(HomeActivity.allItemList_rv.get(j).getItemNCode()))
+                                HomeActivity.allItemList_rv.get(i).setDiscount(ordersDetails.get(i).getDiscount());
+                        HomeActivity.allItemList_rv.get(i).setQty(ordersDetails.get(i).getQty());
+                        HomeActivity.vocher_Items.add(HomeActivity.allItemList_rv.get(i));
+                    }
 
-               //1. fill Items List with qty and discount based on ordersDetails List
-               HomeActivity.vocher_Items.clear();
+                    //spinner customer will be set based on ordersDetails List
+                    //{}
 
-              for (int i=0;i<ordersDetails.size();i++)
-              {
-                  for (int j=0;j<HomeActivity.allItemList_rv.size();j++)
-                  if(ordersDetails.get(i).getItemNo().equals( HomeActivity.allItemList_rv.get(j).getItemNCode()))
-                  HomeActivity.allItemList_rv.get(i).setDiscount(ordersDetails.get(i).getDiscount());
-                  HomeActivity.allItemList_rv.get(i).setQty(ordersDetails.get(i).getQty());
-                  HomeActivity.vocher_Items.add(  HomeActivity.allItemList_rv.get(i));
-              }
+                    Bundle bundle = new Bundle();
 
-             //spinner customer will be set based on ordersDetails List
-               //{}
+                    bundle.putInt("Report_VOHNO", ordersDetails.get(0).getVhfNo());
 
-               Bundle bundle = new Bundle();
+                    Intent intent = new Intent(OrderReport.this, BasketActivity.class);
+                    //  intent.putExtras(bundle);
+                    startActivity(intent);
 
-               bundle.putInt("Report_VOHNO", ordersDetails.get(0).getVhfNo());
-
-               Intent intent = new Intent(OrderReport.this, BasketActivity.class);
-             //  intent.putExtras(bundle);
-               startActivity(intent);
-
-            }
-        });
-
-        print_order.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if(checkPermission()) {
-                    exportToPdf();
                 }
-            }
-        });
+            });
 
-        }
-        catch (Exception  exception){
-            Log.e("exception==",exception.getMessage());
+            print_order.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (checkPermission()) {
+                        exportToPdf();
+                    } else {
+                        requestPermission();
+                    }
+
+                }
+            });
+
+        } catch (Exception exception) {
+            Log.e("exception==", exception.getMessage());
         }
     }
-    void fillAdapter(){
-        Log.e("ordersDetails==",ordersDetails.size()+"");
-        orderReportAdapter=new OrderReportAdapter(OrderReport.this,ordersDetails);
+
+    void fillAdapter() {
+        Log.e("ordersDetails==", ordersDetails.size() + "");
+        orderReportAdapter = new OrderReportAdapter(OrderReport.this, ordersDetails);
         ordersDetalisRec.setAdapter(orderReportAdapter);
     }
-    void    init() {
+
+    void init() {
         ordersDetails.clear();
-        generalMethod=new GeneralMethod(OrderReport.this);
-        Rep_order=findViewById(R.id.  Rep_order);
-        print_order=findViewById(R.id.  print_order);
+        generalMethod = new GeneralMethod(OrderReport.this);
+        Rep_order = findViewById(R.id.Rep_order);
+        print_order = findViewById(R.id.print_order);
         Bundle bundle = getIntent().getExtras();
         VohNu = bundle.getInt("VOHNO");
         Log.e("VOHNO==", VohNu + "");
@@ -205,13 +198,13 @@ public class OrderReport extends AppCompatActivity {
         ORDERNO = findViewById(R.id.ORDERNO);
         Cus_name = findViewById(R.id.Cus_name);
         date = findViewById(R.id.date);
-        Log.e("VOHNO==",VohNu+"");
-        appDatabase=AppDatabase.getInstanceDatabase(OrderReport.this);
-        ordersDetalisRec=findViewById(R.id.   ordersDetalisRec);
-        total=findViewById(R.id.   total);
-        ORDERNO =findViewById(R.id.   ORDERNO);
-                Cus_name=findViewById(R.id.   Cus_name);
-                date=findViewById(R.id.   date);
+        Log.e("VOHNO==", VohNu + "");
+        appDatabase = AppDatabase.getInstanceDatabase(OrderReport.this);
+        ordersDetalisRec = findViewById(R.id.ordersDetalisRec);
+        total = findViewById(R.id.total);
+        ORDERNO = findViewById(R.id.ORDERNO);
+        Cus_name = findViewById(R.id.Cus_name);
+        date = findViewById(R.id.date);
 
 
     }
@@ -368,8 +361,9 @@ public class OrderReport extends AppCompatActivity {
 
                 if (writeStorage && readStorage) {
                     Toast.makeText(this, "Permission Granted..", Toast.LENGTH_SHORT).show();
+                    exportToPdf();
                 } else {
-                    Toast.makeText(this, "Permission Denined.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Permission Denied.", Toast.LENGTH_SHORT).show();
                     finish();
                 }
             }

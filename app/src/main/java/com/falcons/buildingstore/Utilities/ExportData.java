@@ -460,6 +460,7 @@ public class ExportData {
             pdVoucher.setTitle("Export SALES_VOUCHER_Detail");
             if (result != null && !result.equals("")) {
                 if (result.contains("Saved Successfully")) {
+                    showSweetDialog(context, 1, context.getString(R.string.savedSuccsesfule), null);
 //                    Toast.makeText(context, "onPostExecute"+result, Toast.LENGTH_SHORT).show();
 
 

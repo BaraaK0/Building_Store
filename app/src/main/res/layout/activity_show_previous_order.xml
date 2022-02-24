@@ -132,7 +132,6 @@
                 android:drawableEnd="@drawable/ic_baseline_filter_alt_24"
                 android:text="@string/preview"
                 android:textColor="@color/white"
-
                 android:textSize="13sp" />
 
 
