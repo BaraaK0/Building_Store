@@ -147,19 +147,17 @@ public class BasketActivity extends AppCompatActivity {
                 if (HomeActivity.vocher_Items.size() != 0) {
 
                         if (customerNames.contains(selectedCustomer) && !selectedCustomer.equals("")) {
-
+                            customer_textInput.setError(null);
                             SaveMasterVocher(2);
                             ordersDetailslist.clear();
                             HomeActivity.vocher_Items.clear();
                             fillListAdapter();
-                        } catch (Exception exception) {
-                            Log.e("exception==", exception.getMessage());
+                            HomeActivity.item_count = 0;
+                            generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
 
                         }
 
-                        HomeActivity.item_count = 0;
-                        generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
-                    } else {
+                      else {
 
                         customer_textInput.setError("*");
 
