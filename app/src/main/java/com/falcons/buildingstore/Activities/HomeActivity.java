@@ -96,12 +96,14 @@ public class HomeActivity extends AppCompatActivity {
 
 
         /*  Initialize Items  */
-        allItemList_rv = appDatabase.itemsDao().getAllItems();
 
-        itemsAdapter = new ItemsAdapter(allItemList_rv, HomeActivity.this);
-        itemsRecycler.setAdapter(itemsAdapter);
-        itemsRecycler.setSaveEnabled(true);
+        if(HomeActivity.vocher_Items.size() ==0) {
+            allItemList_rv = appDatabase.itemsDao().getAllItems();
 
+            itemsAdapter = new ItemsAdapter(allItemList_rv, HomeActivity.this);
+            itemsRecycler.setAdapter(itemsAdapter);
+            itemsRecycler.setSaveEnabled(true);
+        }
 
         /* Items Search Handling */
         searchItemsEdt.addTextChangedListener(new TextWatcher() {

@@ -272,7 +272,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                     itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
 
                     Log.e("vocher_Items=", vocher_Items.size() + "");
-                    if (vocher_Items.size() == 0) {
+
                         vocher_Items.add(itemsList.get(position));
                         badge.setNumber(vocher_Items.size());
 
@@ -288,7 +288,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                             Log.e("case2vocher_Items=", HomeActivity.vocher_Items.size() + "");
                             HomeActivity.vocher_Items.add(itemsList.get(position));
                             Log.e("case2vocher_Items=", vocher_Items.size() + "");
-                            vocher_Items.add(itemsList.get(position));
                             badge.setNumber(vocher_Items.size());
                             //      HomeActivity.voherItemAdapter.notifyItemInserted(HomeActivity.vocher_Items.size() - 1);
                         } else // item already added
@@ -309,12 +308,12 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
                     }
 
-                }
-
-
-            }else
+                }else
                 holder.itemQtyEdt.setError(context.getResources().getString(R.string.Empty));
-        }
+
+
+            }
+
     }
 
     boolean IsExistsInList(String ItemNCode) {
