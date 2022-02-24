@@ -147,15 +147,12 @@ public class BasketActivity extends AppCompatActivity {
                 if (HomeActivity.vocher_Items.size() != 0) {
 
                         if (customerNames.contains(selectedCustomer) && !selectedCustomer.equals("")) {
-
+                            SaveDetialsVocher(2);
                             SaveMasterVocher(2);
                             ordersDetailslist.clear();
                             HomeActivity.vocher_Items.clear();
                             fillListAdapter();
-                        } catch (Exception exception) {
-                            Log.e("exception==", exception.getMessage());
 
-                        }
 
                         HomeActivity.item_count = 0;
                         generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
@@ -343,7 +340,7 @@ public class BasketActivity extends AppCompatActivity {
     }
 
     void SaveDetialsVocher(int x) {
-
+        Log.e("vocher_ItemsSize==",HomeActivity.vocher_Items.size()+"");
         for (int i = 0; i < HomeActivity.vocher_Items.size(); i++) {
             OrdersDetails ordersDetails = new OrdersDetails();
 
@@ -386,7 +383,7 @@ public class BasketActivity extends AppCompatActivity {
 
 
             ordersDetailslist.add(ordersDetails);
-            Log.e("ordersDetailslist==",ordersDetailslist.size()+"");
+            Log.e("hereordersDetailslist==",ordersDetailslist.size()+"");
 
         }
 
