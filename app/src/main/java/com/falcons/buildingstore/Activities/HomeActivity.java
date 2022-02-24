@@ -100,7 +100,7 @@ public class HomeActivity extends AppCompatActivity {
         if(HomeActivity.vocher_Items.size() ==0)
 
         {
-           
+
             allItemList_rv = appDatabase.itemsDao().getAllItems();
 
             itemsAdapter = new ItemsAdapter(allItemList_rv, HomeActivity.this);
