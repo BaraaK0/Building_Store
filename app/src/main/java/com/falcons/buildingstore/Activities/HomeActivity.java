@@ -59,7 +59,7 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
-    public static List<Item> allItemList_rv;
+    public static List<Item> allItemList_rv= new ArrayList<>();;
     private List<Item> search_itemList;
 
 
@@ -97,8 +97,21 @@ public class HomeActivity extends AppCompatActivity {
 
         /*  Initialize Items  */
 
-        if(HomeActivity.vocher_Items.size() ==0) {
+        if(HomeActivity.vocher_Items.size() ==0)
+
+        {
+           
             allItemList_rv = appDatabase.itemsDao().getAllItems();
+
+            itemsAdapter = new ItemsAdapter(allItemList_rv, HomeActivity.this);
+            itemsRecycler.setAdapter(itemsAdapter);
+            itemsRecycler.setSaveEnabled(true);
+            Log.e("allItemList_rv",allItemList_rv.size()+"");
+
+        }
+        else
+        {
+
 
             itemsAdapter = new ItemsAdapter(allItemList_rv, HomeActivity.this);
             itemsRecycler.setAdapter(itemsAdapter);
@@ -267,7 +280,7 @@ public class HomeActivity extends AppCompatActivity {
         searchItemsEdt = findViewById(R.id.searchItemsEdt);
         searchItems_textField = findViewById(R.id.searchItems_textField);
 
-        allItemList_rv = new ArrayList<>();
+
         search_itemList = new ArrayList<>();
 
         badge = bottom_navigation.getOrCreateBadge(R.id.action_cart);
