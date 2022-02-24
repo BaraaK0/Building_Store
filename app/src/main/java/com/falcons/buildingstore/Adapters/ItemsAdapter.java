@@ -274,10 +274,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                     Log.e("vocher_Items=", vocher_Items.size() + "");
                     if (vocher_Items.size() == 0) {
                         vocher_Items.add(itemsList.get(position));
-                        item_count++;
                         badge.setNumber(vocher_Items.size());
-                        HomeActivity.itemcount.setText(item_count + "");
-                        HomeActivity.vocher_Items.add(itemsList.get(position));
+
                         //  HomeActivity.  FillrecyclerView_Items(context,HomeActivity. vocher_Items);
 
                     } else {
@@ -291,9 +289,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                             HomeActivity.vocher_Items.add(itemsList.get(position));
                             Log.e("case2vocher_Items=", vocher_Items.size() + "");
                             vocher_Items.add(itemsList.get(position));
-                            item_count++;
                             badge.setNumber(vocher_Items.size());
-                            HomeActivity.itemcount.setText(item_count + "");
                             //      HomeActivity.voherItemAdapter.notifyItemInserted(HomeActivity.vocher_Items.size() - 1);
                         } else // item already added
                         {
@@ -303,6 +299,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                             itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()));
                             itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
                             HomeActivity.vocher_Items.add(itemsList.get(position));
+
                             Log.e("case3vocher_Items=", vocher_Items.size() + "");
 
                             //   HomeActivity.voherItemAdapter.notifyItemChanged(index);
@@ -312,11 +309,11 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
                     }
 
-                } else
-                    holder.itemQtyEdt.setError(context.getResources().getString(R.string.Empty));
+                }
 
 
-            }
+            }else
+                holder.itemQtyEdt.setError(context.getResources().getString(R.string.Empty));
         }
     }
 
@@ -325,7 +322,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         for (int i = 0; i < vocher_Items.size(); i++)
             if (vocher_Items.get(i).getItemNCode().equals(ItemNCode)) {
                 index = i;
-                HomeActivity.item_count-=itemsList.get(i).getQty();
                 return true;
 
             }

@@ -102,13 +102,6 @@ public class BasketActivity extends AppCompatActivity {
         orderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (vocher_Items.size() != 0) {
-                    SaveMasterVocher(1);
-                    SaveDetialsVocher(1);
-                    generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
-                } else {
-                    generalMethod.showSweetDialog(BasketActivity.this, 3, getResources().getString(R.string.fillbasket), "");
-                    String selectedCustomer = customerTv.getText().toString().trim();
 
 
                     if (HomeActivity.vocher_Items.size() != 0) {
@@ -144,16 +137,7 @@ public class BasketActivity extends AppCompatActivity {
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (vocher_Items.size() != 0) {
-
-                    SaveMasterVocher(2);
-                    SaveDetialsVocher(2);
-                    generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
-                } else {
-                    generalMethod.showSweetDialog(BasketActivity.this, 3, getResources().getString(R.string.fillbasket), "");
-                    String selectedCustomer = customerTv.getText().toString().trim();
-
-
+        
 
                     if (HomeActivity.vocher_Items.size() != 0) {
 
