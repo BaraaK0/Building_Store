@@ -138,8 +138,8 @@ public class BasketActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                String selectedCustomer = customerTv.getText().toString().trim();
 
-                    String selectedCustomer = customerTv.getText().toString().trim();
 
 
 

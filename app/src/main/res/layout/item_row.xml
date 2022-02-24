@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/itemCard"
@@ -89,9 +89,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="gone">
+        android:visibility="visible">
 
-        <ImageButton
+<!--        <ImageButton
             android:id="@+id/addToCartBtn"
             android:layout_width="35dp"
             android:layout_height="35dp"
@@ -99,7 +99,7 @@
             android:translationZ="90dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/guideline3"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent" />-->
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline3"
@@ -561,6 +561,19 @@
 
 
                     </RadioGroup>
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/addToCartBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="37dp"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:text="@string/add"
+                        android:drawableStart="@android:drawable/ic_input_add"
+                        android:drawableTint="@color/white"
+                        android:background="@drawable/bg_btn"
+                        android:textColor="@color/white"
+                        android:layout_marginVertical="15dp"/>
 
 
                 </LinearLayout>

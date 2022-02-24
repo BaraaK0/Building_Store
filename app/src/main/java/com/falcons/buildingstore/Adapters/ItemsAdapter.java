@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -141,7 +142,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         holder.itemNameTV.setText(itemsList.get(currPosition).getItemName());
         holder.itemCodeTV.setText(itemsList.get(currPosition).getItemNCode());
         holder.itemKindTV.setText(itemsList.get(currPosition).getItemKind());
-        holder.itemTaxTV.setText(itemsList.get(currPosition).getTax()+"");
+        holder.itemTaxTV.setText(itemsList.get(currPosition).getTax() + "");
         holder.itemQtyEdt.setText(itemsList.get(currPosition).getQty() + "");
         holder.itemDiscEdt.setText(itemsList.get(currPosition).getDiscount() + "");
         holder.itemPriceTV.setText(String.valueOf(itemsList.get(currPosition).getPrice()));
@@ -223,7 +224,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         CircleImageView itemImage, expandBtn;
         TextView itemName;
         ConstraintLayout Dis_Layout;
-        ImageButton addToCartBtn;
+        Button addToCartBtn;
         ImageView itemImg2;
         TextView itemNameTV, itemCodeTV, itemKindTV, itemTaxTV, itemPriceTV, itemaviqtyTV;
         EditText itemDiscEdt, itemQtyEdt, itemAreaEdt;
@@ -256,7 +257,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     }
 
 
-
     public void addQTYandDis(int position, ViewHolder holder) {
         {
 
@@ -271,60 +271,61 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                     itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()));
                     itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
 
-                    Log.e("vocher_Items=", vocher_Items.size() + "");
 
+                    vocher_Items.add(itemsList.get(position));
+                    badge.setNumber(vocher_Items.size());
+
+                    //  HomeActivity.  FillrecyclerView_Items(context,HomeActivity. vocher_Items);
+
+
+                } else {
+                    if (!IsExistsInList(itemsList.get(position).getItemOCode())) // new item
+                    {
+
+                        itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()));
+                        itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
+
+                        Log.e("case2vocher_Items=", vocher_Items.size() + "");
                         vocher_Items.add(itemsList.get(position));
                         badge.setNumber(vocher_Items.size());
+                        //      HomeActivity.voherItemAdapter.notifyItemInserted(HomeActivity.vocher_Items.size() - 1);
+                    } else // item already added
+                    {
 
-                        //  HomeActivity.  FillrecyclerView_Items(context,HomeActivity. vocher_Items);
+                        Log.e("case3vocher_Items=", HomeActivity.vocher_Items.size() + "");
+                        HomeActivity.vocher_Items.remove(index);
+                        itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()));
+                        itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
+                        HomeActivity.vocher_Items.add(itemsList.get(position));
+                        badge.setNumber(vocher_Items.size());
+                        Log.e("case3vocher_Items=", vocher_Items.size() + "");
 
-                    } else {
-                        if (!IsExistsInList(itemsList.get(position).getItemNCode())) // new item
-                        {
+                        //   HomeActivity.voherItemAdapter.notifyItemChanged(index);
 
-                            itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()));
-                            itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
-
-                            Log.e("case2vocher_Items=", HomeActivity.vocher_Items.size() + "");
-                            HomeActivity.vocher_Items.add(itemsList.get(position));
-                            Log.e("case2vocher_Items=", vocher_Items.size() + "");
-                            badge.setNumber(vocher_Items.size());
-                            //      HomeActivity.voherItemAdapter.notifyItemInserted(HomeActivity.vocher_Items.size() - 1);
-                        } else // item already added
-                        {
-
-                            Log.e("case3vocher_Items=", HomeActivity.vocher_Items.size() + "");
-                            HomeActivity.vocher_Items.remove(index);
-                            itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()));
-                            itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
-                            HomeActivity.vocher_Items.add(itemsList.get(position));
-
-                            Log.e("case3vocher_Items=", vocher_Items.size() + "");
-
-                            //   HomeActivity.voherItemAdapter.notifyItemChanged(index);
-
-
-                        }
 
                     }
 
-                }else
+                }
+
+            } else
                 holder.itemQtyEdt.setError(context.getResources().getString(R.string.Empty));
 
 
-            }
-
+        }
     }
 
-    boolean IsExistsInList(String ItemNCode) {
+
+    boolean IsExistsInList(String ItemOCode) {
         index = 0;
+        boolean exists = false;
         for (int i = 0; i < vocher_Items.size(); i++)
-            if (vocher_Items.get(i).getItemNCode().equals(ItemNCode)) {
+            if (vocher_Items.get(i).getItemOCode().equals(ItemOCode)) {
                 index = i;
-                return true;
+                exists = true;
+                break;
 
             }
 
-        return false;
+        return exists;
     }
 }
