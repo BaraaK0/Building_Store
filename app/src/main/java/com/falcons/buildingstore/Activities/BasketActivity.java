@@ -131,13 +131,13 @@ public class BasketActivity extends AppCompatActivity {
                     }
 
                 }
-            }
+
         });
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-        
+
 
                     if (HomeActivity.vocher_Items.size() != 0) {
 
@@ -159,7 +159,7 @@ public class BasketActivity extends AppCompatActivity {
 
                     }
                 }
-            }
+
 
         });
 
