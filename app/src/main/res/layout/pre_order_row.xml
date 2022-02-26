@@ -71,16 +71,16 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="2.6"
-            android:gravity="center"
-            >
+            android:gravity="center">
 
-            <Button
+            <TextView
                 android:id="@+id/show"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:background="@drawable/ic_baseline_arrow_drop_down_circle_24"
-                android:gravity="top|center"
-                android:textSize="18sp" />
+                android:clickable="true"
+                android:focusable="true"/>
 
         </LinearLayout>
 
