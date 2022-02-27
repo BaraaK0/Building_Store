@@ -147,7 +147,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:fontFamily="@font/alegreya"
-                                    android:gravity="start"
+                                    android:gravity="center"
                                     android:lineHeight="19sp"
                                     android:text="@string/item_Name_"
                                     android:textColor="@color/primaryTextColor"
@@ -207,10 +207,31 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:fontFamily="@font/alegreya"
-                                    android:gravity="end"
+                                    android:gravity="center"
                                     android:lineHeight="19sp"
                                     android:text="@string/tax_"
                                     android:textColor="@color/primaryTextColor"
+                                    android:textSize="14sp" />
+
+                                <TextView
+                                    android:layout_width="150dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/alegreya"
+                                    android:gravity="center"
+                                    android:lineHeight="19sp"
+                                    android:text="@string/area_"
+                                    android:textColor="@color/primaryTextColor"
+                                    android:textSize="14sp" />
+                                <TextView
+                                    android:layout_width="20dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:fontFamily="@font/alegreya"
+                                    android:gravity="center"
+                                    android:lineHeight="19sp"
+                                  android:background="@drawable/ic_baseline_remove_circle_24"
+                                   android:visibility="invisible"
                                     android:textSize="14sp" />
 
 
@@ -242,11 +263,13 @@
                     android:layout_marginLeft="26dp"
                     android:layout_marginTop="10dp"
                     app:cardCornerRadius="10dp"
+                    android:visibility="invisible"
                     app:cardElevation="5dp">
 
                     <ImageButton
                         android:id="@+id/backBtn"
                         android:layout_width="46dp"
+
                         android:layout_height="46dp"
                         android:layout_alignParentStart="true"
                         android:layout_alignParentTop="true"

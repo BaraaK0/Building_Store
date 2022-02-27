@@ -292,9 +292,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                 Log.e("vocher_Items=", HomeActivity.vocher_Items.size() + "");
                 if (HomeActivity.vocher_Items.size() == 0) {
 
-                    itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()));
+                    itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString())/100);
                     itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
                     itemsList.get(position).setArea(holder.itemAreaEdt.getText().toString());
+                    itemsList.get(position).setAmount( itemsList.get(position).getPrice()* itemsList.get(position).getQty());
                     vocher_Items.add(itemsList.get(position));
                     badge.setNumber(vocher_Items.size());
 
@@ -305,9 +306,11 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                     if (!IsExistsInList(itemsList.get(position).getItemOCode())) // new item
                     {
 
-                        itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()));
+                        itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString())/100);
                         itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
                         itemsList.get(position).setArea(holder.itemAreaEdt.getText().toString());
+                        itemsList.get(position).setAmount( itemsList.get(position).getPrice()* itemsList.get(position).getQty());
+
                         Log.e("case2vocher_Items=", vocher_Items.size() + "");
                         vocher_Items.add(itemsList.get(position));
                         badge.setNumber(vocher_Items.size());
@@ -317,9 +320,11 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
                         Log.e("case3vocher_Items=", HomeActivity.vocher_Items.size() + "");
                         HomeActivity.vocher_Items.remove(index);
-                        itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()));
+                        itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString())/100);
                         itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
                         itemsList.get(position).setArea(holder.itemAreaEdt.getText().toString());
+                        itemsList.get(position).setAmount( itemsList.get(position).getPrice()* itemsList.get(position).getQty());
+
                         HomeActivity.vocher_Items.add(itemsList.get(position));
                         badge.setNumber(vocher_Items.size());
                         Log.e("case3vocher_Items=", vocher_Items.size() + "");

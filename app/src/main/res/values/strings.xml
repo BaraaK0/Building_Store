@@ -76,6 +76,8 @@
     <string name="home">Home</string>
     <string name="save_for_later">Save for later</string>
     <string name="user_already_exists">Username Already Exists !</string>
+    <string name="net_sales">Net Sales</string>
+
     <string name="item_list">Item List</string>
 
     <string name="export_data_msg">Do you want to export all data and get the new data\nfrom the server?</string>

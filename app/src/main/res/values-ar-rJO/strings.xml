@@ -70,6 +70,7 @@
     <string name="customer_name">اسم العميل:</string>
     <string name="save_for_later">حفظ لوقت لاحق</string>
     <string name="user_already_exists">اسم المستخدم موجود سابقاً !</string>
+    <string name="net_sales">الصافي</string>
     <string name="item_list">قائمة المواد</string>
 
     <string name="fillbasket">fill The basket with Items!!</string>

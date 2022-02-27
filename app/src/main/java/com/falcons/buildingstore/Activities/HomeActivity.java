@@ -32,6 +32,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.falcons.buildingstore.Database.AppDatabase;
@@ -88,7 +89,7 @@ public class HomeActivity extends AppCompatActivity {
     public static ArrayList<Item> itemList;
     public static ArrayList<Item> vocher_Items = new ArrayList<>();
     public static BadgeDrawable badge;
-
+    ImageButton backBtn;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -165,6 +166,13 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(HomeActivity.this,LoginActivity.class);
+                startActivity(intent);
+            }
+        });
         searchItems_textField.setEndIconOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -294,7 +302,7 @@ public class HomeActivity extends AppCompatActivity {
 
     void init() {
         exportData = new ExportData(HomeActivity.this);
-
+        backBtn = findViewById(R.id.backBtn);
         importData = new ImportData(this);
         appDatabase = AppDatabase.getInstanceDatabase(this);
 
@@ -334,5 +342,9 @@ public class HomeActivity extends AppCompatActivity {
                 Toast.makeText(this, "Camera permission denied !", Toast.LENGTH_LONG).show();
             }
         }
+    }
+    @Override
+    public void onBackPressed() {
+
     }
 }

@@ -9,10 +9,14 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.falcons.buildingstore.Activities.HomeActivity;
 import com.falcons.buildingstore.Database.Entities.Item;
 import com.falcons.buildingstore.R;
 
 import java.util.ArrayList;
+
+import static com.falcons.buildingstore.Activities.HomeActivity.badge;
+import static com.falcons.buildingstore.Activities.HomeActivity.vocher_Items;
 
 public class BasketItemAdapter extends RecyclerView.Adapter<BasketItemAdapter.VoherItemAdapterViewHolder> {
     ArrayList<Item> items;
@@ -40,6 +44,15 @@ public class BasketItemAdapter extends RecyclerView.Adapter<BasketItemAdapter.Vo
         holder.item_name.setText(items.get(position).getItemName());
         holder.itemNCode.setText(items.get(position).getItemNCode());
         holder.area.setText(items.get(position).getArea());
+
+        holder. reomveItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                HomeActivity.vocher_Items.remove(position);
+                notifyItemRemoved(position);
+                badge.setNumber(vocher_Items.size());
+            }
+        });
     }
 
     @Override
@@ -48,7 +61,7 @@ public class BasketItemAdapter extends RecyclerView.Adapter<BasketItemAdapter.Vo
     }
 
     class VoherItemAdapterViewHolder extends RecyclerView.ViewHolder {
-        TextView tax, discount, price, qty, item_name, itemNCode,area;
+        TextView tax, discount, price, qty, item_name, itemNCode,area,reomveItem;
 
         public VoherItemAdapterViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -59,6 +72,7 @@ public class BasketItemAdapter extends RecyclerView.Adapter<BasketItemAdapter.Vo
             item_name = itemView.findViewById(R.id.item_name);
             itemNCode = itemView.findViewById(R.id.itemNCode);
             area= itemView.findViewById(R.id.area);
+            reomveItem=itemView.findViewById(R.id.reomveItem);
         }
     }
 }

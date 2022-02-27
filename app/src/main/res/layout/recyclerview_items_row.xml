@@ -20,7 +20,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya"
-                android:gravity="start"
+                android:gravity="center"
                 android:lineHeight="19sp"
                 android:text="@string/item_Name_"
                 android:textColor="@color/black"
@@ -82,7 +82,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/alegreya"
-                android:gravity="end"
+                android:gravity="center"
                 android:lineHeight="19sp"
                 android:text="@string/tax_"
                 android:textColor="@color/black"
@@ -95,7 +95,20 @@
                 android:fontFamily="@font/alegreya"
                 android:gravity="center"
                 android:lineHeight="19sp"
-                android:text="@string/tax_"
+
+                android:textColor="@color/black"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/reomveItem"
+                android:layout_width="30dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/alegreya"
+                android:gravity="center"
+                android:lineHeight="19sp"
+                android:background="@drawable/ic_baseline_remove_circle_24"
+
                 android:textColor="@color/black"
                 android:textSize="14sp" />
         </LinearLayout>

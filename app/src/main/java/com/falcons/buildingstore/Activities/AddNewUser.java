@@ -345,4 +345,8 @@ public class AddNewUser extends AppCompatActivity {
 
 
     }
+    @Override
+    public void onBackPressed() {
+
+    }
 }

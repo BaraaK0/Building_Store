@@ -29,4 +29,7 @@ public interface OrdersDetails_Dao {
 
     @Query("UPDATE Orders_Details SET  IS_Posted='1' WHERE IS_Posted='0' ")
   int  updateVoucherDetails ();
+
+    @Query("delete from Orders_Details where VHFNO= :vohno")
+    int deleteOrderByVOHNO(int vohno);
 }

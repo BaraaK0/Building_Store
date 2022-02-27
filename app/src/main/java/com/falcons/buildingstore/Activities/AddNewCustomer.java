@@ -259,4 +259,8 @@ public class AddNewCustomer extends AppCompatActivity {
 
 
     }
+    @Override
+    public void onBackPressed() {
+
+    }
 }
