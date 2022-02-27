@@ -58,6 +58,7 @@ import java.io.IOException;
 import com.itextpdf.text.Document;
 
 import java.util.List;
+import java.util.Locale;
 
 import static com.itextpdf.text.Element.ALIGN_CENTER;
 import com.falcons.buildingstore.R;
@@ -245,7 +246,6 @@ public class PdfConverter {
 
             PdfPTable pdfPTable1 = new PdfPTable(4);
             pdfPTable1.setWidthPercentage(100f);
-            pdfPTable1.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
 
             String dateTime="";
             dateTime=generalMethod.getCurentTimeDate(1);
@@ -404,8 +404,10 @@ public class PdfConverter {
             cell.setMinimumHeight(10f);
         }
 
-        cell.setRunDirection(PdfWriter.RUN_DIRECTION_RTL); //for make arabic string from right to left ...
-
+        if (Locale.getDefault().getLanguage().equals("ar"))
+            cell.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
+        else
+            cell.setRunDirection(PdfWriter.RUN_DIRECTION_LTR);
 //        cell.setBackgroundColor(BaseColor.LIGHT_GRAY);
         //add the call to the table
         cell.setBorder(Rectangle.NO_BORDER);

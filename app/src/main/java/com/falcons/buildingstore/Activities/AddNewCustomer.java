@@ -10,7 +10,9 @@ import static com.falcons.buildingstore.Utilities.GeneralMethod.showSweetDialog;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -106,7 +108,32 @@ public class AddNewCustomer extends AppCompatActivity {
 
                     case R.id.exportdata:
 
-                        exportData.exportSalesVoucherM();
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        //Yes button clicked
+                                        exportData.exportSalesVoucherM();                                        dialog.dismiss();
+                                        break;
+
+
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        //No button clicked
+                                        dialog.dismiss();
+                                        break;
+
+                                }
+                            }
+                        };
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(AddNewCustomer.this);
+                        builder.setMessage(getString(R.string.export_data_msg))
+                                .setTitle(getString(R.string.export_data))
+                                .setPositiveButton(getString(R.string.yes), dialogClickListener)
+                                .setNegativeButton(getString(R.string.cancel), dialogClickListener)
+                                .show();
+
                         return true;
 
                     case R.id.action_report:

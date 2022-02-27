@@ -7,9 +7,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -162,8 +164,31 @@ public class ShowPreviousOrder extends AppCompatActivity {
 
                     case R.id.exportdata:
 
-                        exportData.exportSalesVoucherM();
-                        return true;
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        //Yes button clicked
+                                        exportData.exportSalesVoucherM();                                        dialog.dismiss();
+                                        break;
+
+
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        //No button clicked
+                                        dialog.dismiss();
+                                        break;
+
+                                }
+                            }
+                        };
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ShowPreviousOrder.this);
+                        builder.setMessage(getString(R.string.export_data_msg))
+                                .setTitle(getString(R.string.export_data))
+                                .setPositiveButton(getString(R.string.yes), dialogClickListener)
+                                .setNegativeButton(getString(R.string.cancel), dialogClickListener)
+                                .show();                        return true;
 
                     case R.id.action_report:
                         return true;

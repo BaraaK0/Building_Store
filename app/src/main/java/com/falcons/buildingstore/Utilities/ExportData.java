@@ -318,7 +318,7 @@ public class ExportData {
 
         pdVoucher = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
         pdVoucher.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
-        pdVoucher.setTitleText(" Start export Vouchers");
+        pdVoucher.setTitleText("Exporting Vouchers ..");
         pdVoucher.setCancelable(false);
         pdVoucher.show();
         new JSONTaskDelphi().execute();
