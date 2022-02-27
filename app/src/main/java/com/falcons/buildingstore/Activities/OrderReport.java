@@ -9,16 +9,23 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,9 +34,12 @@ import com.falcons.buildingstore.Adapters.OrderReportAdapter;
 import com.falcons.buildingstore.Database.AppDatabase;
 import com.falcons.buildingstore.Database.Entities.Item;
 import com.falcons.buildingstore.Database.Entities.OrdersDetails;
+import com.falcons.buildingstore.Database.Entities.UserLogs;
 import com.falcons.buildingstore.R;
+import com.falcons.buildingstore.Utilities.ExportData;
 import com.falcons.buildingstore.Utilities.GeneralMethod;
 import com.falcons.buildingstore.Utilities.PdfConverter;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.itextpdf.io.image.ImageData;
 import com.itextpdf.io.image.ImageDataFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
@@ -57,14 +67,19 @@ public class OrderReport extends AppCompatActivity {
     RecyclerView ordersDetalisRec;
     List<OrdersDetails> ordersDetails = new ArrayList<>();
     AppDatabase appDatabase;
-    TextView ORDERNO, Cus_name, date, total;
+    TextView ORDERNO, Cus_name, date, total,tax,netsales;
     Button Rep_order, print_order;
     public static String Cusname;
+  ExportData exportData;
+    Bundle bundle ;
     int VohNu;
     public ArrayList<Item> order_Items = new ArrayList<>();
     GeneralMethod generalMethod;
     // constant code for runtime permissions
     private static final int PERMISSION_REQUEST_CODE = 200;
+    BottomNavigationView bottom_navigation;
+    public static  int Report_VOHNO=0;
+    public static  String sendCus_name="";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +88,78 @@ public class OrderReport extends AppCompatActivity {
         try {
             layoutManager = new LinearLayoutManager(OrderReport.this);
             init();
+            bottom_navigation.setSelectedItemId(R.id.action_cart);
+
+            bottom_navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+                @Override
+                public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                    switch (item.getItemId()) {
+
+                        case R.id.action_home:
+
+                            startActivity(new Intent(getApplicationContext(), HomeActivity.class));
+                            overridePendingTransition(0, 0);
+                            return true;
+
+                        case R.id.action_cart:
+
+                            return true;
+
+                        case R.id.exportdata:
+
+                            exportData.exportSalesVoucherM();
+                            return true;
+
+                        case R.id.action_report:
+
+                            startActivity(new Intent(getApplicationContext(), ShowPreviousOrder.class));
+                            overridePendingTransition(0, 0);
+                            return true;
+
+                        case R.id.action_add:
+
+                            final Dialog dialog = new Dialog(OrderReport.this);
+                            dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                            dialog.setCancelable(true);
+                            dialog.setContentView(R.layout.adddailog);
+                            dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                            WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                            lp.copyFrom(dialog.getWindow().getAttributes());
+                            lp.width = (int) (getResources().getDisplayMetrics().widthPixels / 1.19);
+                            lp.gravity = Gravity.CENTER;
+                            dialog.getWindow().setAttributes(lp);
+                            dialog.show();
+
+                            UserLogs userLogs = appDatabase.userLogsDao().getLastuserLogin();
+
+                            int userType = appDatabase.usersDao().getUserType(userLogs.getUserName());
+                            if (userType == 0)
+                                dialog.findViewById(R.id.adduser).setVisibility(View.GONE);
+                            else
+                                dialog.findViewById(R.id.adduser).setVisibility(View.VISIBLE);
+
+                            dialog.findViewById(R.id.addCustomer).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    startActivity(new Intent(getApplicationContext(), AddNewCustomer.class));
+                                    overridePendingTransition(0, 0);
+                                    dialog.dismiss();
+                                }
+                            });
+                            dialog.findViewById(R.id.adduser).setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    startActivity(new Intent(getApplicationContext(), AddNewUser.class));
+                                    overridePendingTransition(0, 0);
+                                    dialog.dismiss();
+                                }
+                            });
+
+                            return true;
+                    }
+                    return false;
+                }
+            });
             Log.e("ordersDetails==", ordersDetails.size() + "");
             ordersDetails = appDatabase.ordersDetails_dao().getAllOrdersByNumber(VohNu);
             //    ordersDetails=appDatabase.ordersDetails_dao().getAllOrders();
@@ -101,41 +188,6 @@ public class OrderReport extends AppCompatActivity {
 
                     Log.e("Rep_order", "Rep_order");
 
-                    if (checkPermission()) {
-                        exportToPdf();
-                    }
-                 /*  if (Build.VERSION.SDK_INT >= 23) {
-                       if (OrderReport.this.checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
-                               && (OrderReport.this.checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
-                           try {
-                               createPdf2();
-                           } catch (FileNotFoundException e) {
-                               Log.e("FileNotFoundException",  e.getMessage());
-                           }
-                           Log.e("", "Permission is granted");
-                       } else {
-
-                           Log.e("", "Permission is revoked");
-                           ActivityCompat.requestPermissions(
-                                   OrderReport.this,
-                                   new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE},
-                                   1);
-                       }
-                   } else { // permission is automatically granted on sdk<23 upon
-                       // installation
-                       try {
-                           createPdf();
-                       } catch (FileNotFoundException e) {
-
-                           Log.e("FileNotFoundException",  e.getMessage());
-                       }
-                       Log.e("", "Permission is granted");
-                   }*/
-
-
-                    ////////
-
-
                     //1. fill Items List with qty and discount based on ordersDetails List
                     HomeActivity.vocher_Items.clear();
 
@@ -150,13 +202,18 @@ public class OrderReport extends AppCompatActivity {
                     //spinner customer will be set based on ordersDetails List
                     //{}
 
-                    Bundle bundle = new Bundle();
 
-                    bundle.putInt("Report_VOHNO", ordersDetails.get(0).getVhfNo());
+                            Report_VOHNO=ordersDetails.get(0).getVhfNo();
 
                     Intent intent = new Intent(OrderReport.this, BasketActivity.class);
+                /*    bundle = new Bundle();
+
+                    bundle.putInt("Report_VOHNO", ordersDetails.get(0).getVhfNo());
                     //  intent.putExtras(bundle);
+                    intent.putExtras(bundle);*/
                     startActivity(intent);
+                ;
+                    //
 
                 }
             });
@@ -186,12 +243,29 @@ public class OrderReport extends AppCompatActivity {
 
     void init() {
         ordersDetails.clear();
+        tax= findViewById(R.id.tax);
+       netsales= findViewById(R.id.netsales);
+
+
+        bottom_navigation = findViewById(R.id.bottom_navigation);
+        exportData=new ExportData(OrderReport.this);
         generalMethod = new GeneralMethod(OrderReport.this);
         Rep_order = findViewById(R.id.Rep_order);
         print_order = findViewById(R.id.print_order);
-        Bundle bundle = getIntent().getExtras();
-        VohNu = bundle.getInt("VOHNO");
-        Log.e("VOHNO==", VohNu + "");
+      try {
+          Bundle bundle = getIntent().getExtras();
+          VohNu = bundle.getInt("VOHNO");
+         double netsal = bundle.getDouble("netsale");
+          double   taxx = bundle.getDouble("tax");
+          Log.e("VOHNO==", VohNu + "");
+
+          tax.setText(taxx+"");
+          netsales.setText(netsal+"");
+
+      }catch (Exception exception){
+          Log.e("exception==", exception.getMessage() + "");
+      }
+
         appDatabase = AppDatabase.getInstanceDatabase(OrderReport.this);
         ordersDetalisRec = findViewById(R.id.ordersDetalisRec);
         total = findViewById(R.id.total);
@@ -368,5 +442,9 @@ public class OrderReport extends AppCompatActivity {
                 }
             }
         }
+    }
+    @Override
+    public void onBackPressed() {
+
     }
 }

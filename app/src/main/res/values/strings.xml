@@ -76,7 +76,7 @@
     <string name="home">Home</string>
     <string name="save_for_later">Save for later</string>
     <string name="user_already_exists">Username Already Exists !</string>
-
+    <string name="net_sales">Net Sales</string>
     fillbasket
     <string-array name="user_type">
         <item>Admin</item>

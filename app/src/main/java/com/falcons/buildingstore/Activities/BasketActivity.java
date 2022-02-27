@@ -38,7 +38,6 @@ import com.falcons.buildingstore.R;
 import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.card.MaterialCardView;
-import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
@@ -67,6 +66,7 @@ public class BasketActivity extends AppCompatActivity {
     private BadgeDrawable badge;
     private ArrayList<OrdersDetails> ordersDetailslist =new ArrayList<>();
     String Cus_selection;
+    int VOHNO=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,9 +75,11 @@ public class BasketActivity extends AppCompatActivity {
         fillListAdapter();
 
 
-        customerTv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+         customerTv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long rowId) {
                 Cus_selection = (String) parent.getItemAtPosition(position);
+
+
                 customer_textInput.setError(null);
             }
         });
@@ -98,6 +100,25 @@ public class BasketActivity extends AppCompatActivity {
                 this, android.R.layout.simple_dropdown_item_1line, customerNames);
 
         customerTv.setAdapter(customersAdapter);
+
+
+
+        try {
+            if(OrderReport.Report_VOHNO!=0){
+                Log.e("OrderReport.Cusname=",OrderReport.Cusname);
+                for(int i=0;i<customerNames.size();i++)
+                    if(customerNames.get(i).trim().equals(OrderReport.Cusname.trim()))
+                    {   Log.e("i=",i+"");
+                        customerTv.setText(customerTv.getAdapter().getItem(i).toString(), false);
+
+                        }
+
+            }
+        }catch (Exception exception){
+            Log.e("exception",exception.getMessage());
+        }
+
+
 
         orderBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -179,13 +200,21 @@ public class BasketActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
+
             }
         });
     }
 
 
     void init() {
+        //Get the bundle
+        Bundle bundle = getIntent().getExtras();
+
+        //Extract the data…
+ /*   VOHNO = bundle.getInt("Report_VOHNO");
+        Log.e("VOHNO",VOHNO+"");*/
+
+
 
         appDatabase = AppDatabase.getInstanceDatabase(BasketActivity.this);
         exportData = new ExportData(BasketActivity.this);
@@ -324,20 +353,38 @@ public class BasketActivity extends AppCompatActivity {
             orderMaster.setConfirmState(1);
         else
             orderMaster.setConfirmState(0);
-        appDatabase.ordersMasterDao().insertOrder(orderMaster);
 
-        int vohno = appDatabase.ordersMasterDao().getLastVoherNo();
 
-        for (int l = 0; l < ordersDetailslist.size(); l++) {
-            ordersDetailslist.get(l).setVhfNo(vohno);
-            appDatabase.ordersDetails_dao().insertOrder(ordersDetailslist.get(l));
+        if(OrderReport.Report_VOHNO!=0){
+
+            orderMaster.setVhfNo(VOHNO);
+            appDatabase.ordersMasterDao().deleteOrderByVOHNO(OrderReport.Report_VOHNO);
+            appDatabase.ordersDetails_dao().deleteOrderByVOHNO(OrderReport.Report_VOHNO);
+            appDatabase.ordersMasterDao().insertOrder(orderMaster);
+
+            for (int l = 0; l < ordersDetailslist.size(); l++) {
+                ordersDetailslist.get(l).setVhfNo(VOHNO);
+                appDatabase.ordersDetails_dao().insertOrder(ordersDetailslist.get(l));
+            }
         }
+        else{
 
+
+            appDatabase.ordersMasterDao().insertOrder(orderMaster);
+
+            int vohno = appDatabase.ordersMasterDao().getLastVoherNo();
+
+            for (int l = 0; l < ordersDetailslist.size(); l++) {
+                ordersDetailslist.get(l).setVhfNo(vohno);
+                appDatabase.ordersDetails_dao().insertOrder(ordersDetailslist.get(l));
+            }
+        }
 
         ordersDetailslist.clear();
          HomeActivity.vocher_Items.clear();
         badge.setNumber(0);
              fillListAdapter();
+        OrderReport.Report_VOHNO=0;
     }
 
     void SaveDetialsVocher(int x) {
@@ -354,6 +401,8 @@ public class BasketActivity extends AppCompatActivity {
             ordersDetails.setTime(generalMethod.getCurentTimeDate(2));
             ordersDetails.setTax(HomeActivity.vocher_Items.get(i).getTax());
             ordersDetails.setAmount(HomeActivity.vocher_Items.get(i).getAmount());
+            ordersDetails.setTaxPercent(HomeActivity.vocher_Items.get(i).getTaxPercent());
+
             ordersDetails.setCustomerId(appDatabase.customersDao().getCustmByName(Cus_selection));
             ordersDetails.setIsPosted(0);
             ordersDetails.setArea(HomeActivity.vocher_Items.get(i).getArea());
@@ -368,8 +417,13 @@ public class BasketActivity extends AppCompatActivity {
             ordersDetails.setTax(HomeActivity.vocher_Items.get(i).getPrice()*HomeActivity.vocher_Items.get(i).getTaxPercent());
             double nettotal=(HomeActivity.vocher_Items.get(i).getPrice()*HomeActivity.vocher_Items.get(i).getPrice())-HomeActivity.vocher_Items.get(i).getDiscount();
             ordersDetails.setNetTotal(nettotal);
-       // ضريبة شاملة
+
+            Log.e("ordersDetails.getAmount()=",ordersDetails.getAmount()+"");
+            Log.e("ordersDetails.getTaxValue()=",ordersDetails.getTaxValue()+"");
+            Log.e("ordersDetails.getDiscount()=",ordersDetails.getDiscount()+"");
+            // ضريبة شاملة
             double subtotal=ordersDetails.getAmount()-ordersDetails.getTaxValue()-ordersDetails.getDiscount();
+           Log.e("subtotal",subtotal+"");
             ordersDetails.setSubtotal(subtotal);
             // ضريبة خاضعة
         /*    double subtotal=ordersDetails.getAmount()-ordersDetails.getDiscount();
@@ -403,10 +457,7 @@ public class BasketActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(getApplicationContext(), HomeActivity.class);
-        startActivity(intent);
-        overridePendingTransition(0, 0);
+
     }
 
 

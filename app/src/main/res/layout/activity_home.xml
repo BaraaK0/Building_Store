@@ -18,7 +18,28 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"
         android:background="@drawable/logo" />
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="46dp"
+        android:layout_height="46dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="26dp"
+        android:layout_marginTop="10dp"
+        app:cardCornerRadius="10dp"
 
+        app:cardElevation="5dp">
+
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="46dp"
+
+            android:layout_height="46dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@drawable/back_arrow"
+            android:elevation="10dp" />
+
+    </com.google.android.material.card.MaterialCardView>
     <ScrollView
         android:id="@+id/parentScroll"
         android:layout_width="match_parent"

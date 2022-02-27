@@ -696,4 +696,8 @@ public class LoginActivity extends AppCompatActivity {
         userLogs.setTime(generalMethod.getCurentTimeDate(2));
         appDatabase.userLogsDao().insertUser(userLogs);
     }
+    @Override
+    public void onBackPressed() {
+
+    }
 }

@@ -22,7 +22,7 @@ public interface OrdersMaster_Dao {
     void insertOrder(OrderMaster  orderMasters);
 
     @Delete
-    void deleteOrder(OrderMaster orderMaster);
+    void deleteOrderByVOHNO(OrderMaster orderMaster);
     @Query("UPDATE Orders_Master SET  IS_Posted='1' WHERE IS_Posted='0'")
     int updateVoucher();
 
@@ -42,5 +42,9 @@ public interface OrdersMaster_Dao {
 
     @Query("SELECT VHFNO FROM Orders_Master where VHFNO= (SELECT MAX(VHFNO) FROM Orders_Master) and IS_Posted='0'")
     int getLastVoherNo ( );
+    @Query("delete from Orders_Master where VHFNO= :vohno")
+    int deleteOrderByVOHNO(int vohno);
+
+
 
 }

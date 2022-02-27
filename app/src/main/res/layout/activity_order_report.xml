@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="5dp"
-        android:layout_weight="8.3"
+        android:layout_weight="8"
         android:orientation="horizontal">
 
         <TextView
@@ -125,7 +125,7 @@ android:layout_marginEnd="4dp"
 <HorizontalScrollView
         android:layout_width="match_parent"
         android:scrollbars="horizontal"
-        android:layout_weight="1.4"
+        android:layout_weight="1.8"
         android:fillViewport="true"
         android:layout_height="match_parent">
 
@@ -133,7 +133,7 @@ android:layout_marginEnd="4dp"
 <LinearLayout
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:layout_weight="1.4"
+    android:layout_weight="1.8"
     android:layout_height="match_parent">
 
 
@@ -197,14 +197,16 @@ android:layout_weight="9"
         android:layout_height="match_parent"
         android:layout_weight="9"
 
-        android:background="@color/primaryTextColor"
+        android:background="@color/gray_btn_bg_color"
         android:layout_width="match_parent">
         <TextView
             android:layout_height="match_parent"
             android:layout_width="match_parent"
-          android:textColor="@color/white"
+          android:textColor="@color/primaryTextColor"
             android:textSize="18sp"
             android:gravity="center"
+            android:visibility="gone"
+
             android:layout_weight="1"
             android:text="@string/total"/>
         <TextView
@@ -214,9 +216,57 @@ android:layout_weight="9"
             android:textSize="18sp"
             android:layout_weight="1"
             android:text="0.0"
+            android:visibility="gone"
             android:gravity="center"
             android:id="@+id/total"/>
+
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:text="@string/net_sales"/>
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:text="0.0"
+            android:gravity="center"
+            android:id="@+id/netsales"/>
+
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:textColor="@color/primaryTextColor"
+            android:textSize="18sp"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:text="@string/tax"/>
+        <TextView
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:textColor="@color/white"
+            android:textSize="18sp"
+            android:layout_weight="1"
+            android:text="0.0"
+            android:gravity="center"
+            android:id="@+id/tax"/>
+
     </TableRow>
 </LinearLayout>
 </HorizontalScrollView>
+    <include
+        android:id="@+id/bottom_navigation"
+        layout="@layout/bottom_nav_bar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
 </LinearLayout>
