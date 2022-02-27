@@ -11,7 +11,7 @@
     <string name="company_no">رقم الشركة</string>
     <string name="ip_settings">إعدادات الIP</string>
     <string name="ok">حسنًا</string>
-    <string name="cancel">إالغاء</string>
+    <string name="cancel">إلغاء</string>
     <string name="customerName">اسم العميل</string>
     <string name="required">*مطلوب</string>
     <string name="reqired_filled">مطلوب*</string>
@@ -71,8 +71,14 @@
     <string name="save_for_later">حفظ لوقت لاحق</string>
     <string name="user_already_exists">اسم المستخدم موجود سابقاً !</string>
     <string name="net_sales">الصافي</string>
+    <string name="item_list">قائمة المواد</string>
+
     <string name="fillbasket">fill The basket with Items!!</string>
     <string name="vocher">فاتورة</string>
+
+    <string name="export_data_msg">هل ترغب في تصدير كافة البيانات والحصول على البيانات جديدة \n من الخادم؟</string>
+    <string name="export_data">تصدير البيانات</string>
+
     <string-array name="user_type">
         <item>آدمن</item>
         <item>مستخدم عادي</item>
