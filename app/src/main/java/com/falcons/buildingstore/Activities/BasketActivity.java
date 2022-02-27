@@ -112,7 +112,7 @@ public class BasketActivity extends AppCompatActivity {
                     if(customerNames.get(i).trim().equals(OrderReport.Cusname.trim()))
                     {   Log.e("i=",i+"");
                         customerTv.setText(customerTv.getAdapter().getItem(i).toString(), false);
-
+                        Cus_selection =customerTv.getAdapter().getItem(i).toString();
                         }
 
             }

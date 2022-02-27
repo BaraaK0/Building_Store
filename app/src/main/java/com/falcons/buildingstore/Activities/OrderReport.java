@@ -373,44 +373,7 @@ public class OrderReport extends AppCompatActivity {
     }
 
 
-    private void createPdf() throws IOException, DocumentException {
-        String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).toString();
-        File file = new File(pdfPath, "Order_Report.pdf");
 
-        Log.e("createPdf", "createPdf");
-        OutputStream outputStream = new FileOutputStream(file);
-
-        Document document = new Document();
-
-        PdfWriter pdfWriter = PdfWriter.getInstance(document, outputStream);
-
-
-        Drawable drawable = AppCompatResources.getDrawable(this, R.drawable.logo);
-
-        assert drawable != null;
-        Bitmap bitmap = ((BitmapDrawable) drawable).getBitmap();
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-        byte[] bitmapData = stream.toByteArray();
-
-        Image image = Image.getInstance(bitmapData);
-        image.setAlignment(Element.ALIGN_CENTER);
-        image.scaleAbsolute(100, 100);
-
-//
-        Paragraph paragraph1 = new Paragraph("Transfers Report");
-        Paragraph paragraph2 = new Paragraph("Date: " + generalMethod.getCurentTimeDate(1));
-
-        document.add(image);
-        document.add(paragraph1);
-        document.add(paragraph2);
-//                .add(paragraph3)
-//                .add(table);
-//
-        document.close();
-//
-        Toast.makeText(this, "PDF Created", Toast.LENGTH_LONG).show();
-    }
 
     private boolean checkPermission() {
         // checking of permissions.
