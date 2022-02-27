@@ -40,15 +40,7 @@ import com.falcons.buildingstore.Utilities.ExportData;
 import com.falcons.buildingstore.Utilities.GeneralMethod;
 import com.falcons.buildingstore.Utilities.PdfConverter;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.itextpdf.io.image.ImageData;
-import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.Image;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Table;
+
 import com.google.firebase.inappmessaging.model.ImageData;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
