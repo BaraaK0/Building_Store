@@ -168,8 +168,7 @@ public class AddNewCustomer extends AppCompatActivity {
             customerInfo.setCustomerName(cus_name.getText().toString().trim());
             customerInfo.setPhoneNo(phoneNo.getText().toString().trim());
             appDatabase.customersDao().insertCustm(customerInfo);
-            ArrayList<CustomerInfo> customers = new ArrayList<>();
-            customers.add(customerInfo);
+            List<CustomerInfo> customers = appDatabase.customersDao().getUnpostedCust();
             exportData.addCustomer(customers, new ExportData.AddCustCallBack() {
                 @Override
                 public void onResponse(String response) {

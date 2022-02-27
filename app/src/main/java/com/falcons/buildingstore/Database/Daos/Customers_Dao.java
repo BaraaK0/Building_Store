@@ -29,6 +29,9 @@ public interface Customers_Dao {
     @Query("UPDATE Customers_Info SET Is_Posted = '1' WHERE Is_Posted = '0'")
     void setPosted();
 
+    @Query("SELECT * FROM customers_info WHERE Is_Posted = '0'")
+    List<CustomerInfo> getUnpostedCust();
+
     @Delete
     void deleteCustomer(CustomerInfo customerInfo);
 

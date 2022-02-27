@@ -49,11 +49,21 @@ import com.itextpdf.layout.element.Cell;
 import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
+import com.google.firebase.inappmessaging.model.ImageData;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfDocument;
+import com.itextpdf.text.pdf.PdfWriter;
+
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -294,7 +304,7 @@ public class OrderReport extends AppCompatActivity {
 
 
         PdfConverter pdf = new PdfConverter(OrderReport.this);
-        pdf.exportListToPdf(ordersDetails, "Vocher", "", 1);
+        pdf.exportListToPdf(ordersDetails, "Voucher", "", 1);
 
 
     }
@@ -371,16 +381,17 @@ public class OrderReport extends AppCompatActivity {
     }
 
 
-    private void createPdf() throws FileNotFoundException {
+    private void createPdf() throws IOException, DocumentException {
         String pdfPath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS).toString();
         File file = new File(pdfPath, "Order_Report.pdf");
+
         Log.e("createPdf", "createPdf");
         OutputStream outputStream = new FileOutputStream(file);
-        PdfWriter pdfWriter = new PdfWriter(file);
-        Log.e("pdfWriter", "pdfWriter" + pdfWriter.getOutputStream());
-        PdfDocument pdfDocument = new PdfDocument(pdfWriter);
 
-        Document document = new Document(pdfDocument);
+        Document document = new Document();
+
+        PdfWriter pdfWriter = PdfWriter.getInstance(document, outputStream);
+
 
         Drawable drawable = AppCompatResources.getDrawable(this, R.drawable.logo);
 
@@ -390,18 +401,17 @@ public class OrderReport extends AppCompatActivity {
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] bitmapData = stream.toByteArray();
 
-        ImageData imageData = ImageDataFactory.create(bitmapData);
-        Image image = new Image(imageData);
-        image.setHeight(100);
-        image.setWidth(100);
+        Image image = Image.getInstance(bitmapData);
+        image.setAlignment(Element.ALIGN_CENTER);
+        image.scaleAbsolute(100, 100);
 
 //
-        Paragraph paragraph1 = new Paragraph("Transfers Report").setBold();
+        Paragraph paragraph1 = new Paragraph("Transfers Report");
         Paragraph paragraph2 = new Paragraph("Date: " + generalMethod.getCurentTimeDate(1));
 
-        document.add(image)
-                .add(paragraph1)
-                .add(paragraph2);
+        document.add(image);
+        document.add(paragraph1);
+        document.add(paragraph2);
 //                .add(paragraph3)
 //                .add(table);
 //

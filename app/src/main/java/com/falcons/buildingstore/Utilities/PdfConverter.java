@@ -61,11 +61,13 @@ import java.util.List;
 
 import static com.itextpdf.text.Element.ALIGN_CENTER;
 import com.falcons.buildingstore.R;
+import com.itextpdf.text.pdf.draw.LineSeparator;
+
 public class PdfConverter {
     private Context context;
     com.itextpdf.text.Document doc;
     File file;
-    com.itextpdf.text.pdf.PdfWriter docWriter = null;
+    PdfWriter docWriter = null;
     //    PDFView pdfView;
     File pdfFileName;
     BaseFont base;
@@ -74,7 +76,7 @@ public class PdfConverter {
 
     {
         try {
-            base = BaseFont.createFont("assets/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            base = BaseFont.createFont("res/font/arial.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
         } catch (DocumentException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -239,18 +241,25 @@ public class PdfConverter {
 
             insertCell(pdfPTable0, context.getString(R.string.vocher) , ALIGN_CENTER, 7, arabicFontHeaderprint, BaseColor.BLACK);
             insertCell(pdfPTable0, "ARTIC" , ALIGN_CENTER, 7, arabicFontHeaderprint, BaseColor.BLACK);
-
             insertCell(pdfPTable0, "0786971098" , ALIGN_CENTER, 7, arabicFontHeaderprint, BaseColor.BLACK);
+
+            PdfPTable pdfPTable1 = new PdfPTable(4);
+            pdfPTable1.setWidthPercentage(100f);
+            pdfPTable1.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
+
             String dateTime="";
             dateTime=generalMethod.getCurentTimeDate(1);
-            insertCell(pdfPTable0, context.getString(R.string.date) + " : " + dateTime, Element.ALIGN_RIGHT, 7, arabicFontHeader, BaseColor.BLACK);
-            insertCell(pdfPTable0, context.getString(R.string.VoHNO) + " : " + list.get(0).getVhfNo(), Element.ALIGN_RIGHT, 7, arabicFontHeader, BaseColor.BLACK);
-            insertCell(pdfPTable0, context.getString(R.string.customerName) + " : " + OrderReport.Cusname, Element.ALIGN_RIGHT, 7, arabicFontHeader, BaseColor.BLACK);
+            insertCell(pdfPTable1, context.getString(R.string.date) + " : " + dateTime, Element.ALIGN_BASELINE, 7, arabicFontHeader, BaseColor.BLACK);
+            insertCell(pdfPTable1, context.getString(R.string.VoHNO) + " : " + list.get(0).getVhfNo(), Element.ALIGN_BASELINE, 7, arabicFontHeader, BaseColor.BLACK);
+            insertCell(pdfPTable1, context.getString(R.string.customerName) + " : " + OrderReport.Cusname, Element.ALIGN_BASELINE, 7, arabicFontHeader, BaseColor.BLACK);
 
-            doc.add(  pdfPTable0);
+
+            doc.add(pdfPTable0);
             doc.add(new Paragraph("\n"));
             doc.add(new Paragraph("\n"));
-
+            doc.add(pdfPTable1);
+            doc.add(new Paragraph("\n"));
+            doc.add(new Paragraph("\n"));
 
             PdfPTable pdfPTable = new PdfPTable(4);
             pdfPTable.setWidthPercentage(100f);
@@ -266,6 +275,7 @@ public class PdfConverter {
             insertCell(pdfPTable,context.getResources().getString(R.string.total) , ALIGN_CENTER, 1, arabicFont, BaseColor.BLACK);
 
             doc.add(  pdfPTable);
+            doc.add(new LineSeparator());
 
             //////////////////
             PdfPTable pdfPTable3 = new PdfPTable(4);
@@ -300,9 +310,9 @@ public class PdfConverter {
 //            PdfPCell cell8 = new PdfPCell(new Paragraph( context.getString(R.string.discount_value) + " : " +  PrintVoucher.vouchPrinted.getVoucherDiscount(),arabicFontHeaderprint));
 
       //      PdfPCell cell9 = new PdfPCell(new Paragraph(context.getString(R.string.net_sales) + " : " +  PrintVoucher.vouchPrinted.getNetSales(),arabicFontHeaderprint));
-            PdfPCell cell10 = new PdfPCell(new Paragraph("استلمت البضاعة كاملة و بحالة جيدة وخالية من اية عيوب واتعهد بدفع قيمة هذه الفاتورة .",arabicFontHeaderprint));
+            PdfPCell cell10 = new PdfPCell(new Paragraph("استلمت البضاعة كاملة و بحالة جيدة وخالية من أية عيوب وأتعهد بدفع قيمة هذه الفاتورة.",arabicFontHeaderprint));
             PdfPCell cell11 = new PdfPCell(new Paragraph("المستلم : ", arabicFontHeaderprint));
-            PdfPCell cell12 = new PdfPCell(new Paragraph("التوقيع :",arabicFontHeaderprint));
+            PdfPCell cell12 = new PdfPCell(new Paragraph("التوقيع : ",arabicFontHeaderprint));
 
             cell10.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
             cell11.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
@@ -319,7 +329,15 @@ public class PdfConverter {
             table2.addCell(cell11);
             table2.addCell(cell12);
 
-            doc.add(table2);
+            table2.setTotalWidth(doc.right(doc.rightMargin())
+                    - doc.left(doc.leftMargin()));
+
+            table2.writeSelectedRows(0, -1,
+                    doc.left(doc.leftMargin()),
+                    table2.getTotalHeight() + doc.bottom(doc.bottomMargin()),
+                    docWriter.getDirectContent());
+
+//            doc.add(table2);
 
             Log.e("path44", "" + targetPdf);
             pdfFileName = path;
@@ -336,7 +354,7 @@ public class PdfConverter {
         PdfPTable pdfPTableHeader = new PdfPTable(7);
         pdfPTableHeader.setWidthPercentage(100f);
         pdfPTableHeader.setSpacingAfter(20);
-        pdfPTableHeader.setRunDirection(com.itextpdf.text.pdf.PdfWriter.RUN_DIRECTION_LTR);
+        pdfPTableHeader.setRunDirection(com.itextpdf.text.pdf.PdfWriter.RUN_DIRECTION_RTL);
   //      insertCell(pdfPTableHeader, headerDate, ALIGN_CENTER, 7, arabicFontHeader, BaseColor.BLACK);
         if(reportType!=1)   insertCell(pdfPTableHeader, context.getString(R.string.date) + " : " + date, Element.ALIGN_LEFT, 7, arabicFontHeader, BaseColor.BLACK);
 

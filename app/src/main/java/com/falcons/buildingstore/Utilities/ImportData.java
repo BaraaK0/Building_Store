@@ -5,9 +5,7 @@ import static com.falcons.buildingstore.Activities.LoginActivity.CONO_PREF;
 import static com.falcons.buildingstore.Activities.LoginActivity.IP_PREF;
 import static com.falcons.buildingstore.Activities.LoginActivity.PORT_PREF;
 import static com.falcons.buildingstore.Activities.LoginActivity.SETTINGS_PREFERENCES;
-import static com.falcons.buildingstore.Activities.LoginActivity.coNoEdt;
-import static com.falcons.buildingstore.Activities.LoginActivity.ipEdt;
-import static com.falcons.buildingstore.Activities.LoginActivity.portEdt;
+
 
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;

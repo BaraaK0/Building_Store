@@ -48,7 +48,7 @@ import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
 
 public class LoginActivity extends AppCompatActivity {
 
-    public static TextInputEditText ipEdt, portEdt, coNoEdt;
+    private TextInputEditText ipEdt, portEdt, coNoEdt;
     public List<Item> allItemsList;
     private List<CustomerInfo> allCustomers;
     private List<User> allUsers;
@@ -421,8 +421,8 @@ public class LoginActivity extends AppCompatActivity {
                                             item.setItemKind(itemsArray.getJSONObject(i).getString("ItemK"));
                                             item.setPrice(Double.parseDouble(itemsArray.getJSONObject(i).getString("MINPRICE")));
                                             item.setCategoryId(itemsArray.getJSONObject(i).getString("CATEOGRYID"));
-                                              item.setTax(Double.parseDouble(itemsArray.getJSONObject(i).getString("TAXPERC")));
-                                            item.setTaxPercent(Double.parseDouble(itemsArray.getJSONObject(i).getString("TAXPERC"))/100);
+                                            item.setTax(Double.parseDouble(itemsArray.getJSONObject(i).getString("TAXPERC")));
+                                            item.setTaxPercent(Double.parseDouble(itemsArray.getJSONObject(i).getString("TAXPERC")) / 100);
                                             allItemsList.add(item);
 
                                         }
@@ -482,12 +482,10 @@ public class LoginActivity extends AppCompatActivity {
                                                     appDatabase.usersDao().addAll(allUsers);
 
 
-
                                                 }
 
                                                 @Override
                                                 public void onError(String error) {
-
 
 
                                                 }
@@ -526,12 +524,10 @@ public class LoginActivity extends AppCompatActivity {
                                                     appDatabase.usersDao().addAll(allUsers);
 
 
-
                                                 }
 
                                                 @Override
                                                 public void onError(String error) {
-
 
 
                                                 }
@@ -595,12 +591,10 @@ public class LoginActivity extends AppCompatActivity {
                                                     appDatabase.usersDao().addAll(allUsers);
 
 
-
                                                 }
 
                                                 @Override
                                                 public void onError(String error) {
-
 
 
                                                 }
@@ -639,12 +633,10 @@ public class LoginActivity extends AppCompatActivity {
                                                     appDatabase.usersDao().addAll(allUsers);
 
 
-
                                                 }
 
                                                 @Override
                                                 public void onError(String error) {
-
 
 
                                                 }

@@ -6,11 +6,11 @@
     <application
         android:allowBackup="false"
 
-        android:icon="@mipmap/ic_logo"
+        android:icon="@mipmap/ic_logo_new"
         android:largeHeap="true"
         android:requestLegacyExternalStorage="true"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_logo"
+        android:roundIcon="@mipmap/ic_logo_new_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BuildingStore"
         android:usesCleartextTraffic="true"
