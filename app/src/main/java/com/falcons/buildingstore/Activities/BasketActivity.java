@@ -382,13 +382,13 @@ public class BasketActivity extends AppCompatActivity {
 
         if(OrderReport.Report_VOHNO!=0){
 
-            orderMaster.setVhfNo(VOHNO);
+            orderMaster.setVhfNo(OrderReport.Report_VOHNO);
             appDatabase.ordersMasterDao().deleteOrderByVOHNO(OrderReport.Report_VOHNO);
             appDatabase.ordersDetails_dao().deleteOrderByVOHNO(OrderReport.Report_VOHNO);
             appDatabase.ordersMasterDao().insertOrder(orderMaster);
 
             for (int l = 0; l < ordersDetailslist.size(); l++) {
-                ordersDetailslist.get(l).setVhfNo(VOHNO);
+                ordersDetailslist.get(l).setVhfNo(OrderReport.Report_VOHNO);
                 appDatabase.ordersDetails_dao().insertOrder(ordersDetailslist.get(l));
             }
         }
@@ -447,12 +447,12 @@ public class BasketActivity extends AppCompatActivity {
             Log.e("ordersDetails.getTaxValue()=",ordersDetails.getTaxValue()+"");
             Log.e("ordersDetails.getDiscount()=",ordersDetails.getDiscount()+"");
             // ضريبة شاملة
-            double subtotal=ordersDetails.getAmount()-ordersDetails.getTaxValue()-ordersDetails.getDiscount();
+          /*  double subtotal=ordersDetails.getAmount()-ordersDetails.getTaxValue()-ordersDetails.getDiscount();
            Log.e("subtotal",subtotal+"");
-            ordersDetails.setSubtotal(subtotal);
-            // ضريبة خاضعة
-        /*    double subtotal=ordersDetails.getAmount()-ordersDetails.getDiscount();
             ordersDetails.setSubtotal(subtotal);*/
+            // ضريبة خاضعة
+           double subtotal=ordersDetails.getAmount()-ordersDetails.getDiscount();
+            ordersDetails.setSubtotal(subtotal);
 
 
 
