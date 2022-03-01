@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.Manifest;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -39,6 +41,7 @@ import com.falcons.buildingstore.R;
 import com.falcons.buildingstore.Utilities.ExportData;
 import com.falcons.buildingstore.Utilities.GeneralMethod;
 import com.falcons.buildingstore.Utilities.PdfConverter;
+import com.google.android.material.badge.BadgeDrawable;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import com.google.firebase.inappmessaging.model.ImageData;
@@ -62,6 +65,7 @@ import java.util.List;
 
 import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
+import static com.falcons.buildingstore.Activities.HomeActivity.vocher_Items;
 
 public class OrderReport extends AppCompatActivity {
     OrderReportAdapter orderReportAdapter;
@@ -90,7 +94,10 @@ public class OrderReport extends AppCompatActivity {
         try {
             layoutManager = new LinearLayoutManager(OrderReport.this);
             init();
-            bottom_navigation.setSelectedItemId(R.id.action_cart);
+            BadgeDrawable badge = bottom_navigation.getOrCreateBadge(R.id.action_cart);
+            badge.setVisible(true);
+            badge.setNumber(vocher_Items.size());
+            bottom_navigation.setSelectedItemId(R.id.action_report);
 
             bottom_navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
@@ -105,11 +112,37 @@ public class OrderReport extends AppCompatActivity {
 
                         case R.id.action_cart:
 
+                            startActivity(new Intent(getApplicationContext(), BasketActivity.class));
+                            overridePendingTransition(0, 0);
                             return true;
 
                         case R.id.exportdata:
 
-                            exportData.exportSalesVoucherM();
+                            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    switch (which) {
+                                        case DialogInterface.BUTTON_POSITIVE:
+                                            //Yes button clicked
+                                            exportData.exportSalesVoucherM();                                        dialog.dismiss();
+                                            break;
+
+
+                                        case DialogInterface.BUTTON_NEGATIVE:
+                                            //No button clicked
+                                            dialog.dismiss();
+                                            break;
+
+                                    }
+                                }
+                            };
+
+                            AlertDialog.Builder builder = new AlertDialog.Builder(OrderReport.this);
+                            builder.setMessage(getString(R.string.export_data_msg))
+                                    .setTitle(getString(R.string.export_data))
+                                    .setPositiveButton(getString(R.string.yes), dialogClickListener)
+                                    .setNegativeButton(getString(R.string.cancel), dialogClickListener)
+                                    .show();
                             return true;
 
                         case R.id.action_report:

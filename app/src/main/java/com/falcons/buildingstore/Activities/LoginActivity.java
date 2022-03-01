@@ -417,7 +417,7 @@ public class LoginActivity extends AppCompatActivity {
                                             item.setItem_Name(itemsArray.getJSONObject(i).getString("NAME"));
                                             item.setItemNCode(itemsArray.getJSONObject(i).getString("BARCODE"));
                                             item.setItemOCode(itemsArray.getJSONObject(i).getString("ITEMNO"));
-                                            item.setImagePath(itemsArray.getJSONObject(i).getString("ITEMPICSPATH"));
+                                            item.setImagePath(itemsArray.getJSONObject(i).getString("ISAPIPIC"));
                                             item.setItemKind(itemsArray.getJSONObject(i).getString("ItemK"));
                                             item.setPrice(Double.parseDouble(itemsArray.getJSONObject(i).getString("MINPRICE")));
                                             item.setCategoryId(itemsArray.getJSONObject(i).getString("CATEOGRYID"));

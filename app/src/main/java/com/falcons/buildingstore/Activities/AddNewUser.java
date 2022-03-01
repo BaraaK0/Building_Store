@@ -60,7 +60,6 @@ public class AddNewUser extends AppCompatActivity {
     ImportData importData;
     private String ipAddress, port, coNo;
     private List<User> allUsers;
-    private BadgeDrawable badge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +98,7 @@ public class AddNewUser extends AppCompatActivity {
         bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
 
-        badge = bottomNavigationView.getOrCreateBadge(R.id.action_cart);
+        BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(R.id.action_cart);
         badge.setVisible(true);
         badge.setNumber(vocher_Items.size());
 

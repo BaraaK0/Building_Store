@@ -15,7 +15,7 @@ import com.falcons.buildingstore.R;
 
 import java.util.ArrayList;
 
-import static com.falcons.buildingstore.Activities.HomeActivity.badge;
+import static com.falcons.buildingstore.Activities.BasketActivity.badge;
 import static com.falcons.buildingstore.Activities.HomeActivity.vocher_Items;
 
 public class BasketItemAdapter extends RecyclerView.Adapter<BasketItemAdapter.VoherItemAdapterViewHolder> {
