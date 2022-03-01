@@ -80,9 +80,7 @@ public class BasketActivity extends AppCompatActivity {
          customerTv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long rowId) {
                 Cus_selection = (String) parent.getItemAtPosition(position);
-
-
-                customer_textInput.setError(null);
+       customer_textInput.setError(null);
             }
         });
 
@@ -169,14 +167,18 @@ public class BasketActivity extends AppCompatActivity {
 
                 if (HomeActivity.vocher_Items.size() != 0) {
 
-                        if (customerNames.contains(selectedCustomer) && !selectedCustomer.equals("")) {
+                    if (customerNames.contains(selectedCustomer) && !selectedCustomer.equals("")) {
+                        customer_textInput.setError(null);
+//                        try {
                             SaveDetialsVocher(2);
-                            customer_textInput.setError(null);
                             SaveMasterVocher(2);
                             ordersDetailslist.clear();
                             HomeActivity.vocher_Items.clear();
                             fillListAdapter();
-
+//                        } catch (Exception exception) {
+//                            Log.e("exception==", exception.getMessage());
+//
+//                        }
 
                         HomeActivity.item_count = 0;
                         generalMethod.showSweetDialog(BasketActivity.this, 1, getResources().getString(R.string.savedSuccsesfule), "");
@@ -191,7 +193,6 @@ public class BasketActivity extends AppCompatActivity {
                     generalMethod.showSweetDialog(BasketActivity.this, 3, getResources().getString(R.string.fillbasket), "");
 
                 }
-
 
             }
 
@@ -359,21 +360,28 @@ public class BasketActivity extends AppCompatActivity {
         orderMaster.setDiscount(HomeActivity.vocher_Items.get(0).getDiscount());
         UserLogs userLogs = appDatabase.userLogsDao().getLastuserLogin();
         orderMaster.setUserNo(userLogs.getUserID());
+
         Log.e("netTotal444==",netTotal+"");
 
         orderMaster.setNetTotal(netTotal);
         Log.e("netTotal777==",orderMaster.getNetTotal()+"");
 
-        orderMaster.setTax(vocher_Items.get(0).getTax());
+
 
         double totalnetsales=0;
+        double totalqty=0;
+        double totaltax=0;
+        double subtotal=0;
         for (int x = 0; x < ordersDetailslist.size(); x++) {
+            totalqty+=ordersDetailslist.get(x).getQty();
             totalnetsales+= ordersDetailslist.get(x).getSubtotal()+ ordersDetailslist.get(x).getTax();
+            totaltax+= ordersDetailslist.get(x).getTaxValue();
+            subtotal+= ordersDetailslist.get(x).getSubtotal();
         }
-
+        orderMaster.setTotalQty(totalqty);
         orderMaster.setNetTotal(totalnetsales);
-
-
+        orderMaster.setTax(totaltax);
+        orderMaster.setSubTotal(subtotal);
         if (i == 1)
             orderMaster.setConfirmState(1);
         else
@@ -381,7 +389,7 @@ public class BasketActivity extends AppCompatActivity {
 
 
         if(OrderReport.Report_VOHNO!=0){
-
+            Log.e("Report_VOHNO==",OrderReport.Report_VOHNO+"");
             orderMaster.setVhfNo(OrderReport.Report_VOHNO);
             appDatabase.ordersMasterDao().deleteOrderByVOHNO(OrderReport.Report_VOHNO);
             appDatabase.ordersDetails_dao().deleteOrderByVOHNO(OrderReport.Report_VOHNO);
@@ -393,12 +401,8 @@ public class BasketActivity extends AppCompatActivity {
             }
         }
         else{
-
-
             appDatabase.ordersMasterDao().insertOrder(orderMaster);
-
             int vohno = appDatabase.ordersMasterDao().getLastVoherNo();
-
             for (int l = 0; l < ordersDetailslist.size(); l++) {
                 ordersDetailslist.get(l).setVhfNo(vohno);
                 appDatabase.ordersDetails_dao().insertOrder(ordersDetailslist.get(l));
@@ -424,7 +428,6 @@ public class BasketActivity extends AppCompatActivity {
             ordersDetails.setPrice(HomeActivity.vocher_Items.get(i).getPrice());
             ordersDetails.setDate(generalMethod.getCurentTimeDate(1));
             ordersDetails.setTime(generalMethod.getCurentTimeDate(2));
-            ordersDetails.setTax(HomeActivity.vocher_Items.get(i).getTax());
             ordersDetails.setAmount(HomeActivity.vocher_Items.get(i).getAmount());
             ordersDetails.setTaxPercent(HomeActivity.vocher_Items.get(i).getTaxPercent());
 
@@ -443,6 +446,7 @@ public class BasketActivity extends AppCompatActivity {
             double nettotal=(HomeActivity.vocher_Items.get(i).getPrice()*HomeActivity.vocher_Items.get(i).getPrice())-HomeActivity.vocher_Items.get(i).getDiscount();
             ordersDetails.setNetTotal(nettotal);
 
+            Log.e("ordersDetails.getarea",ordersDetails.getArea()+"");
             Log.e("ordersDetails.getAmount()=",ordersDetails.getAmount()+"");
             Log.e("ordersDetails.getTaxValue()=",ordersDetails.getTaxValue()+"");
             Log.e("ordersDetails.getDiscount()=",ordersDetails.getDiscount()+"");

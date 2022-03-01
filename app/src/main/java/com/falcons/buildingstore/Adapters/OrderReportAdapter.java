@@ -43,7 +43,7 @@ public class OrderReportAdapter extends RecyclerView.Adapter<OrderReportAdapter.
         holder.qty.setText(list.get(position).getQty() + "");
         holder.item_name.setText(list.get(position).getItemName());
         holder.itemNCode.setText(list.get(position).getItemNo());
-
+        holder.area.setText(list.get(position).getArea());
     }
 
     @Override
@@ -63,6 +63,7 @@ public class OrderReportAdapter extends RecyclerView.Adapter<OrderReportAdapter.
             qty = itemView.findViewById(R.id.qty);
             item_name = itemView.findViewById(R.id.item_name);
             itemNCode = itemView.findViewById(R.id.itemNCode);
+            area = itemView.findViewById(R.id.area);
         }
     }
 }

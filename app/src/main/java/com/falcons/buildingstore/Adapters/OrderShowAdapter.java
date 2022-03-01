@@ -72,6 +72,7 @@ List<OrderMaster>orderMasters;
                         bundle.putInt("VOHNO", ShowPreviousOrder.orderMasters.get(position).getVhfNo());
                         bundle.putDouble("netsale", ShowPreviousOrder.orderMasters.get(position).getNetTotal());
                         bundle.putDouble("tax", ShowPreviousOrder.orderMasters.get(position).getTax());
+                        bundle.putDouble("subtotal", ShowPreviousOrder.orderMasters.get(position).getSubTotal());
 
                         Intent intent = new Intent(context, OrderReport.class);
                         intent.putExtras(bundle);

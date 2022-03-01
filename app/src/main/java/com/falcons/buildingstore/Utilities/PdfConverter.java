@@ -19,6 +19,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
@@ -306,25 +307,24 @@ public class PdfConverter {
 
             PdfPTable table2 = new PdfPTable(1);
             table2.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
-//            PdfPCell cell7 = new PdfPCell(new Paragraph(context.getString(R.string.sub_total) + " : " +  PrintVoucher.vouchPrinted.getSubTotal(),arabicFontHeaderprint));
-//            PdfPCell cell8 = new PdfPCell(new Paragraph( context.getString(R.string.discount_value) + " : " +  PrintVoucher.vouchPrinted.getVoucherDiscount(),arabicFontHeaderprint));
 
-      //      PdfPCell cell9 = new PdfPCell(new Paragraph(context.getString(R.string.net_sales) + " : " +  PrintVoucher.vouchPrinted.getNetSales(),arabicFontHeaderprint));
-            PdfPCell cell10 = new PdfPCell(new Paragraph("استلمت البضاعة كاملة و بحالة جيدة وخالية من أية عيوب وأتعهد بدفع قيمة هذه الفاتورة.",arabicFontHeaderprint));
+            PdfPCell cell7 = new PdfPCell(new Paragraph(context.getString(R.string.net_sales) + " : " +OrderReport.netsal,arabicFontHeaderprint));
+            PdfPCell cell8 = new PdfPCell(new Paragraph(context.getString(R.string.Sub_total) + " : " +OrderReport.subtotal,arabicFontHeaderprint));
+             PdfPCell cell10 = new PdfPCell(new Paragraph("استلمت البضاعة كاملة و بحالة جيدة وخالية من أية عيوب وأتعهد بدفع قيمة هذه الفاتورة.",arabicFontHeaderprint));
             PdfPCell cell11 = new PdfPCell(new Paragraph("المستلم : ", arabicFontHeaderprint));
             PdfPCell cell12 = new PdfPCell(new Paragraph("التوقيع : ",arabicFontHeaderprint));
 
             cell10.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
             cell11.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
             cell12.setRunDirection(PdfWriter.RUN_DIRECTION_RTL);
-//
-//            cell7.setBorder(Rectangle.NO_BORDER);
-//            cell8.setBorder(Rectangle.NO_BORDER);
-       //     cell9.setBorder(Rectangle.NO_BORDER);
+
             cell10.setBorder(Rectangle.NO_BORDER);
             cell11.setBorder(Rectangle.NO_BORDER);
             cell12.setBorder(Rectangle.NO_BORDER);
-
+            cell7.setBorder(Rectangle.NO_BORDER);
+            cell8.setBorder(Rectangle.NO_BORDER);
+            table2.addCell(cell7);
+            table2.addCell(cell8);
             table2.addCell(cell10);
             table2.addCell(cell11);
             table2.addCell(cell12);

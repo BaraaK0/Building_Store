@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="60dp"
+    android:layout_height="50dp"
     android:orientation="vertical">
 
 
@@ -18,32 +18,32 @@
             android:padding="3dp"
             android:gravity="center"
             android:text="@string/itemNCode"
-            android:textSize="18sp"
-            android:textColor="@color/primaryTextColor"/>
+            android:textSize="12sp"
+            android:textColor="@color/black"/>
         <TextView android:layout_width="150dp"
             android:layout_height="match_parent"
             android:id="@+id/item_name"
             android:gravity="center"
-            android:textSize="18sp"
+            android:textSize="12sp"
             android:padding="3dp"
             android:text="@string/item_name"
-            android:textColor="@color/primaryTextColor"/>
+            android:textColor="@color/black"/>
         <TextView android:layout_width="150dp"
             android:layout_height="match_parent"
             android:text="@string/qty"
             android:gravity="center"
             android:id="@+id/qty"
-            android:textSize="18sp"
+            android:textSize="12sp"
             android:padding="3dp"
-            android:textColor="@color/primaryTextColor"/>
+            android:textColor="@color/black"/>
         <TextView android:layout_width="150dp"
             android:layout_height="match_parent"
             android:text="@string/price"
             android:id="@+id/price"
             android:gravity="center"
-            android:textSize="18sp"
+            android:textSize="12sp"
             android:padding="3dp"
-            android:textColor="@color/primaryTextColor"/>
+            android:textColor="@color/black"/>
 
         <TextView android:layout_width="150dp"
             android:layout_height="match_parent"
@@ -51,16 +51,25 @@
             android:gravity="center"
             android:text="@string/discount"
             android:padding="3dp"
-            android:textSize="18sp"
-            android:textColor="@color/primaryTextColor"/>
+            android:textSize="12sp"
+            android:textColor="@color/black"/>
         <TextView android:layout_width="150dp"
             android:layout_height="match_parent"
             android:text="@string/tax"
-            android:textSize="18sp"
+            android:textSize="12sp"
             android:padding="3dp"
             android:id="@+id/taxx"
             android:gravity="center"
-            android:textColor="@color/primaryTextColor"/>
+            android:textColor="@color/black"/>
+        <TextView android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:text="@string/tax"
+            android:textSize="12sp"
+            android:padding="3dp"
+            android:id="@+id/area"
+            android:gravity="center"
+            android:textColor="@color/black"/>
+
 
     </LinearLayout>
 

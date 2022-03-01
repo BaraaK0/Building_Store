@@ -82,7 +82,7 @@ public class OrderReport extends AppCompatActivity {
     BottomNavigationView bottom_navigation;
     public static  int Report_VOHNO=0;
     public static  String sendCus_name="";
-
+    public static double netsal,taxx,subtotal;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -195,11 +195,14 @@ public class OrderReport extends AppCompatActivity {
 
                     for (int i = 0; i < ordersDetails.size(); i++) {
                         for (int j = 0; j < HomeActivity.allItemList_rv.size(); j++)
-                            if (ordersDetails.get(i).getItemNo().equals(HomeActivity.allItemList_rv.get(j).getItemNCode()))
-                                HomeActivity.allItemList_rv.get(i).setDiscount(ordersDetails.get(i).getDiscount());
-                        HomeActivity.allItemList_rv.get(i).setQty(ordersDetails.get(i).getQty());
-                        HomeActivity.vocher_Items.add(HomeActivity.allItemList_rv.get(i));
-                    }
+                            if (ordersDetails.get(i).getItemNo().equals(HomeActivity.allItemList_rv.get(j).getItemNCode())) {
+                                HomeActivity.allItemList_rv.get(j).setDiscount(ordersDetails.get(i).getDiscount());
+                                HomeActivity.allItemList_rv.get(j).setQty(ordersDetails.get(i).getQty());
+                                HomeActivity.allItemList_rv.get(j).setArea(ordersDetails.get(i).getArea());
+                                HomeActivity.vocher_Items.add(HomeActivity.allItemList_rv.get(j));
+
+
+                            } }
 
                     //spinner customer will be set based on ordersDetails List
                     //{}
@@ -257,8 +260,9 @@ public class OrderReport extends AppCompatActivity {
       try {
           Bundle bundle = getIntent().getExtras();
           VohNu = bundle.getInt("VOHNO");
-         double netsal = bundle.getDouble("netsale");
-          double   taxx = bundle.getDouble("tax");
+       netsal = bundle.getDouble("netsale");
+         taxx = bundle.getDouble("tax");
+          subtotal= bundle.getDouble("subtotal");
           Log.e("VOHNO==", VohNu + "");
 
           tax.setText(taxx+"");

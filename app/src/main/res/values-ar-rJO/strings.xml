@@ -78,7 +78,7 @@
 
     <string name="export_data_msg">هل ترغب في تصدير كافة البيانات والحصول على البيانات جديدة \n من الخادم؟</string>
     <string name="export_data">تصدير البيانات</string>
-
+    <string name="Sub_total">المجموع الجزئي</string>
     <string-array name="user_type">
         <item>آدمن</item>
         <item>مستخدم عادي</item>
