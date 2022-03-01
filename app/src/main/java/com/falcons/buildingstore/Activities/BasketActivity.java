@@ -65,7 +65,7 @@ public class BasketActivity extends AppCompatActivity {
     private List<CustomerInfo> allCustomers;
     private ArrayList<String> customerNames;
     private MaterialCardView basketListCard;
-    private BadgeDrawable badge;
+    public static BadgeDrawable badge;
     private ArrayList<OrdersDetails> ordersDetailslist =new ArrayList<>();
     String Cus_selection;
     int VOHNO=0;

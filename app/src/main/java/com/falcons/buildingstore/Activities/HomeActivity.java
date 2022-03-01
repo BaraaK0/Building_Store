@@ -97,6 +97,11 @@ public class HomeActivity extends AppCompatActivity {
 
         init();
 
+        itemsRecycler.setHasFixedSize(true);
+        itemsRecycler.setItemViewCacheSize(20);
+        itemsRecycler.setDrawingCacheEnabled(true);
+        itemsRecycler.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
+
 
         /*  Initialize Items  */
 

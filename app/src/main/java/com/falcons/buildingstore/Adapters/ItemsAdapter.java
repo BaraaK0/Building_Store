@@ -1,30 +1,27 @@
 package com.falcons.buildingstore.Adapters;
 
 
+import static android.content.Context.MODE_PRIVATE;
 import static com.falcons.buildingstore.Activities.HomeActivity.badge;
-import static com.falcons.buildingstore.Activities.HomeActivity.item_count;
 import static com.falcons.buildingstore.Activities.HomeActivity.itemsRecycler;
 import static com.falcons.buildingstore.Activities.HomeActivity.vocher_Items;
+import static com.falcons.buildingstore.Activities.LoginActivity.IP_PREF;
+import static com.falcons.buildingstore.Activities.LoginActivity.PORT_PREF;
+import static com.falcons.buildingstore.Activities.LoginActivity.SETTINGS_PREFERENCES;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.text.Editable;
+import android.content.SharedPreferences;
 import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import android.widget.RadioGroup;
@@ -32,6 +29,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.transition.TransitionManager;
 
@@ -40,7 +38,6 @@ import com.falcons.buildingstore.Database.AppDatabase;
 import com.falcons.buildingstore.Database.Entities.Item;
 import com.falcons.buildingstore.Database.Entities.UserLogs;
 import com.falcons.buildingstore.R;
-import com.google.android.material.badge.BadgeDrawable;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -50,12 +47,12 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> {
 
-    List<Item> itemsList;
-    Context context;
-    int mExpandedPosition = -1;
-    int previousExpandedPosition = -1;
-    int index = 0;
-    AppDatabase appDatabase;
+    private final List<Item> itemsList;
+    private final Context context;
+    private int mExpandedPosition = -1;
+    private int previousExpandedPosition = -1;
+    private int index = 0;
+    private final AppDatabase appDatabase;
 
     public ItemsAdapter(List<Item> itemsList, Context context) {
         this.itemsList = itemsList;
@@ -75,6 +72,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
+        holder.setIsRecyclable(false);
+
         final int currPosition = holder.getAdapterPosition();
 
         final boolean isExpanded = currPosition == mExpandedPosition;
@@ -88,98 +87,146 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             holder.parentLayout.setVisibility(View.VISIBLE);
         }
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        if (holder.parentLayout.getVisibility() == View.VISIBLE) {
+
+            holder.itemView.setOnClickListener(v -> {
                 mExpandedPosition = isExpanded ? -1 : currPosition;
                 TransitionManager.beginDelayedTransition(itemsRecycler);
 //                notifyItemChanged(previousExpandedPosition);
 //                notifyItemChanged(currPosition);
                 notifyDataSetChanged();
                 itemsRecycler.smoothScrollToPosition(currPosition);
+            });
+
+
+            if (!itemsList.get(currPosition).getImagePath().trim().equals("")) {
+
+                SharedPreferences sharedPref = context.getSharedPreferences(SETTINGS_PREFERENCES, MODE_PRIVATE);
+                String ipAddress = sharedPref.getString(IP_PREF, "");
+                String ipPort = sharedPref.getString(PORT_PREF, "");
+
+                /* TODO UNCOMMENT THIS */
+//            String imagePath = "http://" + ipAddress + ":" + ipPort + "/Falcons/IMG/" + itemsList.get(currPosition).getImagePath();
+                String imagePath = "http://10.0.0.22:8086/Falcons/IMG/" + itemsList.get(currPosition).getImagePath();
+
+                Picasso.get().load(imagePath).into(holder.itemImage);
+
+            } else {
+
+//            holder.itemImage.setBackgroundColor(context.getResources().getColor(R.color.white));
+
+                holder.itemImage.setImageDrawable(
+                        ResourcesCompat.getDrawable(context.getResources(), R.drawable.image_not_available, context.getTheme()));
+
             }
-        });
+
+            holder.itemName.setText(itemsList.get(currPosition).getItemName());
 
 
-        UserLogs userLogs = appDatabase.userLogsDao().getLastuserLogin();
+            if (TextUtils.getLayoutDirectionFromLocale(Locale.getDefault()) == View.LAYOUT_DIRECTION_RTL)
+                holder.expandBtn.setRotationY(180);
 
-        try {
-            int userPer = appDatabase.usersDao().getuserPer(userLogs.getUserName());
-            if (userPer == 0)
-                holder.Dis_Layout.setVisibility(View.GONE);
-            else
-                holder.Dis_Layout.setVisibility(View.VISIBLE);
-        } catch (NullPointerException e) {
+            holder.expandBtn.setOnClickListener(v -> {
+
+                mExpandedPosition = isExpanded ? -1 : currPosition;
+                TransitionManager.beginDelayedTransition(itemsRecycler);
+//                notifyItemChanged(previousExpandedPosition);
+//                notifyItemChanged(currPosition);
+                notifyDataSetChanged();
+                itemsRecycler.smoothScrollToPosition(currPosition);
+
+            });
 
         }
 
-        if (!itemsList.get(currPosition).getImagePath().equals(""))
-            Picasso.get().load(itemsList.get(currPosition).getImagePath()).fit().centerCrop().into(holder.itemImage);
-
-        holder.itemName.setText(itemsList.get(currPosition).getItemName());
-
-
-        if (TextUtils.getLayoutDirectionFromLocale(Locale.getDefault()) == View.LAYOUT_DIRECTION_RTL)
-            holder.expandBtn.setRotationY(180);
-
-        holder.expandBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                mExpandedPosition = isExpanded ? -1 : currPosition;
-                TransitionManager.beginDelayedTransition(itemsRecycler);
-//                notifyItemChanged(previousExpandedPosition);
-//                notifyItemChanged(currPosition);
-                notifyDataSetChanged();
-                itemsRecycler.smoothScrollToPosition(currPosition);
-
-            }
-        });
 
         /////////// Expanded /////////////
 
-        if (!itemsList.get(currPosition).getImagePath().equals(""))
-            Picasso.get().load(itemsList.get(currPosition).getImagePath()).fit().centerCrop().into(holder.itemImg2);
+        if (holder.expandedLayout.getVisibility() == View.VISIBLE) {
 
-        holder.itemNameTV.setText(itemsList.get(currPosition).getItemName());
-        holder.itemCodeTV.setText(itemsList.get(currPosition).getItemNCode());
-        holder.itemKindTV.setText(itemsList.get(currPosition).getItemKind());
-        holder.itemTaxTV.setText(itemsList.get(currPosition).getTax() + "");
-        holder.itemQtyEdt.setText(itemsList.get(currPosition).getQty() + "");
-        holder.itemDiscEdt.setText(itemsList.get(currPosition).getDiscount() + "");
-        holder.itemPriceTV.setText(String.valueOf(itemsList.get(currPosition).getPrice()));
-        holder.itemaviqtyTV.setText(String.valueOf(itemsList.get(currPosition).getAviqty()));
-        holder.itemAreaEdt.setText(itemsList.get(currPosition).getArea());
-        holder.unitRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
+            UserLogs userLogs = appDatabase.userLogsDao().getLastuserLogin();
+
+            try {
+                int userPer = appDatabase.usersDao().getuserPer(userLogs.getUserName());
+                if (userPer == 0)
+                    holder.Dis_Layout.setVisibility(View.GONE);
+                else
+                    holder.Dis_Layout.setVisibility(View.VISIBLE);
+            } catch (NullPointerException e) {
 
             }
-        });
 
-        holder.addToCartBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            holder.itemAreaEdt.setImeOptions(EditorInfo.IME_ACTION_DONE);
+
+            holder.itemAreaEdt.setOnKeyListener((v, keyCode, event) -> {
+
+                if (keyCode == EditorInfo.IME_ACTION_SEARCH ||
+                        keyCode == EditorInfo.IME_ACTION_DONE ||
+                        keyCode == EditorInfo.IME_ACTION_NEXT ||
+                        event.getAction() == KeyEvent.ACTION_DOWN &&
+                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+
+                    holder.addToCartBtn.requestFocus();
+
+                    return true;
+
+                }
+
+                return false;
+            });
+
+            if (!itemsList.get(currPosition).getImagePath().trim().equals("")) {
+
+                SharedPreferences sharedPref = context.getSharedPreferences(SETTINGS_PREFERENCES, MODE_PRIVATE);
+                String ipAddress = sharedPref.getString(IP_PREF, "");
+                String ipPort = sharedPref.getString(PORT_PREF, "");
+
+                /* TODO UNCOMMENT THIS */
+//            String imagePath = "http://" + ipAddress + ":" + ipPort + "/Falcons/IMG/" + itemsList.get(currPosition).getImagePath();
+                String imagePath = "http://10.0.0.22:8086/Falcons/IMG/" + itemsList.get(currPosition).getImagePath();
+
+                Picasso.get().load(imagePath).into(holder.itemImg2);
+
+            } else {
+
+//            holder.itemImg2.setBackgroundColor(context.getResources().getColor(R.color.white));
+
+                holder.itemImg2.setImageDrawable(
+                        ResourcesCompat.getDrawable(context.getResources(), R.drawable.image_not_available, context.getTheme()));
+
+            }
+
+            holder.itemNameTV.setText(itemsList.get(currPosition).getItemName());
+            holder.itemCodeTV.setText(itemsList.get(currPosition).getItemNCode());
+            holder.itemKindTV.setText(itemsList.get(currPosition).getItemKind());
+            holder.itemTaxTV.setText(itemsList.get(currPosition).getTax() + "");
+            holder.itemQtyEdt.setText(itemsList.get(currPosition).getQty() + "");
+            holder.itemDiscEdt.setText(itemsList.get(currPosition).getDiscount() + "");
+            holder.itemPriceTV.setText(String.valueOf(itemsList.get(currPosition).getPrice()));
+            holder.itemaviqtyTV.setText(String.valueOf(itemsList.get(currPosition).getAviqty()));
+            holder.itemAreaEdt.setText(itemsList.get(currPosition).getArea());
+            holder.unitRG.setOnCheckedChangeListener((group, checkedId) -> {
+
+            });
+
+            holder.addToCartBtn.setOnClickListener(v -> {
 
 
-                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case DialogInterface.BUTTON_POSITIVE:
-                                //Yes button clicked
-                                //  openSalesDialog(currPosition);
-                                addQTYandDis(currPosition, holder);
-                                dialog.dismiss();
-                                break;
+                DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+                    switch (which) {
+                        case DialogInterface.BUTTON_POSITIVE:
+                            //Yes button clicked
+                            //  openSalesDialog(currPosition);
+                            addQTYandDis(currPosition, holder);
+                            dialog.dismiss();
+                            break;
 
 
-                            case DialogInterface.BUTTON_NEGATIVE:
-                                //No button clicked
-                                dialog.dismiss();
-                                break;
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            //No button clicked
+                            dialog.dismiss();
+                            break;
 
-                        }
                     }
                 };
 
@@ -191,8 +238,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                         .show();
 
 
-            }
-        });
+            });
+
+        }
+
 //        holder.itemAreaEdt.addTextChangedListener(new TextWatcher() {
 //            @Override
 //            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -212,27 +261,24 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 //            }
 //        });
 
-        holder.itemAreaEdt.setImeOptions(EditorInfo.IME_ACTION_DONE);
-
-        holder.itemAreaEdt.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-
-                if (keyCode == EditorInfo.IME_ACTION_SEARCH ||
-                        keyCode == EditorInfo.IME_ACTION_DONE ||
-                        keyCode == EditorInfo.IME_ACTION_NEXT ||
-                        event.getAction() == KeyEvent.ACTION_DOWN &&
-                                event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
-
-                    holder.addToCartBtn.requestFocus();
-
-                    return true;
-
-                }
-
-                return false;
-            }
-        });
+//        holder.itemAreaEdt.setImeOptions(EditorInfo.IME_ACTION_DONE);
+//
+//        holder.itemAreaEdt.setOnKeyListener((v, keyCode, event) -> {
+//
+//            if (keyCode == EditorInfo.IME_ACTION_SEARCH ||
+//                    keyCode == EditorInfo.IME_ACTION_DONE ||
+//                    keyCode == EditorInfo.IME_ACTION_NEXT ||
+//                    event.getAction() == KeyEvent.ACTION_DOWN &&
+//                            event.getKeyCode() == KeyEvent.KEYCODE_ENTER) {
+//
+//                holder.addToCartBtn.requestFocus();
+//
+//                return true;
+//
+//            }
+//
+//            return false;
+//        });
 
     }
 
@@ -281,7 +327,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
     }
 
 
-    public void addQTYandDis(int position, ViewHolder holder) {
+    private void addQTYandDis(int position, ViewHolder holder) {
         {
 
             if (!holder.itemDiscEdt.getText().toString().equals("") &&
@@ -292,10 +338,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                 Log.e("vocher_Items=", HomeActivity.vocher_Items.size() + "");
                 if (HomeActivity.vocher_Items.size() == 0) {
 
-                    itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString())/100);
+                    itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()) / 100);
                     itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
                     itemsList.get(position).setArea(holder.itemAreaEdt.getText().toString());
-                    itemsList.get(position).setAmount( itemsList.get(position).getPrice()* itemsList.get(position).getQty());
+                    itemsList.get(position).setAmount(itemsList.get(position).getPrice() * itemsList.get(position).getQty());
                     vocher_Items.add(itemsList.get(position));
                     badge.setNumber(vocher_Items.size());
 
@@ -306,10 +352,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                     if (!IsExistsInList(itemsList.get(position).getItemOCode())) // new item
                     {
 
-                        itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString())/100);
+                        itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()) / 100);
                         itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
                         itemsList.get(position).setArea(holder.itemAreaEdt.getText().toString());
-                        itemsList.get(position).setAmount( itemsList.get(position).getPrice()* itemsList.get(position).getQty());
+                        itemsList.get(position).setAmount(itemsList.get(position).getPrice() * itemsList.get(position).getQty());
 
                         Log.e("case2vocher_Items=", vocher_Items.size() + "");
                         vocher_Items.add(itemsList.get(position));
@@ -320,10 +366,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
 
                         Log.e("case3vocher_Items=", HomeActivity.vocher_Items.size() + "");
                         HomeActivity.vocher_Items.remove(index);
-                        itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString())/100);
+                        itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()) / 100);
                         itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
                         itemsList.get(position).setArea(holder.itemAreaEdt.getText().toString());
-                        itemsList.get(position).setAmount( itemsList.get(position).getPrice()* itemsList.get(position).getQty());
+                        itemsList.get(position).setAmount(itemsList.get(position).getPrice() * itemsList.get(position).getQty());
 
                         HomeActivity.vocher_Items.add(itemsList.get(position));
                         badge.setNumber(vocher_Items.size());

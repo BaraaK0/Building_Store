@@ -54,7 +54,6 @@ public class AddNewCustomer extends AppCompatActivity {
     ImportData importData;
     private String ipAddress, port, coNo;
     private List<CustomerInfo> allCustomers;
-    private BadgeDrawable badge;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,7 +82,7 @@ public class AddNewCustomer extends AppCompatActivity {
         bottomNavigationView = (BottomNavigationView)
                 findViewById(R.id.bottom_navigation);
 
-        badge = bottomNavigationView.getOrCreateBadge(R.id.action_cart);
+        BadgeDrawable badge = bottomNavigationView.getOrCreateBadge(R.id.action_cart);
         badge.setVisible(true);
         badge.setNumber(vocher_Items.size());
 
