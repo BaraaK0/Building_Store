@@ -17,7 +17,7 @@
     <string name="title_activity_maps">MapsActivity</string>
     <string name="itemNCode">itemNCode</string>
     <string name="qty">Quantity</string>
-    <string name="unit">unit</string>
+    <string name="unit">Unit:</string>
     <string name="itemKind">itemKind</string>
     <string name="preview">Preview</string>
     <string name="date">Date</string>

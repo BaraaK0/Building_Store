@@ -53,7 +53,7 @@ public class OrderReportAdapter extends RecyclerView.Adapter<OrderReportAdapter.
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView tax, discount, price, qty, item_name, itemNCode;
+        TextView tax, discount, price, qty, item_name, itemNCode, area;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);

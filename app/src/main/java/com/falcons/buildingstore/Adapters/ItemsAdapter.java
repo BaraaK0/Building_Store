@@ -20,11 +20,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -40,6 +42,7 @@ import com.falcons.buildingstore.Database.Entities.UserLogs;
 import com.falcons.buildingstore.R;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -197,7 +200,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             }
 
             holder.itemNameTV.setText(itemsList.get(currPosition).getItemName());
-            holder.itemCodeTV.setText(itemsList.get(currPosition).getItemNCode());
+            holder.itemCodeTV.setText(itemsList.get(currPosition).getItemOCode());
             holder.itemKindTV.setText(itemsList.get(currPosition).getItemKind());
             holder.itemTaxTV.setText(itemsList.get(currPosition).getTax() + "");
             holder.itemQtyEdt.setText(itemsList.get(currPosition).getQty() + "");
@@ -205,9 +208,16 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             holder.itemPriceTV.setText(String.valueOf(itemsList.get(currPosition).getPrice()));
             holder.itemaviqtyTV.setText(String.valueOf(itemsList.get(currPosition).getAviqty()));
             holder.itemAreaEdt.setText(itemsList.get(currPosition).getArea());
-            holder.unitRG.setOnCheckedChangeListener((group, checkedId) -> {
 
-            });
+            List<String> itemUnits = new ArrayList<>();
+
+            itemUnits.add("One Unit");
+            itemUnits.addAll(appDatabase.itemUnitsDao().getItemUnits(itemsList.get(currPosition).getItemOCode()));
+
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_dropdown_item_1line, itemUnits);
+
+            holder.unitSpinner.setAdapter(arrayAdapter);
+            holder.unitSpinner.setSelection(0);
 
             holder.addToCartBtn.setOnClickListener(v -> {
 
@@ -299,6 +309,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
         TextView itemNameTV, itemCodeTV, itemKindTV, itemTaxTV, itemPriceTV, itemaviqtyTV;
         EditText itemDiscEdt, itemQtyEdt, itemAreaEdt;
         RadioGroup unitRG;
+        Spinner unitSpinner;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -320,7 +331,8 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             itemDiscEdt = itemView.findViewById(R.id.itemDiscEdt);
             itemQtyEdt = itemView.findViewById(R.id.itemQtyEdt);
             itemAreaEdt = itemView.findViewById(R.id.itemAreaEdt);
-            unitRG = itemView.findViewById(R.id.unitRG);
+//            unitRG = itemView.findViewById(R.id.unitRG);
+            unitSpinner = itemView.findViewById(R.id.unitSpinner);
             itemaviqtyTV = itemView.findViewById(R.id.itemaviqtyTV);
 
         }
@@ -341,7 +353,17 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                     itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()) / 100);
                     itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
                     itemsList.get(position).setArea(holder.itemAreaEdt.getText().toString());
-                    itemsList.get(position).setAmount(itemsList.get(position).getPrice() * itemsList.get(position).getQty());
+                    itemsList.get(position).setUnit(holder.unitSpinner.getSelectedItem().toString());
+
+                    double num_items = 1;
+                    String selectedUnit = holder.unitSpinner.getSelectedItem().toString()+"";
+                    if (holder.unitSpinner.getSelectedItemId() != 0) {
+
+                        num_items = appDatabase.itemUnitsDao().getConvRate(holder.itemCodeTV.getText().toString(), selectedUnit);
+
+                    }
+
+                    itemsList.get(position).setAmount(itemsList.get(position).getPrice() * itemsList.get(position).getQty() * num_items);
                     vocher_Items.add(itemsList.get(position));
                     badge.setNumber(vocher_Items.size());
 
@@ -355,7 +377,18 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                         itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()) / 100);
                         itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
                         itemsList.get(position).setArea(holder.itemAreaEdt.getText().toString());
-                        itemsList.get(position).setAmount(itemsList.get(position).getPrice() * itemsList.get(position).getQty());
+
+                        itemsList.get(position).setUnit(holder.unitSpinner.getSelectedItem().toString());
+
+                        double num_items = 1;
+                        String selectedUnit = holder.unitSpinner.getSelectedItem().toString()+"";
+                        if (holder.unitSpinner.getSelectedItemId() != 0) {
+
+                            num_items = appDatabase.itemUnitsDao().getConvRate(holder.itemCodeTV.getText().toString(), selectedUnit);
+
+                        }
+
+                        itemsList.get(position).setAmount(itemsList.get(position).getPrice() * itemsList.get(position).getQty() * num_items);
 
                         Log.e("case2vocher_Items=", vocher_Items.size() + "");
                         vocher_Items.add(itemsList.get(position));
@@ -369,7 +402,18 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
                         itemsList.get(position).setDiscount(Double.parseDouble(holder.itemDiscEdt.getText().toString()) / 100);
                         itemsList.get(position).setQty(Double.parseDouble(holder.itemQtyEdt.getText().toString()));
                         itemsList.get(position).setArea(holder.itemAreaEdt.getText().toString());
-                        itemsList.get(position).setAmount(itemsList.get(position).getPrice() * itemsList.get(position).getQty());
+
+                        itemsList.get(position).setUnit(holder.unitSpinner.getSelectedItem().toString());
+
+                        double num_items = 1;
+                        String selectedUnit = holder.unitSpinner.getSelectedItem().toString()+"";
+                        if (holder.unitSpinner.getSelectedItemId() != 0) {
+
+                            num_items = appDatabase.itemUnitsDao().getConvRate(holder.itemCodeTV.getText().toString(), selectedUnit);
+
+                        }
+
+                        itemsList.get(position).setAmount(itemsList.get(position).getPrice() * itemsList.get(position).getQty() * num_items);
 
                         HomeActivity.vocher_Items.add(itemsList.get(position));
                         badge.setNumber(vocher_Items.size());

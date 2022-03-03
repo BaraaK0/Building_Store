@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <com.google.android.material.card.MaterialCardView
             android:id="@+id/itemCard"
@@ -90,7 +90,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:visibility="gone">
+        android:visibility="visible">
 
 <!--        <ImageButton
             android:id="@+id/addToCartBtn"
@@ -533,40 +533,101 @@
 
                     </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-                    <RadioGroup
-                        android:id="@+id/unitRG"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginHorizontal="34dp"
+                        android:orientation="horizontal"
                         android:layout_marginTop="11dp"
-                        android:orientation="horizontal">
+                        >
 
-
-                        <RadioButton
-                            android:id="@+id/boxRB"
+                        <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:checked="true"
+                            android:layout_gravity="center"
                             android:fontFamily="@font/alegreya_sans"
+                            android:gravity="start"
                             android:lineHeight="21.6px"
-                            android:text="@string/box"
+                            android:text="@string/unit"
                             android:textColor="@color/primaryTextColor"
-                            android:textSize="17sp" />
+                            android:textSize="17sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            />
 
-                        <RadioButton
-                            android:id="@+id/MeterRB"
-                            android:layout_width="wrap_content"
+                        <Spinner
+                            android:id="@+id/unitSpinner"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="100dp"
-                            android:fontFamily="@font/alegreya_sans"
-                            android:lineHeight="21.6px"
-                            android:text="@string/meter"
-                            android:textColor="@color/primaryTextColor"
-                            android:textSize="17sp" />
+                            android:layout_marginStart="102dp"
+                            android:textColor="@color/black"
+                            android:textSize="16sp"
+                            android:layout_gravity="center"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"/>
+
+<!--                        <EditText-->
+<!--                            android:id="@+id/itemAreaEdt"-->
+<!--                            android:layout_width="match_parent"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            android:layout_marginStart="102dp"-->
+<!--                            android:fontFamily="@font/alegreya_sans"-->
+<!--                            android:gravity="start"-->
+<!--                            android:inputType="text"-->
+<!--                            android:lineHeight="21.6px"-->
+<!--                            android:textColor="@color/black"-->
+<!--                            android:textSize="16sp"-->
+<!--                            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                            app:layout_constraintEnd_toEndOf="parent"-->
+<!--                            app:layout_constraintStart_toStartOf="parent"-->
+<!--                            app:layout_constraintTop_toTopOf="parent" />-->
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-                    </RadioGroup>
+<!--                    <RadioGroup-->
+<!--                        android:id="@+id/unitRG"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginHorizontal="34dp"-->
+<!--                        android:layout_marginTop="11dp"-->
+<!--                        android:orientation="horizontal">-->
+
+
+<!--                        <RadioButton-->
+<!--                            android:id="@+id/boxRB"-->
+<!--                            android:layout_width="wrap_content"-->
+<!--                            android:layout_height="wrap_content"-->
+<!--                            android:checked="true"-->
+<!--                            android:fontFamily="@font/alegreya_sans"-->
+<!--                            android:lineHeight="21.6px"-->
+<!--                            android:text="Unit"-->
+<!--                            android:textColor="@color/primaryTextColor"-->
+<!--                            android:textSize="17sp"-->
+<!--                            android:layout_gravity="center"-->
+<!--                            />-->
+
+
+
+
+
+<!--&lt;!&ndash;                        <RadioButton&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:id="@+id/MeterRB"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:layout_marginStart="100dp"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:fontFamily="@font/alegreya_sans"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:lineHeight="21.6px"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:text="@string/meter"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:textColor="@color/primaryTextColor"&ndash;&gt;-->
+<!--&lt;!&ndash;                            android:textSize="17sp" />&ndash;&gt;-->
+
+
+<!--                    </RadioGroup>-->
 
                     <androidx.appcompat.widget.AppCompatButton
                         android:id="@+id/addToCartBtn"

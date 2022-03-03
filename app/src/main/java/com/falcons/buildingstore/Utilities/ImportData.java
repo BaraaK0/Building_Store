@@ -1,46 +1,30 @@
 package com.falcons.buildingstore.Utilities;
 
 import static android.content.Context.MODE_PRIVATE;
-import static com.falcons.buildingstore.Activities.LoginActivity.CONO_PREF;
-import static com.falcons.buildingstore.Activities.LoginActivity.IP_PREF;
-import static com.falcons.buildingstore.Activities.LoginActivity.PORT_PREF;
 import static com.falcons.buildingstore.Activities.LoginActivity.SETTINGS_PREFERENCES;
 
 
-import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
+
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Looper;
+
 import android.util.Log;
-import android.widget.Toast;
+
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.falcons.buildingstore.Activities.LoginActivity;
 import com.falcons.buildingstore.Database.AppDatabase;
 import com.falcons.buildingstore.Database.Entities.Item;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.conn.HttpHostConnectException;
-import org.apache.http.impl.client.DefaultHttpClient;
+
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URI;
-import java.util.ArrayList;
+
 import java.util.List;
 
 import cn.pedant.SweetAlert.SweetAlertDialog;
@@ -212,6 +196,7 @@ public class ImportData {
         pDialog.setTitleText("Loading ...");
         pDialog.setCancelable(false);
         pDialog.show();
+        //http://10.0.0.22:8085/GetVanAllData?STRNO=1&CONO=295
         if (!ipAddress.equals("") || !ipPort.equals("") || !coNo.equals(""))
             link = "http://" + ipAddress + ":" + ipPort + headerDll + "/GetVanAllData?STRNO=1&CONO=" + coNo;
 //        else
@@ -263,6 +248,68 @@ public class ImportData {
         RequestQueueSingleton.getInstance(context.getApplicationContext()).addToRequestQueue(jsonObjectRequest);
 
     }
+
+
+//    public void getUnits(GetItemsCallBack getItemsCallBack, String ipAddress, String ipPort, String coNo) {
+//
+//        pDialog = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
+//
+//        pDialog.getProgressHelper().setBarColor(Color.parseColor("#115571"));
+//        pDialog.setTitleText("Loading ...");
+//        pDialog.setCancelable(false);
+//        pDialog.show();
+//        //http://10.0.0.22:8085/GetVanAllData?STRNO=1&CONO=295
+//        if (!ipAddress.equals("") || !ipPort.equals("") || !coNo.equals(""))
+//            link = "http://" + ipAddress + ":" + ipPort + headerDll + "/GetVanAllData?STRNO=1&CONO=" + coNo;
+////        else
+////            link = "http://" + ipEdt.getText().toString().trim() + ":" +
+////                    portEdt.getText().toString().trim() +
+////                    headerDll + "/GetVanAllData?STRNO=1&CONO=" + coNoEdt.getText().toString().trim();
+//
+//        Log.e("getItems_Link", link);
+//
+//        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(link, new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//
+//                getItemsCallBack.onResponse(response);
+//                pDialog.dismissWithAnimation();
+////                GeneralMethod.showSweetDialog(context, 1, "Items Saved", null);
+//                Log.e("getItems_Response", response + "");
+//
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//                getItemsCallBack.onError(error.getMessage() + "");
+//                pDialog.dismissWithAnimation();
+//                if ((error.getMessage() + "").contains("SSLHandshakeException") || (error.getMessage() + "").equals("null")) {
+//
+//                    GeneralMethod.showSweetDialog(context, 0, null, "Connection to server failed");
+//
+//                } else if ((error.getMessage() + "").contains("ConnectException")) {
+//
+//                    GeneralMethod.showSweetDialog(context, 0, "Connection Failed", null);
+//
+//                } else if ((error.getMessage() + "").contains("NoRouteToHostException")) {
+//
+//                    GeneralMethod.showSweetDialog(context, 3, "", "Please check the entered IP info");
+//
+//                } else if ((error.getMessage() + "").contains("No Data Found")) {
+//
+//                    GeneralMethod.showSweetDialog(context, 3, "", "No Items Found");
+//
+//                }
+//                Log.e("getItems_Error", error.getMessage() + "");
+//
+//            }
+//        });
+//
+//        jsonObjectRequest.setRetryPolicy(new DefaultRetryPolicy(30 * 1000, 2, DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
+//        RequestQueueSingleton.getInstance(context.getApplicationContext()).addToRequestQueue(jsonObjectRequest);
+//
+//    }
 
 
 }

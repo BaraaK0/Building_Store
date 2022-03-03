@@ -149,7 +149,8 @@ public class HomeActivity extends AppCompatActivity {
                     for (int i = 0; i < allItemList_rv.size(); i++) {
 
                         if (allItemList_rv.get(i).getItemName().toLowerCase().contains(eTxt) ||
-                                allItemList_rv.get(i).getItemNCode().toLowerCase().contains(eTxt.replaceAll("\\s+", ""))) {
+                                allItemList_rv.get(i).getItemNCode().toLowerCase().contains(eTxt.replaceAll("\\s+", "")) ||
+                                allItemList_rv.get(i).getItemOCode().toLowerCase().contains(eTxt.replaceAll("\\s+", ""))) {
 
                             search_itemList.add(allItemList_rv.get(i));
 

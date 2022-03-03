@@ -9,6 +9,7 @@ import androidx.room.migration.Migration;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 import com.falcons.buildingstore.Database.Daos.Customers_Dao;
+import com.falcons.buildingstore.Database.Daos.ItemUnits_Dao;
 import com.falcons.buildingstore.Database.Daos.Items_Dao;
 import com.falcons.buildingstore.Database.Daos.OrdersDetails_Dao;
 import com.falcons.buildingstore.Database.Daos.OrdersMaster_Dao;
@@ -17,17 +18,20 @@ import com.falcons.buildingstore.Database.Daos.UserLogsDao;
 import com.falcons.buildingstore.Database.Daos.Users_Dao;
 import com.falcons.buildingstore.Database.Entities.CustomerInfo;
 import com.falcons.buildingstore.Database.Entities.Item;
+import com.falcons.buildingstore.Database.Entities.Item_Unit_Details;
 import com.falcons.buildingstore.Database.Entities.OrderMaster;
 import com.falcons.buildingstore.Database.Entities.OrdersDetails;
 import com.falcons.buildingstore.Database.Entities.TempOrder;
 import com.falcons.buildingstore.Database.Entities.User;
 import com.falcons.buildingstore.Database.Entities.UserLogs;
 
-@Database(entities = {Item.class, CustomerInfo.class, TempOrder.class, OrderMaster.class, User.class, OrdersDetails.class, UserLogs.class}, version =23)
+@Database(entities = {Item.class, CustomerInfo.class, TempOrder.class, OrderMaster.class, User.class, OrdersDetails.class, UserLogs.class, Item_Unit_Details.class}, version =24)
 
 public abstract class AppDatabase extends RoomDatabase {
 
     public abstract Items_Dao itemsDao();
+
+    public abstract ItemUnits_Dao itemUnitsDao();
 
     public abstract Customers_Dao customersDao();
 

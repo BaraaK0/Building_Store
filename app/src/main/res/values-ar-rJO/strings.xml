@@ -76,6 +76,8 @@
     <string name="fillbasket">fill The basket with Items!!</string>
     <string name="vocher">فاتورة</string>
 
+    <string name="unit">الوحدة:</string>
+
     <string name="export_data_msg">هل ترغب في تصدير كافة البيانات والحصول على البيانات جديدة \n من الخادم؟</string>
     <string name="export_data">تصدير البيانات</string>
     <string name="Sub_total">المجموع الجزئي</string>
