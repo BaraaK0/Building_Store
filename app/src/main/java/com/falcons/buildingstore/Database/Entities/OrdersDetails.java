@@ -52,7 +52,7 @@ public class OrdersDetails {
     @ColumnInfo(name = "Customer_ID")
     private int customerId;
     @ColumnInfo(name = "Unit")
-    private int Unit;
+    private String Unit;
     @ColumnInfo(name = "IS_Posted", defaultValue = "0")
     private int isPosted;
     @ColumnInfo(name = "ConfirmState")
@@ -77,6 +77,38 @@ public class OrdersDetails {
 
     @ColumnInfo(name = "area")
     public String area;
+
+
+    @ColumnInfo(name = "WhichUNIT")
+    public String WhichUNIT;
+    @ColumnInfo(name = "WhichUNITSTR")
+    public String WhichUNITSTR;
+    @ColumnInfo(name = "WHICHUQTY")
+    public String WHICHUQTY;
+
+    public String getWhichUNIT() {
+        return WhichUNIT;
+    }
+
+    public void setWhichUNIT(String whichUNIT) {
+        WhichUNIT = whichUNIT;
+    }
+
+    public String getWhichUNITSTR() {
+        return WhichUNITSTR;
+    }
+
+    public void setWhichUNITSTR(String whichUNITSTR) {
+        WhichUNITSTR = whichUNITSTR;
+    }
+
+    public String getWHICHUQTY() {
+        return WHICHUQTY;
+    }
+
+    public void setWHICHUQTY(String WHICHUQTY) {
+        this.WHICHUQTY = WHICHUQTY;
+    }
 
     public String getArea() {
         return area;
@@ -155,28 +187,12 @@ public class OrdersDetails {
     public OrdersDetails() {
     }
 
-    public OrdersDetails(int vhfNo, String date, String time, String itemNo, String itemName, double qty, double discount, double total, double price, int customerId, int unit, int isPosted) {
-        this.vhfNo = vhfNo;
-        this.date = date;
-        this.time = time;
-        this.itemNo = itemNo;
-        this.itemName = itemName;
-        this.qty = qty;
-        this.discount = discount;
 
-
-        this.total = total;
-        this.price = price;
-        this.customerId = customerId;
-        Unit = unit;
-        this.isPosted = isPosted;
-    }
-
-    public int getUnit() {
+    public String getUnit() {
         return Unit;
     }
 
-    public void setUnit(int unit) {
+    public void setUnit(String unit) {
         Unit = unit;
     }
 
@@ -298,10 +314,10 @@ public class OrdersDetails {
             obj.put("SERIAL_CODE", "");
             obj.put("ITEM_SERIAL_CODE", "");
 
-            obj.put("WHICHUNIT", "");
-            obj.put("WHICHUNITSTR", "");
+            obj.put("WHICHUNIT", WhichUNIT);
+            obj.put("WHICHUNITSTR", WhichUNITSTR);
 
-          obj.put("WHICHUQTY", "0");
+          obj.put("WHICHUQTY", WHICHUQTY);
 
             obj.put("ENTERQTY", qty);
             obj.put("ENTERPRICE", price);

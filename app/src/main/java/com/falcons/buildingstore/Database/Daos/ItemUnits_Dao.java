@@ -22,6 +22,7 @@ public interface ItemUnits_Dao {
 
     @Query("SELECT CONVRATE FROM Item_Unit_Details WHERE ITEMNO = :itemNo AND UNITID = :unitId")
     Double getConvRate(String itemNo, String unitId);
-
+    @Query("SELECT CONVRATE FROM Item_Unit_Details WHERE ITEMNO = :itemNo")
+    double getConvRatebyitemnum(String itemNo);
 
 }

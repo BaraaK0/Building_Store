@@ -37,6 +37,7 @@
     <string name="item_kind">Item kind:</string>
     <string name="tax">Tax:</string>
     <string name="total">Total price</string>
+    <string name="total_">Total</string>
     <string name="tax_">Tax</string>
     <string name="price">Price:</string>
     <string name="price_">Price</string>
