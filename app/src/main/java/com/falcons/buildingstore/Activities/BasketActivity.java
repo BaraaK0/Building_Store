@@ -435,6 +435,7 @@ public class BasketActivity extends AppCompatActivity {
             ordersDetails.setIsPosted(0);
             ordersDetails.setArea(HomeActivity.vocher_Items.get(i).getArea());
 
+//            ordersDetails.setUnit(vocher_Items.get(i).getUnit().equals("One Unit") ? 0 : 1);
 
             //Discount calcualtios
             ordersDetails.setTotalDiscVal( HomeActivity.vocher_Items.get(i).getAmount()* HomeActivity.vocher_Items.get(i).getDiscount());

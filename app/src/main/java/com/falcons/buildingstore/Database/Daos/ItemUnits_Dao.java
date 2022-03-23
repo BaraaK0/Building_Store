@@ -17,7 +17,7 @@ public interface ItemUnits_Dao {
     @Query("DELETE FROM Item_Unit_Details")
     void deleteAll();
 
-    @Query("SELECT UNITID FROM Item_Unit_Details WHERE ITEMNO = :itemNo")
+    @Query("SELECT UNITID FROM Item_Unit_Details WHERE ITEMNO = :itemNo AND UNITID <> ''")
     List<String> getItemUnits(String itemNo);
 
     @Query("SELECT CONVRATE FROM Item_Unit_Details WHERE ITEMNO = :itemNo AND UNITID = :unitId")

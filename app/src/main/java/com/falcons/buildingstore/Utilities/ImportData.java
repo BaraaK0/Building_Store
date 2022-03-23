@@ -19,6 +19,7 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.falcons.buildingstore.Database.AppDatabase;
 import com.falcons.buildingstore.Database.Entities.Item;
+import com.falcons.buildingstore.Database.Entities.User;
 
 
 import org.json.JSONArray;
@@ -97,9 +98,10 @@ public class ImportData {
 
                     GeneralMethod.showSweetDialog(context, 3, "", "Please check the entered IP info");
 
-                }else if ((error.getMessage() + "").contains("No Data Found")) {
+                } else if ((error.getMessage() + "").contains("No Data Found")) {
 
                     GeneralMethod.showSweetDialog(context, 3, "", "No Users Found");
+                    appDatabase.usersDao().insertUser(new User("010101", "admin", "2022", 1, 1, 1));
 
                 }
                 Log.e("getUsers_Error", error.getMessage() + "");

@@ -80,6 +80,7 @@ public class HomeActivity extends AppCompatActivity {
 
     public static EditText searchItemsEdt;
     private TextInputLayout searchItems_textField;
+    private ImageView ic_clear;
 
     public static final int REQUEST_Camera_Barcode = 1;
 
@@ -127,6 +128,21 @@ public class HomeActivity extends AppCompatActivity {
         }
 
         /* Items Search Handling */
+
+        ic_clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchItemsEdt.setText("");
+            }
+        });
+
+        searchItemsEdt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                searchItemsEdt.setSelection(0, searchItemsEdt.getText().toString().length());
+            }
+        });
+
         searchItemsEdt.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -318,6 +334,7 @@ public class HomeActivity extends AppCompatActivity {
         itemcount = findViewById(R.id.itemcount);
         searchItemsEdt = findViewById(R.id.searchItemsEdt);
         searchItems_textField = findViewById(R.id.searchItems_textField);
+        ic_clear = findViewById(R.id.ic_clear);
 
 
         search_itemList = new ArrayList<>();
