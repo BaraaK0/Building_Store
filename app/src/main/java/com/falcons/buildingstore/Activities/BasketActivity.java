@@ -25,6 +25,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.falcons.buildingstore.Adapters.BasketItemAdapter;
 
@@ -68,6 +69,7 @@ public class BasketActivity extends AppCompatActivity {
     public static BadgeDrawable badge;
     private ArrayList<OrdersDetails> ordersDetailslist =new ArrayList<>();
     String Cus_selection;
+    TextView Textveiw_total;
     int VOHNO=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -136,6 +138,7 @@ public class BasketActivity extends AppCompatActivity {
                                 ordersDetailslist.clear();
                                 HomeActivity.vocher_Items.clear();
                                 fillListAdapter();
+                                Textveiw_total.setText("0.0");
                             } catch (Exception exception) {
                                 Log.e("exception==", exception.getMessage());
 
@@ -175,6 +178,7 @@ public class BasketActivity extends AppCompatActivity {
                             ordersDetailslist.clear();
                             HomeActivity.vocher_Items.clear();
                             fillListAdapter();
+                        Textveiw_total.setText("0.0");
 //                        } catch (Exception exception) {
 //                            Log.e("exception==", exception.getMessage());
 //
@@ -206,6 +210,10 @@ public class BasketActivity extends AppCompatActivity {
 
             }
         });
+
+
+
+      CalculateTotal();
     }
 
 
@@ -218,7 +226,7 @@ public class BasketActivity extends AppCompatActivity {
         Log.e("VOHNO",VOHNO+"");*/
 
 
-
+        Textveiw_total= findViewById(R.id.total);
         appDatabase = AppDatabase.getInstanceDatabase(BasketActivity.this);
         exportData = new ExportData(BasketActivity.this);
         generalMethod = new GeneralMethod(BasketActivity.this);
@@ -422,7 +430,7 @@ public class BasketActivity extends AppCompatActivity {
             OrdersDetails ordersDetails = new OrdersDetails();
 
             ordersDetails.setDiscount(HomeActivity.vocher_Items.get(i).getDiscount());
-            ordersDetails.setItemNo(HomeActivity.vocher_Items.get(i).getItemNCode());
+            ordersDetails.setItemNo(HomeActivity.vocher_Items.get(i).getItemOCode());
             ordersDetails.setItemName(HomeActivity.vocher_Items.get(i).getItemName());
             ordersDetails.setQty(HomeActivity.vocher_Items.get(i).getQty());
             ordersDetails.setPrice(HomeActivity.vocher_Items.get(i).getPrice());
@@ -430,7 +438,14 @@ public class BasketActivity extends AppCompatActivity {
             ordersDetails.setTime(generalMethod.getCurentTimeDate(2));
             ordersDetails.setAmount(HomeActivity.vocher_Items.get(i).getAmount());
             ordersDetails.setTaxPercent(HomeActivity.vocher_Items.get(i).getTaxPercent());
+            ordersDetails.setUnit(HomeActivity.vocher_Items.get(i).getUnit());
+            if(ordersDetails.getUnit().equals("One Unit"))ordersDetails.setWhichUNIT("0");
+            else
+                ordersDetails.setWhichUNIT("1");
 
+            ordersDetails.setWhichUNITSTR(HomeActivity.vocher_Items.get(i).getUnit());
+          double  num_items = appDatabase.itemUnitsDao().getConvRatebyitemnum( ordersDetails.getItemNo());
+            ordersDetails.setWHICHUQTY(num_items+"");
             ordersDetails.setCustomerId(appDatabase.customersDao().getCustmByName(Cus_selection));
             ordersDetails.setIsPosted(0);
             ordersDetails.setArea(HomeActivity.vocher_Items.get(i).getArea());
@@ -452,12 +467,12 @@ public class BasketActivity extends AppCompatActivity {
             Log.e("ordersDetails.getTaxValue()=",ordersDetails.getTaxValue()+"");
             Log.e("ordersDetails.getDiscount()=",ordersDetails.getDiscount()+"");
             // ضريبة شاملة
-          /*  double subtotal=ordersDetails.getAmount()-ordersDetails.getTaxValue()-ordersDetails.getDiscount();
+            double subtotal=ordersDetails.getAmount()-ordersDetails.getTaxValue()-ordersDetails.getDiscount();
            Log.e("subtotal",subtotal+"");
-            ordersDetails.setSubtotal(subtotal);*/
-            // ضريبة خاضعة
-           double subtotal=ordersDetails.getAmount()-ordersDetails.getDiscount();
             ordersDetails.setSubtotal(subtotal);
+            // ضريبة خاضعة
+      /*    double subtotal=ordersDetails.getAmount()-ordersDetails.getDiscount();
+            ordersDetails.setSubtotal(subtotal);*/
 
 
 
@@ -490,7 +505,26 @@ public class BasketActivity extends AppCompatActivity {
 
     }
 
+    void CalculateTotal(){
 
+try {
+
+
+    double setTotalDiscVal = 0;
+    double total = 0;
+    for (int i = 0; i < HomeActivity.vocher_Items.size(); i++) {
+        setTotalDiscVal = HomeActivity.vocher_Items.get(i).getAmount() * HomeActivity.vocher_Items.get(i).getDiscount();
+        total += HomeActivity.vocher_Items.get(i).getAmount() - setTotalDiscVal;
+
+
+    }
+
+    Textveiw_total.setText(total + "");
+
+}catch (Exception exception){
+    Log.e("exception=",exception.getMessage());
+}
+    }
 //   void CalculateTax(int taxType , List<Item> items){
 //
 //     if(taxType==0)   // taxType=0 خاضع

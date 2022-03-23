@@ -69,6 +69,33 @@
 
                 </com.google.android.material.textfield.TextInputLayout>
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:orientation="horizontal"
+                 android:layout_marginTop="8dp"
+                    android:layout_below="@+id/basketListCard"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:textColor="@color/primaryTextColor"
+                        android:textSize="18sp"
+                        android:gravity="center"
+                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        android:text="@string/total_"/>
+                    <TextView
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:textColor="@color/amountColor"
+                        android:textSize="18sp"
+                        android:layout_weight="1"
+                        android:text="0.0"
+                        android:gravity="center"
+                        android:id="@+id/total"/>
+                </LinearLayout>
+
 
                 <androidx.appcompat.widget.AppCompatButton
                     android:id="@+id/orderBtn"
@@ -291,6 +318,7 @@
 
             </RelativeLayout>
         </ScrollView>
+
     </RelativeLayout>
 
 

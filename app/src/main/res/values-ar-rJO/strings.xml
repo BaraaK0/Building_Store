@@ -29,6 +29,7 @@
     <string name="item_kind">نوع المادة:</string>
     <string name="tax">الضريبة:</string>
     <string name="total"> مجموع السعر</string>
+    <string name="total_">المجموع</string>
     <string name="tax_">الضريبة</string>
     <string name="price">السعر:</string>
     <string name="price_">السعر</string>
