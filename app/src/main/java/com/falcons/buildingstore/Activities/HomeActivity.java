@@ -258,6 +258,8 @@ public class HomeActivity extends AppCompatActivity {
                                 return true;
 
                             case R.id.action_add:
+try {
+
 
                                 final Dialog dialog = new Dialog(HomeActivity.this);
                                 dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -297,7 +299,9 @@ public class HomeActivity extends AppCompatActivity {
                                         dialog.dismiss();
                                     }
                                 });
+}catch (Exception exception){
 
+}
                                 return true;
                         }
                         return false;
