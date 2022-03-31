@@ -266,10 +266,6 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(this, "No Saved Users Found !", Toast.LENGTH_SHORT).show();
             loginBtn.revertAnimation();
 
-//            /** TODO Delete This **/
-//            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
-//            startActivity(intent);
-
         }
 
 
