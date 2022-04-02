@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 
 import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
@@ -46,7 +47,7 @@ import java.util.List;
 
 public class AddNewCustomer extends AppCompatActivity {
     EditText cus_name, phoneNo;
-    CircularProgressButton addCustomer;
+    Button addCustomer;
     AppDatabase appDatabase;
     GeneralMethod generalMethod;
     BottomNavigationView bottomNavigationView;

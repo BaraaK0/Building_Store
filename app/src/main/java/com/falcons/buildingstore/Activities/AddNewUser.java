@@ -24,6 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -52,7 +53,7 @@ public class AddNewUser extends AppCompatActivity {
     Spinner usertype;
     RadioGroup dis_Per;
     RadioButton RB_yes, RB_no;
-    CircularProgressButton adduser;
+    Button adduser;
     AppDatabase appDatabase;
     GeneralMethod generalMethod;
     BottomNavigationView bottomNavigationView;
