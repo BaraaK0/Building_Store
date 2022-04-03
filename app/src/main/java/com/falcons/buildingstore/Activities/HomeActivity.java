@@ -116,8 +116,7 @@ public class HomeActivity extends AppCompatActivity {
             itemsRecycler.setAdapter(itemsAdapter);
             itemsRecycler.setSaveEnabled(true);
             Log.e("allItemList_rv",allItemList_rv.size()+"");
-
-        }
+            }
         else
         {
 
@@ -294,9 +293,10 @@ try {
                                 int userType = appDatabase.usersDao().getUserType(userLogs.getUserName());
                                 Log.e("UserType/Username", userType+"/"+userLogs.getUserName());
                                 if (userType == 0)
-                                    dialog.findViewById(R.id.adduser).setVisibility(View.GONE);
-                                else
                                     dialog.findViewById(R.id.adduser).setVisibility(View.VISIBLE);
+
+                                else
+                                    dialog.findViewById(R.id.adduser).setVisibility(View.GONE);
 
 
                                 dialog.findViewById(R.id.addCustomer).setOnClickListener(new View.OnClickListener() {

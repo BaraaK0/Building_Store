@@ -49,7 +49,7 @@ public class BasketItemAdapter extends RecyclerView.Adapter<BasketItemAdapter.Vo
             @Override
             public void onClick(View view) {
                 HomeActivity.vocher_Items.remove(position);
-                notifyItemRemoved(position);
+                notifyDataSetChanged();
                 badge.setNumber(vocher_Items.size());
             }
         });

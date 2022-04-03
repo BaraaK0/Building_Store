@@ -48,10 +48,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -77,7 +81,7 @@ public class ExportData {
     private final List<User> allUsers;
     public List<Item> allItemsList;
     public List<Item_Unit_Details> allUnitDetails;
-
+    SweetAlertDialog pdStosk=null;
     public ExportData(Context context) {
         this.context = context;
         this.mHandler = AppDatabase.getInstanceDatabase(context);
@@ -346,6 +350,8 @@ public class ExportData {
         mHandler.ordersMasterDao().updateVoucher();
         mHandler.ordersDetails_dao().updateVoucherDetails();
         Log.e("onPostExecute", "updateVoucherExported---3---");
+        new JSONTaskSaveVouchers().execute();
+
     }
 
     private void getVouchersDetail() {
@@ -478,15 +484,10 @@ public class ExportData {
                 if (result.contains("Saved Successfully")) {
 
                     updateVoucherExported();// 3
+
+
                     pdVoucher.dismissWithAnimation();
 
-                    /* Get Items .....
-                        1- onResponse OR 2- onError
-                                       |
-                                       v
-                check for not posted customers/users export then import them
-
-                                        */
 
                     importData.getAllItems(new ImportData.GetItemsCallBack() {
                         @Override
@@ -1241,6 +1242,205 @@ public class ExportData {
                     }
                 });
             }
+        }
+    }
+    private class JSONTaskSaveVouchers extends AsyncTask<String, String, String> {
+        private String JsonResponse = null;
+        private HttpURLConnection urlConnection = null;
+        private BufferedReader reader = null;
+        //        SweetAlertDialog pdItem=null;
+        public  String salesNo="",finalJson;
+
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressSave = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
+            progressSave.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+            progressSave.setTitleText(" Save Vouchers");
+            progressSave.setCancelable(false);
+            progressSave.show();
+
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+
+            try {
+                //  URL_TO_HIT = "http://"+ipAddress.trim()+":" + ipWithPort.trim() +"/ExportSALES_VOUCHER_D?CONO="+CONO.trim()+"&JSONSTR="+vouchersObject.toString().trim();
+
+//LINK : http://localhost:8082/ExportITEMSERIALS?CONO=290&JSONSTR={"JSN":[{"VHFNO":"123","STORENO":"5","TRNSDATE":"01/01/2021","TRANSKIND":"1","ITEMNO":"321","SERIAL_CODE":"369258147852211","QTY":"1","VSERIAL":"1","ISPOSTED":"0"}]}
+                String link = "http://"+ipAddress.trim()+":" + ipPort.trim() + headerDll.trim()+"/SaveVouchers";
+                // Log.e("ipAdress", "ip -->" + ip);
+                String data = "CONO="+coNo.trim()+"&STRNO=" +"1"+"&VHFTYPE="+"1";
+                Log.e("tag_link", "ExportData -->" + link);
+                Log.e("tag_data", "ExportData -->" + data);
+
+////
+                URL url = new URL(link);
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                httpURLConnection.setRequestMethod("POST");
+
+
+
+                DataOutputStream wr = new DataOutputStream(httpURLConnection.getOutputStream());
+                wr.writeBytes(data);
+                wr.flush();
+                wr.close();
+
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+                StringBuffer stringBuffer = new StringBuffer();
+
+                while ((JsonResponse = bufferedReader.readLine()) != null) {
+                    stringBuffer.append(JsonResponse + "\n");
+                }
+
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+
+                Log.e("tag", "ExportData -->" + stringBuffer.toString());
+
+                return stringBuffer.toString();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (final IOException e) {
+                        Log.e("tag", "Error closing stream", e);
+                    }
+                }
+            }
+            return null;
+
+        }
+
+
+        @Override
+        protected void onPostExecute(final String result) {
+            super.onPostExecute(result);
+            progressSave.setTitle("Saved Vouchers");
+            Log.e("onPostExecute","---15----"+result);
+
+            if (result != null && !result.equals("")) {
+
+
+            } else {
+                progressSave.dismissWithAnimation();
+
+            }
+            new JSONTaskEXPORT_STOCK().execute();
+        }
+    }
+    private class JSONTaskEXPORT_STOCK extends AsyncTask<String, String, String> {
+        private String JsonResponse = null;
+        private HttpURLConnection urlConnection = null;
+        private BufferedReader reader = null;
+
+
+        @Override
+        protected void onPreExecute() {
+
+            pdStosk = new SweetAlertDialog(context, SweetAlertDialog.PROGRESS_TYPE);
+            pdStosk.getProgressHelper().setBarColor(Color.parseColor("#FDD835"));
+            pdStosk.setTitleText(" Export Stock ");
+            pdStosk.setCancelable(false);
+            pdStosk.show();
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            try {
+                //http://localhost:8082/EXPORTTOSTOCK?CONO=295&STRNO=4
+                String link = "http://"+ipAddress.trim()+":" + ipPort.trim() + headerDll.trim()+"/EXPORTTOSTOCK";
+                String data = "CONO="+coNo.trim()+"&STRNO=" +"1"+"&VHFTYPE="+"1";
+                Log.e("tag_link", "ExportData -->" + link);Log.e("tag_data", "ExportData -->" + data);
+
+
+////
+                URL url = new URL(link);
+
+                HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                httpURLConnection.setDoOutput(true);
+                httpURLConnection.setDoInput(true);
+                httpURLConnection.setRequestMethod("POST");
+
+
+
+                DataOutputStream wr = new DataOutputStream(httpURLConnection.getOutputStream());
+                wr.writeBytes(data);
+                wr.flush();
+                wr.close();
+
+                InputStream inputStream = httpURLConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+
+                StringBuffer stringBuffer = new StringBuffer();
+
+                while ((JsonResponse = bufferedReader.readLine()) != null) {
+                    stringBuffer.append(JsonResponse + "\n");
+                }
+
+                bufferedReader.close();
+                inputStream.close();
+                httpURLConnection.disconnect();
+
+                Log.e("tag", "ExportData -->" + stringBuffer.toString());
+
+                return stringBuffer.toString();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            } finally {
+                if (urlConnection != null) {
+                    urlConnection.disconnect();
+                }
+                if (reader != null) {
+                    try {
+                        reader.close();
+                    } catch (final IOException e) {
+                        Log.e("tag", "Error closing stream", e);
+                    }
+                }
+            }
+            return null;
+
+        }
+
+
+        @Override
+        protected void onPostExecute(final String result) {
+            super.onPostExecute(result);
+
+            Log.e("onPostExecute","EXPORT_STOCK---18----"+result);
+
+            if (result != null && !result.equals("")) {
+                if(result.contains("Saved Successfully")) {
+                    Log.e("EXPORT_STOCK","result_start");
+                    pdStosk.dismissWithAnimation();
+
+                }
+
+
+            } else {
+                pdStosk.dismissWithAnimation();
+            }
+
+
         }
     }
 

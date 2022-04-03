@@ -457,8 +457,10 @@ public class BasketActivity extends AppCompatActivity {
             ordersDetails.setTotal(HomeActivity.vocher_Items.get(i).getAmount()- ordersDetails.getTotalDiscVal());
 
                //Tax calcualtios
-            ordersDetails.setTaxValue(HomeActivity.vocher_Items.get(i).getTaxPercent()*HomeActivity.vocher_Items.get(i).getQty());
+
             ordersDetails.setTax(HomeActivity.vocher_Items.get(i).getPrice()*HomeActivity.vocher_Items.get(i).getTaxPercent());
+
+            ordersDetails.setTaxValue(ordersDetails.getTax()*HomeActivity.vocher_Items.get(i).getQty());
             double nettotal=(HomeActivity.vocher_Items.get(i).getPrice()*HomeActivity.vocher_Items.get(i).getPrice())-HomeActivity.vocher_Items.get(i).getDiscount();
             ordersDetails.setNetTotal(nettotal);
 
