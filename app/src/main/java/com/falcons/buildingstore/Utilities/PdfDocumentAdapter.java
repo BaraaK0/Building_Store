@@ -8,6 +8,7 @@ import android.print.PageRange;
 import android.print.PrintAttributes;
 import android.print.PrintDocumentAdapter;
 import android.print.PrintDocumentInfo;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -73,8 +74,11 @@ public class PdfDocumentAdapter extends PrintDocumentAdapter {
                 in.close();
                 out.close();
             }
-            catch (IOException e) {
+            catch (IOException e ) {
                 //Logger.logError( e);
+            }
+            catch (NullPointerException nullPointerException) {
+                Toast.makeText(context, "Pdf viewer required", Toast.LENGTH_SHORT).show();
             }
         }
     }}
