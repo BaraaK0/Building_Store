@@ -101,7 +101,7 @@ public class ImportData {
                 } else if ((error.getMessage() + "").contains("No Data Found")) {
 
                     GeneralMethod.showSweetDialog(context, 3, "", "No Users Found");
-                    appDatabase.usersDao().insertUser(new User("010101", "admin", "2022", 1, 1, 1));
+                    appDatabase.usersDao().insertUser(new User("010101", "admin", "2022", 1, 1, 0));
 
                 }
                 Log.e("getUsers_Error", error.getMessage() + "");

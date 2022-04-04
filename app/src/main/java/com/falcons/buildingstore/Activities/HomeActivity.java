@@ -291,7 +291,7 @@ public class HomeActivity extends AppCompatActivity {
 
                                     int userType = appDatabase.usersDao().getUserType(userLogs.getUserName());
                                     Log.e("UserType/Username", userType + "/" + userLogs.getUserName());
-                                    if (userType == 0)
+                                    if (userType == 1)
                                         dialog.findViewById(R.id.adduser).setVisibility(View.VISIBLE);
 
                                     else
