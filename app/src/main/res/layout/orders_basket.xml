@@ -255,14 +255,8 @@
                                     android:textSize="14sp" />
 
                                 <TextView
-                                    android:layout_width="20dp"
-                                    android:layout_height="wrap_content"
-                                    android:layout_weight="1"
-                                    android:background="@drawable/ic_baseline_remove_circle_24"
-                                    android:fontFamily="@font/alegreya"
-                                    android:gravity="center"
-                                    android:lineHeight="19sp"
-                                    android:textSize="14sp"
+                                    android:layout_width="30dp"
+                                    android:layout_height="1dp"
                                     android:visibility="invisible" />
 
 
@@ -279,7 +273,7 @@
                             <androidx.recyclerview.widget.RecyclerView
                                 android:id="@+id/basketListRV"
                                 android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:layout_height="wrap_content"
                                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                                 android:layout_marginHorizontal="23dp"
                                 android:layout_marginBottom="23dp"
