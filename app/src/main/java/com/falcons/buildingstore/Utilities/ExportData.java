@@ -250,7 +250,7 @@ public class ExportData {
         pDialog.show();
 
         String url = "http://" + ipAddress + ":" + ipPort + headerDll + "/ExportADDED_CUSTOMERS";
-        Log.e("AddUser_URL ", url);
+        Log.e("AddCustomer_URL ", url);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override
@@ -1334,13 +1334,15 @@ public class ExportData {
             progressSave.setTitle("Saved Vouchers");
             Log.e("onPostExecute","---15----"+result);
 
-            if (result != null && !result.equals("")) {
+//            if (result != null && !result.equals("")) {
+//
+//
+//            } else {
+//                progressSave.dismissWithAnimation();
+//
+//            }
+            progressSave.dismissWithAnimation();
 
-
-            } else {
-                progressSave.dismissWithAnimation();
-
-            }
             new JSONTaskEXPORT_STOCK().execute();
         }
     }
