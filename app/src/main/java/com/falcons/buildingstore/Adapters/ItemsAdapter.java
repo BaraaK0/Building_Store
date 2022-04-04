@@ -204,6 +204,9 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ViewHolder> 
             holder.itemKindTV.setText(itemsList.get(currPosition).getItemKind());
             holder.itemTaxTV.setText(itemsList.get(currPosition).getTax() + "");
             holder.itemQtyEdt.setText(itemsList.get(currPosition).getQty() + "");
+            if(itemsList.get(currPosition).getDiscount()==0)
+                holder.itemDiscEdt.setText("0");
+                else
             holder.itemDiscEdt.setText(itemsList.get(currPosition).getDiscount() + "");
             holder.itemPriceTV.setText(String.valueOf(itemsList.get(currPosition).getPrice()));
             holder.itemaviqtyTV.setText(String.valueOf(itemsList.get(currPosition).getAviqty()));

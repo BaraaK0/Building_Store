@@ -6,6 +6,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.falcons.buildingstore.Utilities.ExportData;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -181,7 +183,7 @@ public class OrderMaster {
         //      "SALESMANNO":"5","CUSTOMERNO":"123456","VOUCHERDISCOUNT":"50",
         //    "VOUCHERDISCOUNTPERCENT":"10","NOTES":"AAAAAA","CACR":"1","ISPOSTED":"0","PAYMETHOD":"1","NETSALES":"150.720"}]}
         try {
-            obj.put("COMAPNYNO", "295");
+            obj.put("COMAPNYNO", ExportData.coNo);
             obj.put("VOUCHERNO", vhfNo);
             obj.put("VOUCHERTYPE", 508);
 

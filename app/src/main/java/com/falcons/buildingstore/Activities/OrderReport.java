@@ -232,6 +232,8 @@ public class OrderReport extends AppCompatActivity {
                                 HomeActivity.allItemList_rv.get(j).setDiscount(ordersDetails.get(i).getDiscount());
                                 HomeActivity.allItemList_rv.get(j).setQty(ordersDetails.get(i).getQty());
                                 HomeActivity.allItemList_rv.get(j).setArea(ordersDetails.get(i).getArea());
+                                HomeActivity.allItemList_rv.get(j).setUnit(ordersDetails.get(i).getUnit());
+
                                 HomeActivity.vocher_Items.add(HomeActivity.allItemList_rv.get(j));
 
 
@@ -298,7 +300,10 @@ public class OrderReport extends AppCompatActivity {
           subtotal= bundle.getDouble("subtotal");
           Log.e("VOHNO==", VohNu + "");
 
-          tax.setText(taxx+"");
+
+         ;
+
+          tax.setText( String.format("%.3f", taxx)+"");
           netsales.setText(netsal+"");
 
       }catch (Exception exception){
