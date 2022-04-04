@@ -251,7 +251,7 @@ public class ExportData {
         pDialog.show();
 
         String url = "http://" + ipAddress + ":" + ipPort + headerDll + "/ExportADDED_CUSTOMERS";
-        Log.e("AddUser_URL ", url);
+        Log.e("AddCustomer_URL ", url);
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
             @Override

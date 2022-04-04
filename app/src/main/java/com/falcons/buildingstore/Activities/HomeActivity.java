@@ -62,7 +62,8 @@ import java.util.List;
 
 public class HomeActivity extends AppCompatActivity {
 
-    public static List<Item> allItemList_rv= new ArrayList<>();;
+    public static List<Item> allItemList_rv = new ArrayList<>();
+    ;
     private List<Item> search_itemList;
 
 
@@ -91,6 +92,7 @@ public class HomeActivity extends AppCompatActivity {
     public static ArrayList<Item> vocher_Items = new ArrayList<>();
     public static BadgeDrawable badge;
     ImageButton backBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -106,19 +108,15 @@ public class HomeActivity extends AppCompatActivity {
 
         /*  Initialize Items  */
 
-        if(HomeActivity.vocher_Items.size() ==0)
-
-        {
+        if (HomeActivity.vocher_Items.size() == 0) {
 
             allItemList_rv = appDatabase.itemsDao().getAllItems();
 
             itemsAdapter = new ItemsAdapter(allItemList_rv, HomeActivity.this);
             itemsRecycler.setAdapter(itemsAdapter);
             itemsRecycler.setSaveEnabled(true);
-            Log.e("allItemList_rv",allItemList_rv.size()+"");
-            }
-        else
-        {
+            Log.e("allItemList_rv", allItemList_rv.size() + "");
+        } else {
 
 
             itemsAdapter = new ItemsAdapter(allItemList_rv, HomeActivity.this);
@@ -176,8 +174,7 @@ public class HomeActivity extends AppCompatActivity {
                     ItemsAdapter itemsAdapter1 = new ItemsAdapter(search_itemList, HomeActivity.this);
                     itemsRecycler.setAdapter(itemsAdapter1);
 
-                }
-                else {
+                } else {
 
                     itemsAdapter = new ItemsAdapter(allItemList_rv, HomeActivity.this);
                     itemsRecycler.setAdapter(itemsAdapter);
@@ -190,7 +187,7 @@ public class HomeActivity extends AppCompatActivity {
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(HomeActivity.this,LoginActivity.class);
+                Intent intent = new Intent(HomeActivity.this, LoginActivity.class);
                 startActivity(intent);
             }
         });
@@ -246,7 +243,8 @@ public class HomeActivity extends AppCompatActivity {
                                         switch (which) {
                                             case DialogInterface.BUTTON_POSITIVE:
                                                 //Yes button clicked
-                                                exportData.exportSalesVoucherM();                                        dialog.dismiss();
+                                                exportData.exportSalesVoucherM();
+                                                dialog.dismiss();
                                                 break;
 
 
@@ -264,7 +262,8 @@ public class HomeActivity extends AppCompatActivity {
                                         .setTitle(getString(R.string.export_data))
                                         .setPositiveButton(getString(R.string.yes), dialogClickListener)
                                         .setNegativeButton(getString(R.string.cancel), dialogClickListener)
-                                        .show();                                return true;
+                                        .show();
+                                return true;
 
                             case R.id.action_report:
 
@@ -273,51 +272,51 @@ public class HomeActivity extends AppCompatActivity {
                                 return true;
 
                             case R.id.action_add:
-try {
+                                try {
 
 
-                                final Dialog dialog = new Dialog(HomeActivity.this);
-                                dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-                                dialog.setCancelable(true);
-                                dialog.setContentView(R.layout.adddailog);
-                                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                                WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
-                                lp.copyFrom(dialog.getWindow().getAttributes());
-                                lp.width = (int) (getResources().getDisplayMetrics().widthPixels / 1.19);
-                                lp.gravity = Gravity.CENTER;
-                                dialog.getWindow().setAttributes(lp);
-                                dialog.show();
+                                    final Dialog dialog = new Dialog(HomeActivity.this);
+                                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                                    dialog.setCancelable(true);
+                                    dialog.setContentView(R.layout.adddailog);
+                                    dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                                    lp.copyFrom(dialog.getWindow().getAttributes());
+                                    lp.width = (int) (getResources().getDisplayMetrics().widthPixels / 1.19);
+                                    lp.gravity = Gravity.CENTER;
+                                    dialog.getWindow().setAttributes(lp);
+                                    dialog.show();
 
-                                UserLogs userLogs = appDatabase.userLogsDao().getLastuserLogin();
+                                    UserLogs userLogs = appDatabase.userLogsDao().getLastuserLogin();
 
-                                int userType = appDatabase.usersDao().getUserType(userLogs.getUserName());
-                                Log.e("UserType/Username", userType+"/"+userLogs.getUserName());
-                                if (userType == 0)
-                                    dialog.findViewById(R.id.adduser).setVisibility(View.GONE);
+                                    int userType = appDatabase.usersDao().getUserType(userLogs.getUserName());
+                                    Log.e("UserType/Username", userType + "/" + userLogs.getUserName());
+                                    if (userType == 1)
+                                        dialog.findViewById(R.id.adduser).setVisibility(View.VISIBLE);
 
-                                else
-                                    dialog.findViewById(R.id.adduser).setVisibility(View.VISIBLE);
+                                    else
+                                        dialog.findViewById(R.id.adduser).setVisibility(View.GONE);
 
 
-                                dialog.findViewById(R.id.addCustomer).setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        startActivity(new Intent(getApplicationContext(), AddNewCustomer.class));
-                                        overridePendingTransition(0, 0);
-                                        dialog.dismiss();
-                                    }
-                                });
-                                dialog.findViewById(R.id.adduser).setOnClickListener(new View.OnClickListener() {
-                                    @Override
-                                    public void onClick(View view) {
-                                        startActivity(new Intent(getApplicationContext(), AddNewUser.class));
-                                        overridePendingTransition(0, 0);
-                                        dialog.dismiss();
-                                    }
-                                });
-}catch (Exception exception){
+                                    dialog.findViewById(R.id.addCustomer).setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            startActivity(new Intent(getApplicationContext(), AddNewCustomer.class));
+                                            overridePendingTransition(0, 0);
+                                            dialog.dismiss();
+                                        }
+                                    });
+                                    dialog.findViewById(R.id.adduser).setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+                                            startActivity(new Intent(getApplicationContext(), AddNewUser.class));
+                                            overridePendingTransition(0, 0);
+                                            dialog.dismiss();
+                                        }
+                                    });
+                                } catch (Exception exception) {
 
-}
+                                }
                                 return true;
                         }
                         return false;
@@ -370,6 +369,7 @@ try {
             }
         }
     }
+
     @Override
     public void onBackPressed() {
 
