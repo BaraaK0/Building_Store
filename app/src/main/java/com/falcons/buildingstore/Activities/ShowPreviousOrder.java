@@ -46,14 +46,14 @@ import java.util.List;
 import java.util.Locale;
 
 public class ShowPreviousOrder extends AppCompatActivity {
-    RecyclerView orderRec;
-    OrderShowAdapter orderShowAdapter;
-    RecyclerView.LayoutManager layoutManager;
+    public static  RecyclerView orderRec;
+    public  static   OrderShowAdapter orderShowAdapter;
+    public static    RecyclerView.LayoutManager layoutManager;
   public static   List<OrderMaster> orderMasters;
     List<String> Cus_name = new ArrayList<>();
     Calendar myCalendar;
     TextView date, OrderNO;
-    AppDatabase appDatabase;
+    public static   AppDatabase appDatabase;
     Spinner Customer_spinner;
     Button preview;
     BottomNavigationView bottomNavigationView;
@@ -73,12 +73,8 @@ public class ShowPreviousOrder extends AppCompatActivity {
         Customer_spinner.setAdapter(spinnerArrayAdapter);
         layoutManager = new LinearLayoutManager(ShowPreviousOrder.this);
         orderRec.setLayoutManager(layoutManager);
-        orderMasters = appDatabase.ordersMasterDao().getAllOrders();// from voucher master
-
-        orderShowAdapter = new OrderShowAdapter(ShowPreviousOrder.this, orderMasters);
-        orderRec.setAdapter(orderShowAdapter);
+      filladapter(ShowPreviousOrder.this);
         myCalendar = Calendar.getInstance();
-
         Date currentTimeAndDate = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
         String today = df.format(currentTimeAndDate);
@@ -190,6 +186,11 @@ public class ShowPreviousOrder extends AppCompatActivity {
                                 .setNegativeButton(getString(R.string.cancel), dialogClickListener)
                                 .show();                        return true;
 
+
+
+
+
+
                     case R.id.action_report:
                         return true;
 
@@ -271,6 +272,14 @@ public class ShowPreviousOrder extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
+
+    }
+   public static void  filladapter(Context context){
+
+        orderMasters = appDatabase.ordersMasterDao().getAllOrders();// from voucher master
+
+        orderShowAdapter = new OrderShowAdapter(context, orderMasters);
+        orderRec.setAdapter(orderShowAdapter);
 
     }
 }

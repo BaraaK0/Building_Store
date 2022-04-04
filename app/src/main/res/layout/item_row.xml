@@ -434,6 +434,8 @@
                             android:lineHeight="21.6px"
                             android:textColor="@color/black"
                             android:textSize="16sp"
+                            android:hint="0"
+                            android:selectAllOnFocus="true"
                             app:layout_constraintBottom_toBottomOf="parent"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -446,6 +448,7 @@
                             android:gravity="start"
                             android:lineHeight="21.6px"
                             android:text="%"
+
                             android:textColor="@color/primaryTextColor"
                             android:textSize="17sp"
                             app:layout_constraintBottom_toBottomOf="parent"
@@ -485,7 +488,6 @@
                             android:gravity="start"
                             android:inputType="number"
                             android:selectAllOnFocus="true"
-                            android:textIsSelectable="true"
                             android:lineHeight="21.6px"
                             android:textColor="@color/black"
                             android:textSize="16sp"

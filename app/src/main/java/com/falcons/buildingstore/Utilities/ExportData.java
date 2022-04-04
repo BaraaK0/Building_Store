@@ -25,6 +25,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 import com.falcons.buildingstore.Activities.AddNewCustomer;
 import com.falcons.buildingstore.Activities.AddNewUser;
+import com.falcons.buildingstore.Activities.ShowPreviousOrder;
 import com.falcons.buildingstore.Database.AppDatabase;
 import com.falcons.buildingstore.Database.Entities.CustomerInfo;
 import com.falcons.buildingstore.Database.Entities.Item;
@@ -70,7 +71,7 @@ public class ExportData {
     private Context context;
     List<OrdersDetails> items;
     private AppDatabase appDatabase;
-    private String URL_TO_HIT, ipAddress, ipPort, headerDll = "", coNo = "";
+    public static String URL_TO_HIT, ipAddress, ipPort, headerDll = "", coNo = "";
     private ProgressDialog progressDialog, pdValidation;
     SweetAlertDialog progressSave, pdVoucher;
     AppDatabase mHandler;
@@ -350,6 +351,7 @@ public class ExportData {
         mHandler.ordersMasterDao().updateVoucher();
         mHandler.ordersDetails_dao().updateVoucherDetails();
         Log.e("onPostExecute", "updateVoucherExported---3---");
+        ShowPreviousOrder.filladapter(context);
         new JSONTaskSaveVouchers().execute();
 
     }
@@ -1268,10 +1270,7 @@ public class ExportData {
 
 
             try {
-                //  URL_TO_HIT = "http://"+ipAddress.trim()+":" + ipWithPort.trim() +"/ExportSALES_VOUCHER_D?CONO="+CONO.trim()+"&JSONSTR="+vouchersObject.toString().trim();
-
-//LINK : http://localhost:8082/ExportITEMSERIALS?CONO=290&JSONSTR={"JSN":[{"VHFNO":"123","STORENO":"5","TRNSDATE":"01/01/2021","TRANSKIND":"1","ITEMNO":"321","SERIAL_CODE":"369258147852211","QTY":"1","VSERIAL":"1","ISPOSTED":"0"}]}
-                String link = "http://"+ipAddress.trim()+":" + ipPort.trim() + headerDll.trim()+"/SaveVouchers";
+     String link = "http://"+ipAddress.trim()+":" + ipPort.trim() + headerDll.trim()+"/SaveVouchers";
                 // Log.e("ipAdress", "ip -->" + ip);
                 String data = "CONO="+coNo.trim()+"&STRNO=" +"1"+"&VHFTYPE="+"1";
                 Log.e("tag_link", "ExportData -->" + link);
@@ -1341,6 +1340,7 @@ public class ExportData {
                 progressSave.dismissWithAnimation();
 
             }
+            progressSave.dismissWithAnimation();
             new JSONTaskEXPORT_STOCK().execute();
         }
     }
@@ -1365,7 +1365,7 @@ public class ExportData {
         protected String doInBackground(String... params) {
 
             try {
-                //http://localhost:8082/EXPORTTOSTOCK?CONO=295&STRNO=4
+                //http://10.0.0.22:8085/EXPORTTOSTOCK?CONO=295&STRNO=4
                 String link = "http://"+ipAddress.trim()+":" + ipPort.trim() + headerDll.trim()+"/EXPORTTOSTOCK";
                 String data = "CONO="+coNo.trim()+"&STRNO=" +"1"+"&VHFTYPE="+"1";
                 Log.e("tag_link", "ExportData -->" + link);Log.e("tag_data", "ExportData -->" + data);

@@ -6,6 +6,8 @@ import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.falcons.buildingstore.Utilities.ExportData;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -296,7 +298,7 @@ public class OrdersDetails {
         JSONObject obj = new JSONObject();
         try {
             obj.put("VOUCHERNO", vhfNo+"");
-            obj.put("VOUCHERTYPE", "1");
+            obj.put("VOUCHERTYPE", "508");
             obj.put("ITEMNO", itemNo);
             obj.put("UNIT", Unit);
             obj.put("QTY", qty);
@@ -307,7 +309,7 @@ public class OrdersDetails {
             obj.put("VOUCHERDISCOUNT", discount);
             obj.put("TAXVALUE", taxValue);
             obj.put("TAXPERCENT", taxPercent);
-            obj.put("COMAPNYNO", "295");
+            obj.put("COMAPNYNO", ExportData.coNo);
             obj.put("ISPOSTED", "0");
             obj.put("VOUCHERYEAR", "2022");
             obj.put("ITEM_DESCRITION", "");

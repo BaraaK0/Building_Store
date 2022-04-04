@@ -23,7 +23,7 @@ public interface OrdersMaster_Dao {
 
     @Delete
     void deleteOrderByVOHNO(OrderMaster orderMaster);
-    @Query("UPDATE Orders_Master SET  IS_Posted='1' WHERE IS_Posted='0'")
+    @Query("UPDATE Orders_Master SET  IS_Posted='1' WHERE IS_Posted='0' AND ConfirmState ='1'")
     int updateVoucher();
 
     @Query("SELECT * FROM Orders_Master where Customer_ID= :cusid and VHFNO= :orderno and Date= :date and IS_Posted='0'")

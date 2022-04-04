@@ -293,10 +293,10 @@ try {
                                 int userType = appDatabase.usersDao().getUserType(userLogs.getUserName());
                                 Log.e("UserType/Username", userType+"/"+userLogs.getUserName());
                                 if (userType == 0)
-                                    dialog.findViewById(R.id.adduser).setVisibility(View.VISIBLE);
+                                    dialog.findViewById(R.id.adduser).setVisibility(View.GONE);
 
                                 else
-                                    dialog.findViewById(R.id.adduser).setVisibility(View.GONE);
+                                    dialog.findViewById(R.id.adduser).setVisibility(View.VISIBLE);
 
 
                                 dialog.findViewById(R.id.addCustomer).setOnClickListener(new View.OnClickListener() {

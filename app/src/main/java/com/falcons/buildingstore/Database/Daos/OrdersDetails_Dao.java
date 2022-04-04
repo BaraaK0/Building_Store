@@ -27,7 +27,7 @@ public interface OrdersDetails_Dao {
     @Delete
     void deleteOrder(OrdersDetails ordersDetails);
 
-    @Query("UPDATE Orders_Details SET  IS_Posted='1' WHERE IS_Posted='0' ")
+    @Query("UPDATE Orders_Details SET  IS_Posted='1' WHERE IS_Posted='0' AND ConfirmState ='1'")
   int  updateVoucherDetails ();
 
     @Query("delete from Orders_Details where VHFNO= :vohno")

@@ -382,7 +382,7 @@ public class BasketActivity extends AppCompatActivity {
         double subtotal=0;
         for (int x = 0; x < ordersDetailslist.size(); x++) {
             totalqty+=ordersDetailslist.get(x).getQty();
-            totalnetsales+= ordersDetailslist.get(x).getSubtotal()+ ordersDetailslist.get(x).getTax();
+            totalnetsales+= ordersDetailslist.get(x).getNetTotal();
             totaltax+= ordersDetailslist.get(x).getTaxValue();
             subtotal+= ordersDetailslist.get(x).getSubtotal();
         }
@@ -439,7 +439,8 @@ public class BasketActivity extends AppCompatActivity {
             ordersDetails.setAmount(HomeActivity.vocher_Items.get(i).getAmount());
             ordersDetails.setTaxPercent(HomeActivity.vocher_Items.get(i).getTaxPercent());
             ordersDetails.setUnit(HomeActivity.vocher_Items.get(i).getUnit());
-            if(ordersDetails.getUnit().equals("One Unit"))ordersDetails.setWhichUNIT("0");
+            if(ordersDetails.getUnit().equals("One Unit"))
+                ordersDetails.setWhichUNIT("0");
             else
                 ordersDetails.setWhichUNIT("1");
 
@@ -461,17 +462,17 @@ public class BasketActivity extends AppCompatActivity {
             ordersDetails.setTax(HomeActivity.vocher_Items.get(i).getPrice()*HomeActivity.vocher_Items.get(i).getTaxPercent());
 
             ordersDetails.setTaxValue(ordersDetails.getTax()*HomeActivity.vocher_Items.get(i).getQty());
-            double nettotal=(HomeActivity.vocher_Items.get(i).getPrice()*HomeActivity.vocher_Items.get(i).getPrice())-HomeActivity.vocher_Items.get(i).getDiscount();
-            ordersDetails.setNetTotal(nettotal);
 
-            Log.e("ordersDetails.getarea",ordersDetails.getArea()+"");
-            Log.e("ordersDetails.getAmount()=",ordersDetails.getAmount()+"");
-            Log.e("ordersDetails.getTaxValue()=",ordersDetails.getTaxValue()+"");
-            Log.e("ordersDetails.getDiscount()=",ordersDetails.getDiscount()+"");
-            // ضريبة شاملة
-            double subtotal=ordersDetails.getAmount()-ordersDetails.getTaxValue()-ordersDetails.getDiscount();
+     // ضريبة شاملة
+            double subtotal=ordersDetails.getAmount()-ordersDetails.getTaxValue()-ordersDetails.getTotalDiscVal();
            Log.e("subtotal",subtotal+"");
             ordersDetails.setSubtotal(subtotal);
+
+            double nettotal=ordersDetails.getSubtotal()+HomeActivity.vocher_Items.get(i).getTax();
+            ordersDetails.setNetTotal(nettotal);
+
+
+
             // ضريبة خاضعة
       /*    double subtotal=ordersDetails.getAmount()-ordersDetails.getDiscount();
             ordersDetails.setSubtotal(subtotal);*/
@@ -486,6 +487,21 @@ public class BasketActivity extends AppCompatActivity {
 
             ordersDetailslist.add(ordersDetails);
             Log.e("hereordersDetailslist==",ordersDetailslist.size()+"");
+
+
+
+
+            Log.e("ordersDetails.getarea",ordersDetails.getArea()+"");
+            Log.e("ordersDetails.getAmount()=",ordersDetails.getAmount()+"");
+            Log.e("ordersDetails.getTaxValue()=",ordersDetails.getTaxValue()+"");
+            Log.e("ordersDetails.getDiscount()=",ordersDetails.getDiscount()+"");
+            Log.e("ordersDetails.getNetTotal()=",ordersDetails.getNetTotal()+"");
+            Log.e("ordersDetails.getSubtotal()=",ordersDetails.getSubtotal()+"");
+
+
+
+
+
 
         }
 
