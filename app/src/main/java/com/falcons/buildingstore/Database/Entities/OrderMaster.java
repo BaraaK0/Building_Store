@@ -14,7 +14,7 @@ import org.json.JSONObject;
 @Entity(tableName = "Orders_Master")
 public class OrderMaster {
 
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "VHFNO")
     private int vhfNo;
 

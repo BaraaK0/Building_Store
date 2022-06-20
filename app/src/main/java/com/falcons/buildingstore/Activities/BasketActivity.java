@@ -1,6 +1,8 @@
 package com.falcons.buildingstore.Activities;
 
 import static com.falcons.buildingstore.Activities.HomeActivity.vocher_Items;
+import static com.falcons.buildingstore.Activities.LoginActivity.CONO_PREF;
+import static com.falcons.buildingstore.Activities.LoginActivity.SETTINGS_PREFERENCES;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,6 +13,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -71,6 +74,8 @@ public class BasketActivity extends AppCompatActivity {
     String Cus_selection;
     TextView Textveiw_total;
     int VOHNO=0;
+
+    int vohno;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -224,8 +229,9 @@ public class BasketActivity extends AppCompatActivity {
         //Extract the data…
  /*   VOHNO = bundle.getInt("Report_VOHNO");
         Log.e("VOHNO",VOHNO+"");*/
-
-
+//        SharedPreferences sharedPref = getSharedPreferences(SETTINGS_PREFERENCES, MODE_PRIVATE);
+//
+//        vohno =Integer.parseInt(sharedPref.getString(LoginActivity.maxVoch_PREF, "")) ;
         Textveiw_total= findViewById(R.id.total);
         appDatabase = AppDatabase.getInstanceDatabase(BasketActivity.this);
         exportData = new ExportData(BasketActivity.this);
@@ -409,8 +415,12 @@ public class BasketActivity extends AppCompatActivity {
             }
         }
         else{
+            SharedPreferences sharedPref = getSharedPreferences(SETTINGS_PREFERENCES, MODE_PRIVATE);
+vohno =Integer.parseInt(sharedPref.getString(LoginActivity.maxVoch_PREF, "")) ;
+          // vohno =Integer.parseInt(vohno) ;
+            orderMaster.setVhfNo(vohno);
             appDatabase.ordersMasterDao().insertOrder(orderMaster);
-            int vohno = appDatabase.ordersMasterDao().getLastVoherNo();
+
             for (int l = 0; l < ordersDetailslist.size(); l++) {
                 ordersDetailslist.get(l).setVhfNo(vohno);
                 appDatabase.ordersDetails_dao().insertOrder(ordersDetailslist.get(l));
@@ -419,11 +429,18 @@ public class BasketActivity extends AppCompatActivity {
 
         ordersDetailslist.clear();
          HomeActivity.vocher_Items.clear();
+         UpdateMaxVo();
         badge.setNumber(0);
              fillListAdapter();
         OrderReport.Report_VOHNO=0;
     }
+    void   UpdateMaxVo(){
 
+        SharedPreferences.Editor editor = getSharedPreferences(SETTINGS_PREFERENCES, MODE_PRIVATE).edit();
+        Log.e("vohno==",vohno+"");
+        editor.putString(LoginActivity.maxVoch_PREF,String.valueOf(++vohno) );
+        editor.apply();
+    }
     void SaveDetialsVocher(int x) {
         Log.e("vocher_ItemsSize==",HomeActivity.vocher_Items.size()+"");
         for (int i = 0; i < HomeActivity.vocher_Items.size(); i++) {
@@ -464,12 +481,16 @@ public class BasketActivity extends AppCompatActivity {
             ordersDetails.setTaxValue(ordersDetails.getTax()*HomeActivity.vocher_Items.get(i).getQty());
 
      // ضريبة شاملة
-            double subtotal=ordersDetails.getAmount()-ordersDetails.getTaxValue()-ordersDetails.getTotalDiscVal();
-           Log.e("subtotal",subtotal+"");
-            ordersDetails.setSubtotal(subtotal);
+            double subtotal=0;
+            subtotal= ordersDetails.getAmount()-ordersDetails.getTaxValue()-ordersDetails.getTotalDiscVal();
 
-            double nettotal=ordersDetails.getSubtotal()+HomeActivity.vocher_Items.get(i).getTax();
-            ordersDetails.setNetTotal(nettotal);
+            ordersDetails.setSubtotal(subtotal);
+             Log.e("ordersDetails.getSubtotal()=",ordersDetails.getSubtotal()+"");
+
+            double nettotal=0;
+            nettotal=ordersDetails.getSubtotal()+ordersDetails.getTaxValue();
+                    ordersDetails.setNetTotal(nettotal);
+            Log.e("ordersDetails.getNetTotal()=",ordersDetails.getNetTotal()+"");
 
 
 
@@ -495,8 +516,6 @@ public class BasketActivity extends AppCompatActivity {
             Log.e("ordersDetails.getAmount()=",ordersDetails.getAmount()+"");
             Log.e("ordersDetails.getTaxValue()=",ordersDetails.getTaxValue()+"");
             Log.e("ordersDetails.getDiscount()=",ordersDetails.getDiscount()+"");
-            Log.e("ordersDetails.getNetTotal()=",ordersDetails.getNetTotal()+"");
-            Log.e("ordersDetails.getSubtotal()=",ordersDetails.getSubtotal()+"");
 
 
 

@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -44,12 +45,14 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import br.com.simplepass.loadingbutton.customViews.CircularProgressButton;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private TextInputEditText ipEdt, portEdt, coNoEdt;
+    private TextInputEditText ipEdt, portEdt, coNoEdt,maxVochEdt;
+   ImageView editVochNo,saveVochNo;
     public List<Item> allItemsList;
     public List<Item_Unit_Details> allUnitDetails;
     private List<CustomerInfo> allCustomers;
@@ -67,10 +70,10 @@ public class LoginActivity extends AppCompatActivity {
     public final static String IP_PREF = "IP_Address";
     public final static String PORT_PREF = "IP_Port";
     public final static String CONO_PREF = "Company_No";
-
+    public final static String maxVoch_PREF = "maxVoch";
     AppDatabase appDatabase;
-
-    String ipAddress, ipPort, coNo;
+    EditText  editPassword;
+    String ipAddress, ipPort, coNo,Max_Voch;
 
     ImportData importData;
 
@@ -160,11 +163,11 @@ public class LoginActivity extends AppCompatActivity {
         ipAddress = sharedPref.getString(IP_PREF, "");
         ipPort = sharedPref.getString(PORT_PREF, "");
         coNo = sharedPref.getString(CONO_PREF, "");
-
+        Max_Voch = sharedPref.getString(maxVoch_PREF, "");
         Log.e("IP_PREF", ipAddress + "");
         Log.e("PORT_PREF", ipPort);
         Log.e("CONO_PREF", coNo);
-
+        Log.e("CONO_PREF",  Max_Voch);
         return !(ipAddress + "").trim().equals("") &&
                 !(ipPort + "").trim().equals("") &&
                 !(coNo + "").trim().equals("");
@@ -199,11 +202,15 @@ public class LoginActivity extends AppCompatActivity {
         uTypeEdt.setAdapter(adapter);
         uTypeEdt.setText(getResources().getStringArray(R.array.user_type)[1], false);
 
+        SharedPreferences sharedPref = getSharedPreferences(SETTINGS_PREFERENCES, MODE_PRIVATE);
+
+
+
     }
 
     void checkUnameAndPass() {
 
-        String uname = unameEdt.getText().toString().trim() + "";
+        String uname = unameEdt.getText().toString().trim().toLowerCase(Locale.ROOT) + "";
         String pass = passEdt.getText().toString().trim() + "";
         int uType = uTypeEdt.getText().toString().equals(getResources().getStringArray(R.array.user_type)[0]) ? 1 : 0;
 
@@ -286,26 +293,116 @@ public class LoginActivity extends AppCompatActivity {
         ip_settings_dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         ip_settings_dialog.show();
+        editVochNo= ip_settings_dialog.findViewById(R.id.editVochNo);
+
+        int MaxVo= appDatabase.ordersMasterDao(). getLastVoherNo();
 
 
+
+
+        editVochNo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                    final Dialog dialog = new Dialog(LoginActivity.this);
+                    dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+                    dialog.setCancelable(true);
+                    dialog.setContentView(R.layout.passwordsettings);
+                    WindowManager.LayoutParams lp = new WindowManager.LayoutParams();
+                    lp.copyFrom(dialog.getWindow().getAttributes());
+
+                    lp.gravity = Gravity.CENTER;
+                    dialog.getWindow().setAttributes(lp);
+                    Button saveButton = (Button) dialog.findViewById(R.id.saveButton);
+//                    TextView cancelButton = (TextView) dialog.findViewById(R.id.cancel);
+
+              editPassword = (EditText) dialog.findViewById(R.id.passowrdEdit);
+
+
+                    saveButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            if (!editPassword.getText().toString().equals("")) {
+                                if(editPassword.getText().toString().trim().equals("1234"))
+                                {
+
+
+                                        maxVochEdt.setEnabled(true);
+                                        maxVochEdt.requestFocus();
+                                        dialog.dismiss();
+
+
+
+                                }else
+                                {
+                                    editPassword.setError("password not correct");
+                                }
+                            } else {
+                                editPassword.setError("Required");
+                            }
+
+
+                        }
+                    });
+//
+//                    cancelButton.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View v) {
+//                            dialog.dismiss();
+//                        }
+//                    });
+                    dialog.show();
+
+
+
+            }
+        });
         ipEdt = ip_settings_dialog.findViewById(R.id.ipEdt);
         portEdt = ip_settings_dialog.findViewById(R.id.portEdt);
         coNoEdt = ip_settings_dialog.findViewById(R.id.coNoEdt);
-        TextInputLayout textInputIpAddress, textInputPort, textInputCoNo;
+        maxVochEdt= ip_settings_dialog.findViewById(R.id.maxVoch);
+        maxVochEdt.setEnabled(false);
+        TextInputLayout textInputIpAddress, textInputPort, textInputCoNo,textInputMaxVoch;
         textInputIpAddress = ip_settings_dialog.findViewById(R.id.textInputIpAddress);
         textInputPort = ip_settings_dialog.findViewById(R.id.textInputPort);
         textInputCoNo = ip_settings_dialog.findViewById(R.id.textInputCoNo);
-
+        textInputMaxVoch = ip_settings_dialog.findViewById(R.id.textInputmaxVoch);
         Button okBtn, cancelBtn;
         okBtn = ip_settings_dialog.findViewById(R.id.okBtn);
         cancelBtn = ip_settings_dialog.findViewById(R.id.cancelBtn);
+        textInputMaxVoch.setEndIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(!maxVochEdt.getText().toString().trim().equals(""))
+                {
+                    Log.e("MaxVo==",MaxVo+"");
 
+                    if(Integer.parseInt(maxVochEdt.getText().toString().trim())>MaxVo)
+                {
+                    maxVochEdt.setEnabled(false);
+                    SharedPreferences.Editor editor = getSharedPreferences(SETTINGS_PREFERENCES, MODE_PRIVATE).edit();
+                    editor.putString(maxVoch_PREF,  maxVochEdt.getText().toString().trim());
+                    editor.apply();
+                }
+                else
+                {
+                    maxVochEdt.setText("");
+                  if(MaxVo!=0)
+                      generalMethod.showSweetDialog(LoginActivity.this,0,"",getResources().getString(R.string.MaxVoMsg1)+" "+MaxVo+getResources().getString(R.string.MaxVoMsg2)+(MaxVo+1)+"  " +getResources().getString(R.string.MaxVoMsg3));
+                   else   generalMethod.showSweetDialog(LoginActivity.this,0,"",getResources().getString(R.string.MaxVoMsg2)+(MaxVo+1)+"  " +getResources().getString(R.string.MaxVoMsg3));
+
+                    maxVochEdt.setError("");
+                }
+
+            }}
+        });
         SharedPreferences sharedPref = getSharedPreferences(SETTINGS_PREFERENCES, MODE_PRIVATE);
 
         ipEdt.setText(sharedPref.getString(IP_PREF, ""));
         portEdt.setText(sharedPref.getString(PORT_PREF, ""));
         coNoEdt.setText(sharedPref.getString(CONO_PREF, ""));
-
+        maxVochEdt.setText(sharedPref.getString(maxVoch_PREF, ""));
         cancelBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -368,6 +465,24 @@ public class LoginActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
 
                 textInputCoNo.setError(null);
+
+            }
+        });
+        maxVochEdt.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+                textInputMaxVoch.setError(null);
 
             }
         });
@@ -484,7 +599,7 @@ public class LoginActivity extends AppCompatActivity {
 
                                                             allUsers.add(new User(
                                                                     response.getJSONObject(i).getString("SALESNO"),
-                                                                    response.getJSONObject(i).getString("ACCNAME"),
+                                                                 response.getJSONObject(i).getString("ACCNAME").toLowerCase(Locale.ROOT),
                                                                     response.getJSONObject(i).getString("USER_PASSWORD"),
                                                                     Integer.parseInt(response.getJSONObject(i).getString("USERTYPE")),
                                                                     Integer.parseInt(response.getJSONObject(i).getString("DISCOUNTPER")),

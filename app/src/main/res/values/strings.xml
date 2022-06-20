@@ -29,7 +29,8 @@
     <string name="sign_in_with">Sign in now with your username and password !</string>
     <string name="login_as">Login as:</string>
     <string name="request">Request</string>
-
+    <string name="VOchNum">VOcher Number</string>
+    <string name="PassowrdSetting">Passowrd Setting</string>
     <string name="item_Code">Item Code</string>
     <string name="item_Name_">Item Name</string>
     <string name="item_name">Item name:</string>
@@ -83,7 +84,9 @@
 
     <string name="export_data_msg">Do you want to export all data and get the new data\nfrom the server?</string>
     <string name="export_data">Export Data</string>
-
+    <string name="MaxVoMsg1">Max Vocher Num is</string>
+    <string name="MaxVoMsg2">,so you can set Vocher Num</string>
+    <string name="MaxVoMsg3">and above</string>
     <string-array name="user_type">
         <item>Admin</item>
         <item>User</item>

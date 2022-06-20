@@ -55,7 +55,7 @@
     <string name="savedSuccsesfule">تم الحفظ بنجاح</string>
     <string name="Order">تأكيد الطلب</string>
     <string name="incorrect_user_info">معلومات المُستخدم غير صحيحة !</string>
-
+    <string name="VOchNum">رقم الفاتورة</string>
     <string name="yes">نعم</string>
     <string name="no">لا</string>
 
@@ -82,6 +82,11 @@
     <string name="export_data_msg">هل ترغب في تصدير كافة البيانات والحصول على البيانات جديدة \n من الخادم؟</string>
     <string name="export_data">تصدير البيانات</string>
     <string name="Sub_total">المجموع الجزئي</string>
+    <string name="MaxVoMsg1">أكبر رقم فاتورة هو </string>
+    <string name="MaxVoMsg2">تستطيع وضع رقم,</string>
+    <string name="MaxVoMsg3">أو أكبر</string>
+
+
     <string-array name="user_type">
         <item>آدمن</item>
         <item>مستخدم عادي</item>

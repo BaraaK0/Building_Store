@@ -25,7 +25,7 @@ import com.falcons.buildingstore.Database.Entities.TempOrder;
 import com.falcons.buildingstore.Database.Entities.User;
 import com.falcons.buildingstore.Database.Entities.UserLogs;
 
-@Database(entities = {Item.class, CustomerInfo.class, TempOrder.class, OrderMaster.class, User.class, OrdersDetails.class, UserLogs.class, Item_Unit_Details.class}, version =27)
+@Database(entities = {Item.class, CustomerInfo.class, TempOrder.class, OrderMaster.class, User.class, OrdersDetails.class, UserLogs.class, Item_Unit_Details.class}, version =28)
 
 public abstract class AppDatabase extends RoomDatabase {
 
